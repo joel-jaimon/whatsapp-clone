@@ -2,6 +2,7 @@
   display: flex;
   justify-content: space-between;
   padding: 20px;
+  align-items: center;
   border-right: 1px solid lightgrey;
 }
 
@@ -52,4 +53,6 @@
 .sidebar__chats {
   flex: 1;
   overflow: scroll;
+  height: 25px;
+  background-color: white;
 }
