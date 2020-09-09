@@ -1,4 +1,6 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<h1>WhatsApp Web Clone</h1>
+
+<img src="sample.PNG" />
 
 ## Available Scripts
 
