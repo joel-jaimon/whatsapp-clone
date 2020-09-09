@@ -68,13 +68,13 @@ function Chat(props) {
         </div>
         <div className="chat_headeRight">
           <IconButton>
-            <SearchOutlined color="disabled" />
+            <SearchOutlined />
           </IconButton>
           <IconButton>
-            <AttachFile color="disabled" />
+            <AttachFile />
           </IconButton>
           <IconButton>
-            <MoreVert color="disabled" />
+            <MoreVert />
           </IconButton>
         </div>
       </div>
