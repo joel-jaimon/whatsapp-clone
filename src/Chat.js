@@ -5,9 +5,10 @@ import { Avatar, IconButton } from "@material-ui/core";
 import { SearchOutlined, AttachFile, MoreVert } from "@material-ui/icons";
 import MicIcon from "@material-ui/icons/Mic";
 import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
-import { useParams } from "react-router-dom";
+
 import db from "./firebase";
 import firebase from "firebase";
+import { useParams } from "react-router-dom";
 import { useStateValue } from "./StateProvider";
 
 function Chat(props) {
@@ -19,6 +20,7 @@ function Chat(props) {
   const [{ user }] = useStateValue();
 
   useEffect(() => {
+    setSeed(Math.floor(Math.random() * 5000));
     if (roomId) {
       db.collection("rooms")
         .doc(roomId)
@@ -33,10 +35,6 @@ function Chat(props) {
         );
     }
   }, [roomId]);
-
-  useEffect(() => {
-    setSeed(Math.floor(Math.random() * 5000));
-  }, []);
 
   const sendMessage = (e) => {
     //do something
@@ -61,9 +59,7 @@ function Chat(props) {
           <h4>{roomName}</h4>
           <p>
             Last seen:{" "}
-            {new Date(
-              messages[messages.length - 1]?.timestamp?.toDate()
-            ).toUTCString()}
+            {messages[messages.length - 1]?.timestamp?.toDate().toUTCString()}
           </p>
         </div>
         <div className="chat_headeRight">
