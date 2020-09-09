@@ -9,7 +9,6 @@ import { useParams } from "react-router-dom";
 import db from "./firebase";
 import firebase from "firebase";
 import { useStateValue } from "./StateProvider";
-import "emoji-mart/css/emoji-mart.css";
 
 function Chat(props) {
   const [seed, setSeed] = useState("");
@@ -69,13 +68,13 @@ function Chat(props) {
         </div>
         <div className="chat_headeRight">
           <IconButton>
-            <SearchOutlined />
+            <SearchOutlined color="disabled" />
           </IconButton>
           <IconButton>
-            <AttachFile />
+            <AttachFile color="disabled" />
           </IconButton>
           <IconButton>
-            <MoreVert />
+            <MoreVert color="disabled" />
           </IconButton>
         </div>
       </div>

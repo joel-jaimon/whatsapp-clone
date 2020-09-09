@@ -66,6 +66,18 @@ select:focus {
   height: 20px;
 }
 
+.sidebar__chats::-webkit-scrollbar {
+  width: 5px;
+}
+
+.sidebar__chats::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar__chats::-webkit-scrollbar-thumb {
+  background-color: #2a2f32;
+  border-radius: 10px;
+}
 .sidebar {
   background: #131c21;
 }
