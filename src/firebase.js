@@ -1,5 +1,6 @@
 import firebase from "firebase";
 
+// add firebaseConfig file here...........
 const firebaseConfig = {
   apiKey: "AIzaSyDn4n3qI42bVFfByfRmKVdeMMcwd4pWTAE",
   authDomain: "whatsapp-clone-738d9.firebaseapp.com",
