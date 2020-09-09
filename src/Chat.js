@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Chat.css";
+import logo from "./2.PNG";
 import { Avatar, IconButton } from "@material-ui/core";
 import { SearchOutlined, AttachFile, MoreVert } from "@material-ui/icons";
 import MicIcon from "@material-ui/icons/Mic";
@@ -9,9 +10,9 @@ import db from "./firebase";
 import firebase from "firebase";
 import { useStateValue } from "./StateProvider";
 
-function Chat() {
-  const [input, setInput] = useState("");
+function Chat(props) {
   const [seed, setSeed] = useState("");
+  const [input, setInput] = useState("");
   const { roomId } = useParams();
   const [roomName, setRoomName] = useState("");
   const [messages, setMessages] = useState([]);
@@ -21,17 +22,15 @@ function Chat() {
     if (roomId) {
       db.collection("rooms")
         .doc(roomId)
-        .onSnapshot((snapshot) => {
-          setRoomName(snapshot.data().name);
+        .onSnapshot((snapshot) => setRoomName(snapshot.data().name));
 
-          db.collection("rooms")
-            .doc(roomId)
-            .collection("messages")
-            .orderBy("timestamp", "asc")
-            .onSnapshot((snapshot) =>
-              setMessages(snapshot.docs.map((doc) => doc.data()))
-            );
-        });
+      db.collection("rooms")
+        .doc(roomId)
+        .collection("messages")
+        .orderBy("timestamp", "asc")
+        .onSnapshot((snapshot) =>
+          setMessages(snapshot.docs.map((doc) => doc.data()))
+        );
     }
   }, [roomId]);
 
@@ -50,7 +49,11 @@ function Chat() {
     setInput("");
   };
 
-  return (
+  return props.home ? (
+    <div className="chat__default">
+      <img src={logo} alt="Welcome" />
+    </div>
+  ) : (
     <div className="chat">
       <div className="chat__header">
         <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
