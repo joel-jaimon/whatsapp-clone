@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import db from "./firebase";
 import firebase from "firebase";
 import { useStateValue } from "./StateProvider";
+import "emoji-mart/css/emoji-mart.css";
 
 function Chat(props) {
   const [seed, setSeed] = useState("");
@@ -58,9 +59,9 @@ function Chat(props) {
       <div className="chat__header">
         <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
         <div className="chat__headerInfo">
-          <h3>{roomName}</h3>
+          <h4>{roomName}</h4>
           <p>
-            Last seen
+            Last seen:{" "}
             {new Date(
               messages[messages.length - 1]?.timestamp?.toDate()
             ).toUTCString()}
@@ -85,7 +86,13 @@ function Chat(props) {
               message.name === user.displayName && "chat__reciever"
             }`}
           >
-            <span className="chat__name">{message.name}</span>
+            <span
+              className={`chat__name ${
+                message.name === user.displayName && "dis_none"
+              }`}
+            >
+              {message.name}
+            </span>
             {message.message}
             <span className="chat__timestamp">
               {new Date(message.timestamp?.toDate()).toUTCString()}
@@ -94,9 +101,12 @@ function Chat(props) {
         ))}
       </div>
       <div className="chat__footer">
-        <InsertEmoticonIcon />
+        <span className="x10px">
+          <InsertEmoticonIcon />
+        </span>
         <form>
           <input
+            className="input"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Enter a message..."
@@ -106,7 +116,9 @@ function Chat(props) {
             Send a message
           </button>
         </form>
-        <MicIcon />
+        <span className="x10px">
+          <MicIcon />
+        </span>
       </div>
     </div>
   );
