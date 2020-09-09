@@ -36,6 +36,7 @@ function SidebarChat({ id, name, addNewChat }) {
       //do something
       db.collection("rooms").add({
         name: roomName,
+        
       });
     }
   };
