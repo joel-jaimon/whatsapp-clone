@@ -9,6 +9,9 @@
   cursor: pointer;
   border-top: 0.05px solid rgb(51, 51, 51);
 }
+.grp {
+  border-bottom: 1px solid green;
+}
 
 .sidebarChat:hover {
   background-color: #2a2f32;
@@ -16,6 +19,7 @@
 .sidebarChat > h4 {
   align-content: center;
   place-items: center;
+
   margin: 0 auto;
 }
 .sidebarChat__info > p {

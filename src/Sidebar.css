@@ -77,6 +77,7 @@ select:focus {
 .sidebar__chats::-webkit-scrollbar-thumb {
   background-color: #2a2f32;
   border-radius: 10px;
+  border-right: 0.05px solid rgb(70, 70, 70);
 }
 .sidebar {
   background: #131c21;

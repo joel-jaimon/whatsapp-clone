@@ -50,7 +50,7 @@ select:focus {
 }
 .chat__body {
   flex: 1;
-  background-image: url("./back.png");
+  background-image: url("./1.PNG");
   background-repeat: repeat;
   background-position: center;
   background-size: contain;
@@ -102,6 +102,8 @@ select:focus {
 
 .chat__timestamp {
   margin-left: 10px;
+  font-style: italic;
+  color: #c5c5c5;
   font-size: xx-small;
 }
 

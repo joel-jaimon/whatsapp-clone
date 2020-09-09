@@ -9,7 +9,9 @@ function SidebarChat({ id, name, addNewChat }) {
   const [messages, setMessages] = useState("");
   const [typed, setTyped] = useState("");
 
-  onchange(typed);
+  // onchange(() => {
+
+  // })
 
   useEffect(() => {
     if (id) {
