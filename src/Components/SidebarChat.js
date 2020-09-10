@@ -7,11 +7,6 @@ import { Link } from "react-router-dom";
 function SidebarChat({ id, name, addNewChat }) {
   const [seed, setSeed] = useState("");
   const [messages, setMessages] = useState([]);
-  const [typed, setTyped] = useState("");
-
-  // onchange(() => {
-
-  // })
 
   useEffect(() => {
     if (id) {
