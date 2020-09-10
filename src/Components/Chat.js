@@ -1,49 +1,60 @@
 import React, { useEffect, useState } from "react";
-import "./Chat.css";
 import logo from "./2.PNG";
-import { Avatar, IconButton } from "@material-ui/core";
 import { SearchOutlined, AttachFile, MoreVert } from "@material-ui/icons";
 import MicIcon from "@material-ui/icons/Mic";
+import { Avatar, IconButton } from "@material-ui/core";
 import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
-
-import db from "./firebase";
+import db from "../firebase/firebase";
 import firebase from "firebase";
+import "./Chat.css";
+import useSound from "use-sound";
 import { useParams } from "react-router-dom";
-import { useStateValue } from "./StateProvider";
+import { useStateValue } from "../DataLayer/StateProvider";
 
 function Chat(props) {
   const [seed, setSeed] = useState("");
   const [input, setInput] = useState("");
   const { roomId } = useParams();
   const [roomName, setRoomName] = useState("");
+  const [msgbool, msgboolSet] = useState(false);
   const [messages, setMessages] = useState([]);
   const [{ user }] = useStateValue();
+
+  const [playOn] = useSound(`${process.env.PUBLIC_URL}/send.mp3`, {
+    volume: 0.5,
+  });
+  const [playOff] = useSound(`${process.env.PUBLIC_URL}/send.mp3`, {
+    volume: 0.5,
+  });
 
   useEffect(() => {
     setSeed(Math.floor(Math.random() * 5000));
     if (roomId) {
       db.collection("rooms")
         .doc(roomId)
-        .onSnapshot((snapshot) => setRoomName(snapshot.data().name));
+        .onSnapshot((snapshot) => {
+          setRoomName(snapshot.data().name);
+        });
 
       db.collection("rooms")
         .doc(roomId)
         .collection("messages")
         .orderBy("timestamp", "asc")
-        .onSnapshot((snapshot) =>
-          setMessages(snapshot.docs.map((doc) => doc.data()))
-        );
+        .onSnapshot((snapshot) => {
+          setMessages(snapshot.docs.map((doc) => doc.data()));
+        });
     }
   }, [roomId]);
 
   const sendMessage = (e) => {
-    //do something
     e.preventDefault();
     db.collection("rooms").doc(roomId).collection("messages").add({
       message: input,
       name: user.displayName,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
+    msgboolSet(!msgbool);
+    msgbool ? playOff() : playOn();
     setInput("");
   };
 
@@ -58,8 +69,12 @@ function Chat(props) {
         <div className="chat__headerInfo">
           <h4>{roomName}</h4>
           <p>
-            Last seen:{" "}
-            {messages[messages.length - 1]?.timestamp?.toDate().toUTCString()}
+            {messages.length !== 0
+              ? `Last seen: ${messages[messages.length - 1].timestamp
+                  ?.toDate()
+                  .toUTCString()
+                  .slice(0, 22)}`
+              : "Loading..."}
           </p>
         </div>
         <div className="chat_headeRight">
@@ -90,7 +105,12 @@ function Chat(props) {
             </span>
             {message.message}
             <span className="chat__timestamp">
-              {new Date(message.timestamp?.toDate()).toUTCString()}
+              {String(
+                new Date(message.timestamp?.toDate()).toUTCString()
+              ).slice(5, 12) +
+                String(
+                  new Date(message.timestamp?.toDate()).toUTCString()
+                ).slice(17, 22)}
             </span>
           </p>
         ))}

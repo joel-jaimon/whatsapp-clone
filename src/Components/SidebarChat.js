@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./SidebarChat.css";
 import { Avatar } from "@material-ui/core";
-import db from "./firebase";
+import db from "../firebase/firebase";
 import { Link } from "react-router-dom";
 
 function SidebarChat({ id, name, addNewChat }) {
@@ -23,7 +23,7 @@ function SidebarChat({ id, name, addNewChat }) {
           setMessages(snapshot.docs.map((doc) => doc.data()))
         );
     }
-  });
+  }, []);
 
   useEffect(() => {
     setSeed(Math.floor(Math.random() * 5000));
@@ -36,7 +36,6 @@ function SidebarChat({ id, name, addNewChat }) {
       //do something
       db.collection("rooms").add({
         name: roomName,
-        
       });
     }
   };

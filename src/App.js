@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import "./App.css";
-import Sidebar from "./Sidebar";
-import Chat from "./Chat";
+import Sidebar from "./Components/Sidebar";
+import Chat from "./Components/Chat";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Login from "./Login";
-import { useStateValue } from "./StateProvider";
+import Login from "./Components/Login";
+import { useStateValue } from "./DataLayer/StateProvider";
 
 function App() {
   const [{ user }, dispatch] = useStateValue();
