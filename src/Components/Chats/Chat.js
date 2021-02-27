@@ -52,15 +52,17 @@ function Chat(props) {
 
   const sendMessage = (e) => {
     e.preventDefault();
-    db.collection("rooms").doc(roomId).collection("messages").add({
-      message: input,
-      name: user.displayName,
-      avatar: user.photoURL,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    });
-    msgboolSet(!msgbool);
-    msgbool ? playOff() : playOn();
-    setInput("");
+    if (input?.length > 0) {
+      db.collection("rooms").doc(roomId).collection("messages").add({
+        message: input,
+        name: user.displayName,
+        avatar: user.photoURL,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+      msgboolSet(!msgbool);
+      msgbool ? playOff() : playOn();
+      setInput("");
+    }
   };
 
   return props.home ? (
