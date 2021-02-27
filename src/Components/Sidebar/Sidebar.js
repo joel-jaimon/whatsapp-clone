@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Sidebar.css";
+import "./Sidebar.scss";
 import { Avatar, IconButton } from "@material-ui/core";
 import { SearchOutlined } from "@material-ui/icons";
 import DonutLargeIcon from "@material-ui/icons/DonutLarge";
@@ -12,7 +12,7 @@ import db from "../../firebase/firebase";
 function Sidebar() {
   const [rooms, setRooms] = useState([]);
   const [{ user }] = useStateValue();
-
+  const [newGP, setNGP] = useState(true);
   // const data = async () => {
   //   const rooms = db.collection("rooms");
   //   const snapshot = await rooms.get();
@@ -59,10 +59,18 @@ function Sidebar() {
         </div>
       </div>
       <div className="sidebar__chats">
-        <SidebarChat addNewChat />
-        {rooms.map((room) => (
-          <SidebarChat key={room.id} id={room.id} name={room.data.name} />
-        ))}
+        {newGP ? (
+          <div className="new-gp-div">
+            <img src="https://avatars.dicebear.com/api/human/200.svg" />
+          </div>
+        ) : (
+          <>
+            <SidebarChat addNewChat />
+            {rooms.map((room) => (
+              <SidebarChat key={room.id} id={room.id} name={room.data.name} />
+            ))}
+          </>
+        )}
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import "./login.css";
+import "./login.scss";
 import { Button } from "@material-ui/core";
 import { auth, provider } from "../../firebase/firebase";
 import { useStateValue } from "../../DataLayer/StateProvider";

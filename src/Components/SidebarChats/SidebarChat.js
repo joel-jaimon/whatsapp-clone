@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./SidebarChat.css";
+import "./SidebarChat.scss";
 import { Avatar } from "@material-ui/core";
 import db from "../../firebase/firebase";
 import { Link } from "react-router-dom";
@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 function SidebarChat({ id, name, addNewChat }) {
   const [seed, setSeed] = useState("");
   const [messages, setMessages] = useState([]);
-
+  const [newgp, setGP] = useState(false);
   useEffect(() => {
     if (id) {
       db.collection("rooms")
@@ -26,7 +26,6 @@ function SidebarChat({ id, name, addNewChat }) {
 
   const createChat = () => {
     const roomName = prompt("please enter name for chat");
-
     if (roomName) {
       //do something
       db.collection("rooms").add({
@@ -46,7 +45,7 @@ function SidebarChat({ id, name, addNewChat }) {
       </div>
     </Link>
   ) : (
-    <div onClick={createChat} className="sidebarChat">
+    <div onClick={() => createChat()} className="sidebarChat">
       <h4>Create Group</h4>
     </div>
   );

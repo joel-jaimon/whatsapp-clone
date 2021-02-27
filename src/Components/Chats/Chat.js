@@ -6,7 +6,7 @@ import { Avatar, IconButton } from "@material-ui/core";
 import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
 import db from "../../firebase/firebase";
 import firebase from "firebase";
-import "./Chat.css";
+import "./Chat.scss";
 import useSound from "use-sound";
 import { useParams } from "react-router-dom";
 import { useStateValue } from "../../DataLayer/StateProvider";
@@ -42,8 +42,12 @@ function Chat(props) {
         .orderBy("timestamp", "asc")
         .onSnapshot((snapshot) => {
           setMessages(snapshot.docs.map((doc) => doc.data()));
+          var objDiv = document.getElementById("chat_body");
+          objDiv.scrollTop = objDiv.scrollHeight + 1000;
         });
     }
+    var objDiv = document.getElementById("chat_body");
+    objDiv.scrollTop = objDiv.scrollHeight + 1000;
   }, [roomId]);
 
   const sendMessage = (e) => {
@@ -74,7 +78,7 @@ function Chat(props) {
                   ?.toDate()
                   .toUTCString()
                   .slice(0, 22)}`
-              : "Loading..."}
+              : "..."}
           </p>
         </div>
         <div className="chat_headeRight">
@@ -89,7 +93,7 @@ function Chat(props) {
           </IconButton>
         </div>
       </div>
-      <div className="chat__body">
+      <div id="chat_body" className="chat__body">
         {messages.map((message) => (
           <p
             className={`chat__message ${
