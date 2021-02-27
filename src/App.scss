@@ -10,9 +10,16 @@
   height: 95vh;
   min-width: 550px;
   width: 85%;
-  max-width: 1400px;
+  max-width: 1150px;
   box-shadow: -1px 4px 20px -6px rgba(0, 0, 0, 0.7);
 }
 .MuiSvgIcon-root {
   color: gray;
+}
+.avatar-uu {
+  img {
+    height: 34px;
+    width: 34px;
+    border-radius: 50%;
+  }
 }

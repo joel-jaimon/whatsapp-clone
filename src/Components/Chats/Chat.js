@@ -19,7 +19,7 @@ function Chat(props) {
   const [msgbool, msgboolSet] = useState(false);
   const [messages, setMessages] = useState([]);
   const [{ user }] = useStateValue();
-
+  console.log(user);
   const [playOn] = useSound(`${process.env.PUBLIC_URL}/send.mp3`, {
     volume: 0.5,
   });
@@ -42,12 +42,12 @@ function Chat(props) {
         .orderBy("timestamp", "asc")
         .onSnapshot((snapshot) => {
           setMessages(snapshot.docs.map((doc) => doc.data()));
-          // var objDiv = document.getElementById("chat_body");
-          // objDiv.scrollTop = objDiv.scrollHeight + 1000;
+          var objDiv = document.getElementById("chat_body");
+          objDiv.scrollTop = objDiv.scrollHeight + 1000;
         });
     }
-    // var objDiv = document.getElementById("chat_body");
-    // objDiv.scrollTop = objDiv.scrollHeight + 1000;
+    var objDiv = document.getElementById("chat_body");
+    objDiv.scrollTop = objDiv.scrollHeight + 1000;
   }, [roomId]);
 
   const sendMessage = (e) => {
@@ -55,6 +55,7 @@ function Chat(props) {
     db.collection("rooms").doc(roomId).collection("messages").add({
       message: input,
       name: user.displayName,
+      avatar: user.photoURL,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
     msgboolSet(!msgbool);
@@ -69,7 +70,11 @@ function Chat(props) {
   ) : (
     <div className="chat">
       <div className="chat__header">
-        <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
+        <Avatar
+          className="avatar-uu"
+          className="avatar-uu"
+          src={`https://avatars.dicebear.com/api/human/${seed}.svg`}
+        />
         <div className="chat__headerInfo">
           <h4>{roomName}</h4>
           <p>
@@ -83,13 +88,11 @@ function Chat(props) {
         </div>
         <div className="chat_headeRight">
           <IconButton>
-            <SearchOutlined />
+            <SearchOutlined fontSize="small" />
           </IconButton>
+
           <IconButton>
-            <AttachFile />
-          </IconButton>
-          <IconButton>
-            <MoreVert />
+            <MoreVert fontSize="small" />
           </IconButton>
         </div>
       </div>
@@ -120,13 +123,17 @@ function Chat(props) {
         ))}
       </div>
       <div className="chat__footer">
-        <span className="x10px">
-          <InsertEmoticonIcon />
-        </span>
+        <IconButton>
+          <InsertEmoticonIcon fontSize="small" />
+        </IconButton>
+        <IconButton>
+          <AttachFile fontSize="small" />
+        </IconButton>
         <form>
           <input
             className="input"
             value={input}
+            multiple={true}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Enter a message..."
             type="text"
@@ -135,9 +142,9 @@ function Chat(props) {
             Send a message
           </button>
         </form>
-        <span className="x10px">
-          <MicIcon />
-        </span>
+        <IconButton>
+          <MicIcon fontSize="small" />
+        </IconButton>
       </div>
     </div>
   );

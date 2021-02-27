@@ -1,7 +1,7 @@
 .sidebarChat {
   display: flex;
   padding-left: 15px;
-  height: 56px;
+  height: 50px;
   background: #131c21;
   overflow: none;
   align-items: center;
@@ -19,8 +19,10 @@
 .sidebarChat > h4 {
   align-content: center;
   place-items: center;
-
   margin: 0 auto;
+  font-size: medium;
+  font-weight: 600;
+  margin: 5px;
 }
 .sidebarChat__info > p {
   color: grey;
@@ -28,8 +30,9 @@
   padding: 2px;
 }
 .sidebarChat__info > h2 {
-  font-size: 16px;
+  font-size: 14px;
   margin: 0px;
+  font-weight: 500;
 }
 
 .sidebarChat__info {
@@ -41,4 +44,13 @@ a {
   color: black;
   font-size: 13px;
   margin: 0px;
+}
+
+.main-ww {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  svg {
+    margin-top: 3px;
+  }
 }

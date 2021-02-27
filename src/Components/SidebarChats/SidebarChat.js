@@ -3,6 +3,7 @@ import "./SidebarChat.scss";
 import { Avatar } from "@material-ui/core";
 import db from "../../firebase/firebase";
 import { Link } from "react-router-dom";
+import GroupAddIcon from "@material-ui/icons/GroupAdd";
 
 function SidebarChat({ id, name, addNewChat, setNGP, newGP }) {
   const [seed, setSeed] = useState("");
@@ -27,7 +28,10 @@ function SidebarChat({ id, name, addNewChat, setNGP, newGP }) {
   return !addNewChat ? (
     <Link to={`/rooms/${id}`}>
       <div className="sidebarChat">
-        <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
+        <Avatar
+          className="avatar-uu"
+          src={`https://avatars.dicebear.com/api/human/${seed}.svg`}
+        />
         <div className="sidebarChat__info">
           <h2>{name}</h2>
           <p>{messages[0]?.message}</p>
@@ -35,7 +39,8 @@ function SidebarChat({ id, name, addNewChat, setNGP, newGP }) {
       </div>
     </Link>
   ) : newGP ? null : (
-    <div onClick={() => setNGP(true)} className="sidebarChat">
+    <div onClick={() => setNGP(true)} className="sidebarChat main-ww">
+      <GroupAddIcon />
       <h4>Create Group</h4>
     </div>
   );

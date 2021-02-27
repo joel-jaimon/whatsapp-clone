@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Sidebar.scss";
+import firebase from "firebase";
 import { Avatar, IconButton } from "@material-ui/core";
 import { SearchOutlined } from "@material-ui/icons";
 import DonutLargeIcon from "@material-ui/icons/DonutLarge";
@@ -55,6 +56,9 @@ function Sidebar() {
         try {
           await db.collection("rooms").add({
             name: roomName,
+            creater: user.displayName,
+            avatar: user.photoURL,
+            createdOn: firebase.firestore.FieldValue.serverTimestamp(),
           });
           setNGP(false);
         } catch (e) {
@@ -71,22 +75,22 @@ function Sidebar() {
   return (
     <div className="sidebar">
       <div className="sidebar__header">
-        <Avatar src={user?.photoURL} />
+        <Avatar className="avatar-uu" src={user?.photoURL} />
         <div className="sidebar__headerRight">
           <IconButton>
-            <DonutLargeIcon />
+            <DonutLargeIcon fontSize="small" />
           </IconButton>
           <IconButton>
-            <ChatIcon />
+            <ChatIcon fontSize="small" />
           </IconButton>
           <IconButton>
-            <MoreVertIcon />
+            <MoreVertIcon fontSize="small" />
           </IconButton>
         </div>
       </div>
       <div className="sidebar__search">
         <div className="sidebar__searchContainer">
-          <SearchOutlined />
+          <SearchOutlined fontSize="small" />
           <input className="input" placeholder="Search or start" type="text" />
         </div>
       </div>
