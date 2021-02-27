@@ -5,13 +5,21 @@ import { SearchOutlined } from "@material-ui/icons";
 import DonutLargeIcon from "@material-ui/icons/DonutLarge";
 import ChatIcon from "@material-ui/icons/Chat";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import SidebarChat from "./SidebarChat";
-import { useStateValue } from "../DataLayer/StateProvider";
-import db from "../firebase/firebase";
+import SidebarChat from "../SidebarChats/SidebarChat";
+import { useStateValue } from "../../DataLayer/StateProvider";
+import db from "../../firebase/firebase";
 
 function Sidebar() {
   const [rooms, setRooms] = useState([]);
   const [{ user }] = useStateValue();
+
+  // const data = async () => {
+  //   const rooms = db.collection("rooms");
+  //   const snapshot = await rooms.get();
+  //   snapshot.forEach((doc) => {
+  //     console.log(doc.id, "=>", doc.data());
+  //   });
+  // };
 
   useEffect(() => {
     const unsubscribe = db.collection("rooms").onSnapshot((snapshot) => {
@@ -22,7 +30,7 @@ function Sidebar() {
         }))
       );
     });
-
+    // data();
     return () => {
       unsubscribe();
     };

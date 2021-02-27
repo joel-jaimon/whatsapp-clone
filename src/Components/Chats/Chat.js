@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import logo from "./2.PNG";
+import logo from "./assets/2.PNG";
 import { SearchOutlined, AttachFile, MoreVert } from "@material-ui/icons";
 import MicIcon from "@material-ui/icons/Mic";
 import { Avatar, IconButton } from "@material-ui/core";
 import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
-import db from "../firebase/firebase";
+import db from "../../firebase/firebase";
 import firebase from "firebase";
 import "./Chat.css";
 import useSound from "use-sound";
 import { useParams } from "react-router-dom";
-import { useStateValue } from "../DataLayer/StateProvider";
+import { useStateValue } from "../../DataLayer/StateProvider";
 
 function Chat(props) {
   const [seed, setSeed] = useState("");
