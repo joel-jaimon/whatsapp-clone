@@ -42,12 +42,12 @@ function Chat(props) {
         .orderBy("timestamp", "asc")
         .onSnapshot((snapshot) => {
           setMessages(snapshot.docs.map((doc) => doc.data()));
-          var objDiv = document.getElementById("chat_body");
-          objDiv.scrollTop = objDiv.scrollHeight + 1000;
+          // var objDiv = document.getElementById("chat_body");
+          // objDiv.scrollTop = objDiv.scrollHeight + 1000;
         });
     }
-    var objDiv = document.getElementById("chat_body");
-    objDiv.scrollTop = objDiv.scrollHeight + 1000;
+    // var objDiv = document.getElementById("chat_body");
+    // objDiv.scrollTop = objDiv.scrollHeight + 1000;
   }, [roomId]);
 
   const sendMessage = (e) => {

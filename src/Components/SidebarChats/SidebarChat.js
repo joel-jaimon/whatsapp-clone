@@ -4,7 +4,7 @@ import { Avatar } from "@material-ui/core";
 import db from "../../firebase/firebase";
 import { Link } from "react-router-dom";
 
-function SidebarChat({ id, name, addNewChat }) {
+function SidebarChat({ id, name, addNewChat, setNGP, newGP }) {
   const [seed, setSeed] = useState("");
   const [messages, setMessages] = useState([]);
   const [newgp, setGP] = useState(false);
@@ -24,16 +24,6 @@ function SidebarChat({ id, name, addNewChat }) {
     setSeed(Math.floor(Math.random() * 5000));
   }, []);
 
-  const createChat = () => {
-    const roomName = prompt("please enter name for chat");
-    if (roomName) {
-      //do something
-      db.collection("rooms").add({
-        name: roomName,
-      });
-    }
-  };
-
   return !addNewChat ? (
     <Link to={`/rooms/${id}`}>
       <div className="sidebarChat">
@@ -44,8 +34,8 @@ function SidebarChat({ id, name, addNewChat }) {
         </div>
       </div>
     </Link>
-  ) : (
-    <div onClick={() => createChat()} className="sidebarChat">
+  ) : newGP ? null : (
+    <div onClick={() => setNGP(true)} className="sidebarChat">
       <h4>Create Group</h4>
     </div>
   );

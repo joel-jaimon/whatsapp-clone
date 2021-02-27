@@ -1,8 +1,7 @@
 .login {
-  background: #191919;
+  background: rgb(25, 25, 25);
   height: 100vh;
   width: 100vw;
-  display: -ms-grid;
   display: grid;
   place-items: center;
   color: white;
@@ -15,8 +14,7 @@
 }
 
 .login__container > img {
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   height: 150px;
   margin-bottom: 40px;
 }
@@ -33,4 +31,3 @@
   padding-right: 20px;
   padding-left: 20px;
 }
-/*# sourceMappingURL=login.css.map */

@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.scss";
+import "./App.css";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Chat from "./Components/Chats/Chat";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -11,14 +11,16 @@ function App() {
 
   return (
     <div className="App">
-      {user ? (
+      {!user ? (
         <Login />
       ) : (
         <div className="app__body">
           <Router>
             <Sidebar />
             <Switch>
-              <Route path="/rooms/:roomId">{/* <Chat /> */}</Route>
+              <Route path="/rooms/:roomId">
+                <Chat />
+              </Route>
               <Route path="/">
                 <Chat home={true} />
               </Route>

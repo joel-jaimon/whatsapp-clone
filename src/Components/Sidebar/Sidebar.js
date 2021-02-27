@@ -8,11 +8,15 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import SidebarChat from "../SidebarChats/SidebarChat";
 import { useStateValue } from "../../DataLayer/StateProvider";
 import db from "../../firebase/firebase";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import Alert from "@material-ui/lab/Alert";
+import CloseIcon from "@material-ui/icons/Close";
 
 function Sidebar() {
   const [rooms, setRooms] = useState([]);
   const [{ user }] = useStateValue();
-  const [newGP, setNGP] = useState(true);
+  const [newGP, setNGP] = useState(false);
+  const [err, setERR] = useState();
   // const data = async () => {
   //   const rooms = db.collection("rooms");
   //   const snapshot = await rooms.get();
@@ -35,6 +39,34 @@ function Sidebar() {
       unsubscribe();
     };
   }, []);
+
+  const err_control = (er) => {
+    setERR(er);
+    setTimeout(() => {
+      setERR(false);
+    }, 2000);
+  };
+
+  const createGP = async (e) => {
+    e.preventDefault();
+    const roomName = document.querySelector("#n-gp-name").value;
+    if (roomName.length > 1) {
+      if (roomName.match(/^[a-zA-Z ]*$/)) {
+        try {
+          await db.collection("rooms").add({
+            name: roomName,
+          });
+          setNGP(false);
+        } catch (e) {
+          err_control(e?.toString()?.slice(0, 50));
+        }
+      } else {
+        err_control("Group name can only contain text.");
+      }
+    } else {
+      err_control("Please enter a Group Name.");
+    }
+  };
 
   return (
     <div className="sidebar">
@@ -61,11 +93,33 @@ function Sidebar() {
       <div className="sidebar__chats">
         {newGP ? (
           <div className="new-gp-div">
-            <img src="https://avatars.dicebear.com/api/human/200.svg" />
+            <div className="cancel-gp">
+              <IconButton onClick={() => setNGP(false)}>
+                <CloseIcon />
+              </IconButton>
+            </div>
+            <img
+              src={`https://avatars.dicebear.com/api/human/${Math.floor(
+                Math.random() * 2000
+              )}.svg`}
+            />
+
+            <div className="cte">
+              <input placeholder="Group Name" id="n-gp-name" type="text" />
+              <IconButton onClick={(e) => createGP(e)}>
+                <NavigateNextIcon />
+              </IconButton>
+            </div>
+
+            {err ? (
+              <Alert className="err" severity="error">
+                {err}
+              </Alert>
+            ) : null}
           </div>
         ) : (
           <>
-            <SidebarChat addNewChat />
+            <SidebarChat newGP={newGP} addNewChat setNGP={setNGP} />
             {rooms.map((room) => (
               <SidebarChat key={room.id} id={room.id} name={room.data.name} />
             ))}

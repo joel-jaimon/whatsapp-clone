@@ -84,6 +84,41 @@ select:focus {
 }
 
 .new-gp-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   img {
+    height: 140px;
+    border-radius: 100%;
+    width: 140px;
+    background-color: #464646;
+    margin-bottom: 20px;
+    margin-top: 50px;
   }
+  input {
+    border-radius: 15px;
+    margin-left: 10px;
+    padding: 10px 15px 10px 15px;
+    font-size: 14px;
+    border: none;
+  }
+
+  .cte {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+.err {
+  position: fixed;
+  bottom: 60px;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.cancel-gp {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
 }

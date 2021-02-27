@@ -1,0 +1,53 @@
+.sidebarChat {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding-left: 15px;
+  height: 56px;
+  background: #131c21;
+  overflow: none;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #c8c8c8;
+  cursor: pointer;
+  border-top: 0.05px solid #333333;
+}
+
+.grp {
+  border-bottom: 1px solid green;
+}
+
+.sidebarChat:hover {
+  background-color: #2a2f32;
+}
+
+.sidebarChat > h4 {
+  -ms-flex-line-pack: center;
+      align-content: center;
+  place-items: center;
+  margin: 0 auto;
+}
+
+.sidebarChat__info > p {
+  color: grey;
+  margin: 0px;
+  padding: 2px;
+}
+
+.sidebarChat__info > h2 {
+  font-size: 16px;
+  margin: 0px;
+}
+
+.sidebarChat__info {
+  margin-left: 15px;
+}
+
+a {
+  text-decoration: none !important;
+  color: black;
+  font-size: 13px;
+  margin: 0px;
+}
+/*# sourceMappingURL=SidebarChat.css.map */
