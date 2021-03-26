@@ -53,27 +53,28 @@ function Chat(props) {
     }
   }, [roomId]);
 
-  const sendMessage = async (e) => {
+  const sendMessage = (e) => {
     e.preventDefault();
     if (input?.length > 0) {
-      await db
-        .collection("rooms")
+      db.collection("rooms")
         .doc(roomId)
         .collection("messages")
         .add({
           message: input,
           name: user.displayName,
           avatar: user.photoURL,
+          email: user.email,
           timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          tsCompare: new Date().getTime(),
         })
         .then(() => {
+          setInput("");
+          msgboolSet(!msgbool);
+          msgbool ? playOff() : playOn();
           db.collection("rooms").doc(roomId).update({
             lastMsgOn: firebase.firestore.FieldValue.serverTimestamp(),
           });
         });
-      msgboolSet(!msgbool);
-      msgbool ? playOff() : playOn();
-      setInput("");
     }
   };
 
@@ -114,12 +115,12 @@ function Chat(props) {
         {messages.map((message) => (
           <p
             className={`chat__message ${
-              message.name === user.displayName && "chat__reciever"
+              message.email === user.email && "chat__reciever"
             }`}
           >
             <span
               className={`chat__name ${
-                message.name === user.displayName && "dis_none"
+                message.email === user.email && "dis_none"
               }`}
             >
               {message.name}

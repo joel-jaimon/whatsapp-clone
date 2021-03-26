@@ -1,22 +1,35 @@
 import React from "react";
 import "./login.scss";
 import { Button } from "@material-ui/core";
-import { auth, provider } from "../../firebase/firebase";
+import db, { auth, provider } from "../../firebase/firebase";
 import { useStateValue } from "../../DataLayer/StateProvider";
 import { actionTypes } from "../../DataLayer/reducer";
+import firebase from "firebase";
 
 const Login = () => {
   const [{}, dispatch] = useStateValue();
 
-  const signIn = () => {
-    auth
+  const handleLogin = async (result) => {
+    const existBool = await db
+      .collection("users")
+      .where("uid", "==", result.user.uid)
+      .get();
+    if (existBool.empty) {
+      await db.collection("users").add({
+        uid: result.user.uid,
+        dateJoined: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+    }
+    dispatch({
+      type: actionTypes.SET_USER,
+      user: result.user,
+    });
+  };
+
+  const signIn = async () => {
+    await auth
       .signInWithPopup(provider)
-      .then((result) => {
-        dispatch({
-          type: actionTypes.SET_USER,
-          user: result.user,
-        });
-      })
+      .then((result) => handleLogin(result))
       .catch((error) => alert(error.message));
   };
 

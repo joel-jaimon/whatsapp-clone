@@ -24,10 +24,31 @@
   font-weight: 600;
   margin: 5px;
 }
-.sidebarChat__info > p {
-  color: grey;
-  margin: 0px;
-  padding: 2px;
+.sidebarChat__info {
+  width: 100%;
+  padding: 0px 10px 0px 0px;
+  ._chips {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    span {
+      font-size: 10px;
+      padding: 0px 5px 0px 5px;
+      height: 15px;
+      background: green;
+      border-radius: 5px;
+    }
+  }
+  p {
+    color: grey;
+    margin: 0px;
+    padding: 2px;
+    max-width: 220px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 .sidebarChat__info > h2 {
   font-size: 14px;
