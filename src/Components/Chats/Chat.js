@@ -19,7 +19,6 @@ function Chat(props) {
   const [msgbool, msgboolSet] = useState(false);
   const [messages, setMessages] = useState([]);
   const [{ user }] = useStateValue();
-  console.log(user);
   const [playOn] = useSound(`${process.env.PUBLIC_URL}/send.mp3`, {
     volume: 0.5,
   });
@@ -54,15 +53,24 @@ function Chat(props) {
     }
   }, [roomId]);
 
-  const sendMessage = (e) => {
+  const sendMessage = async (e) => {
     e.preventDefault();
     if (input?.length > 0) {
-      db.collection("rooms").doc(roomId).collection("messages").add({
-        message: input,
-        name: user.displayName,
-        avatar: user.photoURL,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      });
+      await db
+        .collection("rooms")
+        .doc(roomId)
+        .collection("messages")
+        .add({
+          message: input,
+          name: user.displayName,
+          avatar: user.photoURL,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        })
+        .then(() => {
+          db.collection("rooms").doc(roomId).update({
+            lastMsgOn: firebase.firestore.FieldValue.serverTimestamp(),
+          });
+        });
       msgboolSet(!msgbool);
       msgbool ? playOff() : playOn();
       setInput("");
@@ -85,7 +93,7 @@ function Chat(props) {
           <h4>{roomName}</h4>
           <p>
             {messages.length !== 0
-              ? `Last seen: ${messages[messages.length - 1].timestamp
+              ? `Last Msg: ${messages[messages.length - 1].timestamp
                   ?.toDate()
                   .toUTCString()
                   .slice(0, 22)}`

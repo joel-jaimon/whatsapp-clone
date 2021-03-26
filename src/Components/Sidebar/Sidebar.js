@@ -18,29 +18,26 @@ function Sidebar() {
   const [{ user }] = useStateValue();
   const [newGP, setNGP] = useState(false);
   const [err, setERR] = useState();
-  // const data = async () => {
-  //   const rooms = db.collection("rooms");
-  //   const snapshot = await rooms.get();
-  //   snapshot.forEach((doc) => {
-  //     console.log(doc.id, "=>", doc.data());
-  //   });
-  // };
 
   useEffect(() => {
-    const unsubscribe = db.collection("rooms").onSnapshot((snapshot) => {
-      setRooms(
-        snapshot.docs.map((doc) => ({
-          id: doc.id,
-          data: doc.data(),
-        }))
-      );
-    });
-    // data();
+    const unsubscribe = db
+      .collection("rooms")
+      .orderBy("lastMsgOn", "desc")
+      .onSnapshot((snapshot) => {
+        setRooms(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            data: doc.data(),
+            doc: doc.metadata,
+          }))
+        );
+      });
+
     return () => {
       unsubscribe();
     };
   }, []);
-
+  if (rooms.length > 0) console.log(rooms);
   const err_control = (er) => {
     setERR(er);
     setTimeout(() => {
@@ -57,8 +54,8 @@ function Sidebar() {
           await db.collection("rooms").add({
             name: roomName,
             creater: user.displayName,
-            avatar: user.photoURL,
-            createdOn: firebase.firestore.FieldValue.serverTimestamp(),
+            createrAvatar: user.photoURL,
+            lastMsgOn: firebase.firestore.FieldValue.serverTimestamp(),
           });
           setNGP(false);
         } catch (e) {
