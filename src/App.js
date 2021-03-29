@@ -9,13 +9,6 @@ import db from "./firebase/firebase";
 
 function App() {
   const [{ user }, dispatch] = useStateValue();
-
-  const checkDocsExistence = async (roomId) => {
-    const _doc = await db.collection("rooms").doc(roomId).get();
-    console.log(_doc.exists);
-    return _doc.exists ? true : false;
-  };
-
   return (
     <div className="App">
       {!user ? (

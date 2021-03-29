@@ -37,7 +37,7 @@ function Sidebar() {
       unsubscribe();
     };
   }, []);
-  if (rooms.length > 0) console.log(rooms);
+
   const err_control = (er) => {
     setERR(er);
     setTimeout(() => {

@@ -65,7 +65,6 @@ function Chat(props) {
           avatar: user.photoURL,
           email: user.email,
           timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-          tsCompare: new Date().getTime(),
         })
         .then(() => {
           setInput("");
