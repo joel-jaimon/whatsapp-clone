@@ -10,16 +10,6 @@ const Login = () => {
   const [{}, dispatch] = useStateValue();
 
   const handleLogin = async (result) => {
-    const existBool = await db
-      .collection("users")
-      .where("uid", "==", result.user.uid)
-      .get();
-    if (existBool.empty) {
-      await db.collection("users").add({
-        uid: result.user.uid,
-        dateJoined: firebase.firestore.FieldValue.serverTimestamp(),
-      });
-    }
     dispatch({
       type: actionTypes.SET_USER,
       user: result.user,
