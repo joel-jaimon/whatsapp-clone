@@ -18,7 +18,8 @@ const Login = () => {
 
   const signIn = async () => {
     await auth
-      .signInWithPopup(provider)
+      .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+      .then(() => auth.signInWithPopup(provider))
       .then((result) => handleLogin(result))
       .catch((error) => alert(error.message));
   };
