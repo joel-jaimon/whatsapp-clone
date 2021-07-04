@@ -8,7 +8,11 @@ export const Sidebar = () => {
     <div className={s.sidebar}>
       <SidebarHead />
       <SidebarSearch />
-      <SidebarChats />
+      <div className={s.chatsContainer}>
+        {[...new Array(200)].map((e, i) => {
+          return <SidebarChats key={i} />;
+        })}
+      </div>
     </div>
   );
 };

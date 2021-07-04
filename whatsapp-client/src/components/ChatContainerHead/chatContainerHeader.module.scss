@@ -1,0 +1,47 @@
+.chatContainerHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2a2f32;
+  height: 45px;
+}
+
+.roomA {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.avatar {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+
+  img {
+    border-radius: 50%;
+    width: 30px;
+    margin-left: 10px;
+    object-fit: contain;
+  }
+}
+
+.roomInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-left: 20px;
+  height: 45px;
+  p {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0px;
+  }
+  small {
+    font-size: 10px;
+  }
+}
+
+.roomControls {
+  display: flex;
+}

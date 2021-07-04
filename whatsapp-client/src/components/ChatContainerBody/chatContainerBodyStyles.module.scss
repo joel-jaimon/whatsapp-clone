@@ -1,0 +1,15 @@
+.chatContainerBody {
+  background-image: url("./assets/bg/dark-chat-bg.png");
+  background-repeat: repeat;
+  background-position: center;
+  height: calc(100% - 90px);
+  width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgb(58, 58, 58);
+  }
+}
