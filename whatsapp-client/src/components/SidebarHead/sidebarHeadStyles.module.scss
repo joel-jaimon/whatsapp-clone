@@ -3,8 +3,7 @@
   justify-content: space-between;
   align-items: center;
   background-color: #2a2f32;
-  height: 25px;
-  padding: 10px 5px 10px 15px;
+  height: 45px;
 }
 
 .headControls {
@@ -15,9 +14,12 @@
 
 .avatar {
   cursor: pointer;
+  width: 30px;
+  height: 30px;
   img {
     border-radius: 50%;
-    height: 35px;
-    width: 35px;
+    width: 30px;
+    margin-left: 10px;
+    object-fit: contain;
   }
 }
