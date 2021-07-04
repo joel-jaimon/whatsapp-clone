@@ -2,4 +2,69 @@
   background-color: #1e2428;
   height: 45px;
   width: 100%;
+  display: flex;
+  position: relative;
+  align-items: flex-end;
+  .input {
+    margin: 7px 15px 7px 15px;
+    padding: 0px 10px 0px 10px;
+    border-radius: 15px;
+    background-color: #33383b;
+    height: 30px;
+    font-size: 12px;
+    width: 100%;
+    color: white;
+    text-align: left;
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+
+    .spanPlaceholder {
+      position: absolute;
+      margin: 6px 0px 8px 0px;
+      color: gray;
+      z-index: 0;
+    }
+    .spanInput {
+      z-index: 1;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-end;
+
+      span {
+        max-height: 80px;
+        overflow: scroll;
+        margin: 6px 0px 8px 0px;
+        position: absolute;
+
+        outline: none;
+        overflow-x: hidden;
+        width: calc(100% - 20px);
+        &::-webkit-scrollbar {
+          width: 4px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background-color: rgb(97, 97, 97);
+        }
+      }
+    }
+  }
+}
+
+.footerControls {
+  display: flex;
+  align-items: flex-end;
+  span {
+    margin: 8px 0px 8px 8px;
+  }
+}
+
+.recorder {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  span {
+  }
 }
