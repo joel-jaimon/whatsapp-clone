@@ -1,0 +1,23 @@
+.sidebarHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2a2f32;
+  height: 25px;
+  padding: 10px 5px 10px 15px;
+}
+
+.headControls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar {
+  cursor: pointer;
+  img {
+    border-radius: 50%;
+    height: 35px;
+    width: 35px;
+  }
+}

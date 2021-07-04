@@ -1,0 +1,23 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+whatsapp-client/node_modules
+whatsapp-client/.pnp
+whatsapp-client/.pnp.js
+
+# testing
+whatsapp-client/coverage
+
+# production
+whatsapp-client/build
+
+# misc
+whatsapp-client/.DS_Store
+whatsapp-client/.env.local
+whatsapp-client/.env.development.local
+whatsapp-client/.env.test.local
+whatsapp-client/.env.production.local
+
+whatsapp-client/npm-debug.log*
+whatsapp-client/yarn-debug.log*
+whatsapp-client/yarn-error.log*
