@@ -8,10 +8,16 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  width: 100%;
 }
 
 .appContainer {
   display: flex;
   height: 98vh;
-  max-width: 1396px;
+  width: 70%;
+  @media screen and (max-width: 1200px) {
+    height: 100vh;
+    width: 100%;
+  }
+  max-width: 1396px !important;
 }
