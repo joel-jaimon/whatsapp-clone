@@ -4,13 +4,13 @@ import s from "./chatContainerFooterStyles.module.scss";
 
 export const ChatContainerFooter = () => {
   const [height, setHeight] = useState(0);
-  const [activity, setActivity] = useState(false);
+  const [activity, setActivity] = useState<boolean | string>(false);
   const [recording, setRecording] = useState(false);
   const [recordTime, setRecordTime] = useState(0);
 
   return (
     <>
-      <Activity />
+      {activity ? <Activity /> : null}
       <div
         style={{
           height: height === 0 ? 45 : 29 + height,
@@ -33,7 +33,12 @@ export const ChatContainerFooter = () => {
               </svg>
             </span>
           ) : null}
-          <span onClick={() => setActivity(true)} className="icons">
+          <span
+            onClick={() => setActivity("emojiDrawer")}
+            className={`icons ${
+              activity === "emojiDrawer" ? "active-icon" : ""
+            }`}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -48,7 +53,12 @@ export const ChatContainerFooter = () => {
           </span>
           {activity ? (
             <>
-              <span className="icons">
+              <span
+                onClick={() => setActivity("gifDrawer")}
+                className={`icons ${
+                  activity === "gifDrawer" ? "active-icon" : ""
+                }`}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -62,7 +72,12 @@ export const ChatContainerFooter = () => {
                 </svg>
               </span>
 
-              <span className="icons">
+              <span
+                onClick={() => setActivity("stickerDrawer")}
+                className={`icons ${
+                  activity === "stickerDrawer" ? "active-icon" : ""
+                }`}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"

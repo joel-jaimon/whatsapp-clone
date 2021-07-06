@@ -9,8 +9,21 @@ import EmojiSymbolsOutlinedIcon from "@material-ui/icons/EmojiSymbolsOutlined";
 import SentimentSatisfiedOutlinedIcon from "@material-ui/icons/SentimentSatisfiedOutlined";
 import PublicOutlinedIcon from "@material-ui/icons/PublicOutlined";
 import { emojiList } from "../../data/emojiSorted";
+import { useEffect, useState } from "react";
+import { emojiSearchList } from "../../data/emoje";
 
 export const Emojees = () => {
+  const [presentVisibleCat, setPresentVisibleCat] = useState("RecentEmojees");
+  const [query, setQuery] = useState<null | string>(null);
+
+  const handleSearch = (query: string) => {
+    if (query.length > 0) {
+      setQuery(query);
+    } else {
+      setQuery(null);
+    }
+  };
+
   const handleScrollToCategory = (id: string) => {
     document.getElementById(id)?.scrollIntoView({
       behavior: "smooth",
@@ -19,72 +32,145 @@ export const Emojees = () => {
     });
   };
 
+  useEffect(() => {
+    //@ts-ignore
+    const drawerCats = [
+      "Smileys&People",
+      "Animals&Nature",
+      "Food&Drinks",
+      "Activity",
+      "Travel&Places",
+      "Objects",
+      "Shorts",
+      "Symbols",
+    ];
+    const intersectionOptions = {
+      root: null,
+    };
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        console.log(entry.isIntersecting);
+        if (entry.isIntersecting) {
+          setPresentVisibleCat(entry.target.id);
+        }
+      });
+    }, intersectionOptions);
+
+    drawerCats.forEach((id) => {
+      const refSection = document.getElementById(id);
+      //@ts-ignore
+      observer.observe(refSection);
+    });
+  }, []);
+
   return (
     <div className={s.emojiContainer}>
       <div className={s.category}>
         <span
-          className={s.activeSvg}
+          className={presentVisibleCat === "RecentEmojees" ? s.activeSvg : ""}
           onClick={() => handleScrollToCategory("RecentEmojees")}
         >
           <QueryBuilderOutlinedIcon />
         </span>
-        <span onClick={() => handleScrollToCategory("Smileys&People")}>
+        <span
+          className={presentVisibleCat === "Smileys&People" ? s.activeSvg : ""}
+          onClick={() => handleScrollToCategory("Smileys&People")}
+        >
           <SentimentSatisfiedOutlinedIcon />
         </span>
-        <span onClick={() => handleScrollToCategory("Animals&Nature")}>
+        <span
+          className={presentVisibleCat === "Animals&Nature" ? s.activeSvg : ""}
+          onClick={() => handleScrollToCategory("Animals&Nature")}
+        >
           <PetsIcon />
         </span>
-        <span onClick={() => handleScrollToCategory("Food&Drinks")}>
+        <span
+          className={presentVisibleCat === "Food&Drinks" ? s.activeSvg : ""}
+          onClick={() => handleScrollToCategory("Food&Drinks")}
+        >
           <EmojiFoodBeverageIcon />
         </span>
-        <span onClick={() => handleScrollToCategory("Activity")}>
+        <span
+          className={presentVisibleCat === "Activity" ? s.activeSvg : ""}
+          onClick={() => handleScrollToCategory("Activity")}
+        >
           <SportsSoccerIcon />
         </span>
-        <span onClick={() => handleScrollToCategory("Travel&Places")}>
+        <span
+          className={presentVisibleCat === "Travel&Places" ? s.activeSvg : ""}
+          onClick={() => handleScrollToCategory("Travel&Places")}
+        >
           <DriveEtaIcon />
         </span>
-        <span onClick={() => handleScrollToCategory("Objects")}>
+        <span
+          className={presentVisibleCat === "Objects" ? s.activeSvg : ""}
+          onClick={() => handleScrollToCategory("Objects")}
+        >
           <EmojiObjectsOutlinedIcon />
         </span>
-        <span onClick={() => handleScrollToCategory("Shorts")}>
+        <span
+          className={presentVisibleCat === "Shorts" ? s.activeSvg : ""}
+          onClick={() => handleScrollToCategory("Shorts")}
+        >
           <PublicOutlinedIcon />
         </span>
-        <span onClick={() => handleScrollToCategory("Symbols")}>
+        <span
+          className={presentVisibleCat === "Symbols" ? s.activeSvg : ""}
+          onClick={() => handleScrollToCategory("Symbols")}
+        >
           <EmojiSymbolsOutlinedIcon />
         </span>
       </div>
 
       <div className={s.search}>
-        <input placeholder="Search Emoji" />
+        <input
+          onChange={(e: any) => handleSearch(e.target.value)}
+          placeholder="Search Emoji"
+        />
       </div>
       <div id="drawerEmo" className={s.emojeesMain}>
-        <div className={s.classWiseEmojees}>
-          <a id="RecentEmojees">Recents</a>
-          <div className={s.emos}>
-            <p>😃</p>
-            <p>😄</p>
-            <p>😅</p>
-            {/* {e.data.map((e) => {
+        {/* {!query ? (
+          <div className={s.classWiseEmojees}>
+            <a id="RecentEmojees">Recents</a>
+            <div className={s.emos}>
+              <p>😃</p>
+              <p>😄</p>
+              <p>😅</p>
+              {e.data.map((e) => {
               return <p dangerouslySetInnerHTML={{ __html: e.code_decimal }} />;
-            })} */}
-          </div>
-        </div>
-
-        {emojiList.map((e) => {
-          return (
-            <div className={s.classWiseEmojees}>
-              <a id={e.title.toString().replaceAll(" ", "")}>{e.title}</a>
-              {/* @ts-ignore */}
-              <div className={s.emos}>
-                {e.data.map((e) => {
-                  return (
-                    <p dangerouslySetInnerHTML={{ __html: e.code_decimal }} />
-                  );
-                })}
-              </div>
+            })}
             </div>
-          );
-        })}
+          </div>
+        ) : null} */}
+        {query ? (
+          <div className={s.classWiseEmojees}>
+            <div className={`${s.emos} ${s.queryEmos}`}>
+              {emojiSearchList
+                ?.filter((e: any) => {
+                  return e.name.includes(query);
+                })
+                .map((e) => (
+                  <p dangerouslySetInnerHTML={{ __html: e.code_decimal }} />
+                ))}
+            </div>
+          </div>
+        ) : (
+          emojiList.map((e) => {
+            return (
+              <div className={s.classWiseEmojees}>
+                <a id={e.title.toString().replaceAll(" ", "")}>{e.title}</a>
+                {/* @ts-ignore */}
+                <div className={s.emos}>
+                  {e.data.map((e) => {
+                    return (
+                      <p dangerouslySetInnerHTML={{ __html: e.code_decimal }} />
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })
+        )}
       </div>
     </div>
   );
