@@ -1,0 +1,61 @@
+.chatModal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #131c21;
+  z-index: 10;
+
+  // @media screen and (min-width: 1200px) {
+  //   width: 40%;
+  //   position: absolute;
+  // }
+}
+
+.userInfoModal {
+  .modalHead {
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    background-color: #2a2f32;
+    color: rgba(241, 241, 242, 0.92);
+    height: 45px;
+    svg {
+      height: 18px;
+      color: #828689;
+      margin: 18px;
+      cursor: pointer;
+    }
+  }
+
+  .infoModalBody {
+    overflow-y: scroll;
+    height: calc(100vh - 50px);
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: rgb(71, 71, 71);
+    }
+    input {
+      background-color: transparent;
+      color: whitesmoke;
+      border: none;
+      outline: none;
+    }
+  }
+
+  .exit,
+  .report {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    border-bottom: 8px solid #0d1418;
+    padding: 0px 20px 0px 20px;
+    color: #ef697a;
+    svg {
+      height: 19px;
+      width: 19px;
+      margin-right: 15px;
+    }
+  }
+}

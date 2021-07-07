@@ -1,0 +1,37 @@
+.infoModalDesc {
+  border-bottom: 8px solid #0d1418;
+  padding: 10px 20px 10px 20px;
+}
+
+.infoSub {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 3px;
+  position: relative;
+  .input {
+    font-size: 11px;
+    width: calc(100% - 50px);
+    text-align: left;
+    overflow-wrap: break-word;
+    -webkit-line-break: after-white-space;
+    outline: none;
+  }
+  svg {
+    height: 17px;
+    color: #828689;
+    cursor: pointer;
+    margin-left: 2px;
+  }
+  .editNameButton {
+    display: flex;
+    align-items: center;
+    small {
+      margin-right: 3px;
+    }
+    svg {
+      height: 17px;
+      cursor: pointer;
+      margin-left: 2px;
+    }
+  }
+}
