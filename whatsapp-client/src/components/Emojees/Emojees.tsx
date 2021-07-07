@@ -12,8 +12,9 @@ import { emojiList } from "../../data/emojiSorted";
 import { useEffect, useState } from "react";
 import { emojiSearchList } from "../../data/emoje";
 
-export const Emojees = () => {
-  const [presentVisibleCat, setPresentVisibleCat] = useState("RecentEmojees");
+export const Emojees = (ref: any) => {
+  console.log(ref);
+  const [presentVisibleCat, setPresentVisibleCat] = useState("Smileys&People");
   const [query, setQuery] = useState<null | string>(null);
 
   const handleSearch = (query: string) => {
@@ -30,6 +31,10 @@ export const Emojees = () => {
       block: "start",
       inline: "center",
     });
+  };
+
+  const addEmoji = (emo: any) => {
+    document.querySelector("#custom-input")?.append("<a>Hello</a>");
   };
 
   useEffect(() => {
@@ -150,7 +155,10 @@ export const Emojees = () => {
                   return e.name.includes(query);
                 })
                 .map((e) => (
-                  <p dangerouslySetInnerHTML={{ __html: e.code_decimal }} />
+                  <p
+                    onClick={() => addEmoji(e)}
+                    dangerouslySetInnerHTML={{ __html: e.code_decimal }}
+                  />
                 ))}
             </div>
           </div>

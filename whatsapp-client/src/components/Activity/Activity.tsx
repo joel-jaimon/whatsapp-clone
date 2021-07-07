@@ -1,10 +1,11 @@
+import { forwardRef } from "react";
 import { Emojees } from "../Emojees/Emojees";
 import s from "./activityStyles.module.scss";
 
-export const Activity = () => {
+export const Activity = forwardRef((props: any, ref: any) => {
   return (
     <div className={s.activity}>
-      <Emojees />
+      <Emojees ref={ref} />
     </div>
   );
-};
+});
