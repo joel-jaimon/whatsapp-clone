@@ -2,6 +2,7 @@ import { createRef, forwardRef, useContext, useRef, useState } from "react";
 import s from "./avatarSection.module.scss";
 import compress from "react-image-file-resizer";
 import { dropDownContext } from "../../../../context/dropDownContext";
+import { globalModalContext } from "../../../../context/globalModalContext";
 
 export const AvatarSection = (props: any) => {
   const [editName, setEditName] = useState(false);
@@ -9,9 +10,22 @@ export const AvatarSection = (props: any) => {
   const [avatar, setAvatar] = useState<any>(null);
   const [hoverForNewAvatar, setHoverForNewAvatar] = useState(false);
   const { dropMenu, setDropMenu } = useContext(dropDownContext);
+  const { setModal } = useContext(globalModalContext);
 
   const handleCompressedImage = (base64Data: string) => {
     setAvatar(base64Data);
+  };
+
+  const handleRemoveImage = () => {
+    setModal({
+      type: "removeAvatar",
+      params: {
+        removeAvatar: () => {
+          setAvatar(null);
+          setModal(null);
+        },
+      },
+    });
   };
 
   const handleAvatarChange = async (file: any) => {
@@ -41,6 +55,7 @@ export const AvatarSection = (props: any) => {
         },
         params: {
           handleAvatarChange: handleAvatarChange,
+          handleRemoveImage: handleRemoveImage,
         },
       });
     } else {
