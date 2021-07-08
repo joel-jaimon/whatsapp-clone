@@ -27,9 +27,10 @@ export const DescSection = (props: any) => {
         <span
           className={s.input}
           contentEditable={editDescBool}
-          defaultValue={newDesc}
           onChange={(e: any) => setNewDesc(e.target.value)}
-        ></span>
+        >
+          {newDesc}
+        </span>
 
         <div className={s.editNameButton}>
           {editDescBool ? (

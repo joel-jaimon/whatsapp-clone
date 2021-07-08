@@ -4,14 +4,16 @@
   height: 100%;
   background: #131c21;
   z-index: 10;
+  border-left: 0.25px solid rgb(75, 75, 75);
 
-  // @media screen and (min-width: 1200px) {
-  //   width: 40%;
-  //   position: absolute;
-  // }
+  @media screen and (min-width: 1200px) {
+    width: 80%;
+    position: relative;
+  }
 }
 
 .userInfoModal {
+  width: 100%;
   .modalHead {
     display: flex;
     align-items: center;
@@ -29,7 +31,7 @@
 
   .infoModalBody {
     overflow-y: scroll;
-    height: calc(100vh - 50px);
+    height: calc(100vh - 60px);
     &::-webkit-scrollbar {
       width: 5px;
     }

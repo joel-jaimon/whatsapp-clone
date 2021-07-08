@@ -2,6 +2,12 @@
   width: 65%;
   overflow: hidden;
   display: flex;
-  flex-direction: column;
+  height: 100%;
   position: relative;
+}
+
+.chatMain {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }

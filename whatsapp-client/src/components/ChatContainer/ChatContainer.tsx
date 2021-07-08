@@ -7,10 +7,12 @@ import s from "./chatContainerStyles.module.scss";
 export const ChatContainer = () => {
   return (
     <div className={s.chatContainer}>
+      <div className={s.chatMain}>
+        <ChatContainerHead />
+        <ChatContainerBody />
+        <ChatContainerFooter />
+      </div>
       <ChatModal />
-      <ChatContainerHead />
-      <ChatContainerBody />
-      <ChatContainerFooter />
     </div>
   );
 };
