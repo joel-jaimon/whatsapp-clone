@@ -1,6 +1,7 @@
 .avatarSection {
   border-bottom: 8px solid #0d1418;
   padding: 10px 20px 10px 20px;
+  position: relative;
 }
 
 .grpIcon {
@@ -23,6 +24,7 @@
     }
   }
   .addGroupIcon {
+    cursor: pointer;
     height: 160px;
     width: 160px;
     background: rgba(29, 35, 37, 0.726);

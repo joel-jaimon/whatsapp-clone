@@ -1,15 +1,20 @@
 import s from "./App.module.scss";
 import { ChatContainer } from "./components/ChatContainer/ChatContainer";
+import { DropMenu } from "./components/Dropmenu/Dropmenu";
 import { Sidebar } from "./components/Sidebar/Sidebar";
+import { DropDownContextProvider } from "./context/dropDownContext";
 
 const App = () => {
   return (
-    <div className={s.app}>
-      <div className={s.appContainer}>
-        <Sidebar />
-        <ChatContainer />
+    <DropDownContextProvider>
+      <div className={s.app}>
+        <DropMenu />
+        <div className={s.appContainer}>
+          <Sidebar />
+          <ChatContainer />
+        </div>
       </div>
-    </div>
+    </DropDownContextProvider>
   );
 };
 

@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { createRef, forwardRef, useContext, useRef, useState } from "react";
 import s from "./avatarSection.module.scss";
 import compress from "react-image-file-resizer";
+import { dropDownContext } from "../../../../context/dropDownContext";
 
 export const AvatarSection = (props: any) => {
   const [editName, setEditName] = useState(false);
   const [newName, setNewName] = useState(props.name ?? "");
   const [avatar, setAvatar] = useState<any>(null);
   const [hoverForNewAvatar, setHoverForNewAvatar] = useState(false);
+  const { dropMenu, setDropMenu } = useContext(dropDownContext);
 
   const handleCompressedImage = (base64Data: string) => {
     setAvatar(base64Data);
@@ -29,6 +31,23 @@ export const AvatarSection = (props: any) => {
     setEditName(false);
   };
 
+  const handleDropMenuClicks = (e: any, type: string) => {
+    if (!dropMenu) {
+      setDropMenu({
+        type,
+        position: {
+          x: e.clientX,
+          y: e.clientY,
+        },
+        params: {
+          handleAvatarChange: handleAvatarChange,
+        },
+      });
+    } else {
+      setDropMenu(false);
+    }
+  };
+
   return (
     <div className={s.avatarSection}>
       <div className={s.infoModalAvatar}>
@@ -38,17 +57,27 @@ export const AvatarSection = (props: any) => {
             onMouseOver={() => setHoverForNewAvatar(true)}
             className={s.grpIcon}
           >
-            {hoverForNewAvatar && (
+            {/* @ts-ignore */}
+            {(hoverForNewAvatar || dropMenu?.type === "changeAvatar") && (
               <AddNewAvatar
-                type="change"
                 handleAvatarChange={handleAvatarChange}
+                handleDropMenuClicks={(e: any) =>
+                  handleDropMenuClicks(e, "changeAvatar")
+                }
+                type="change"
               />
             )}
             <img src={avatar} />
           </div>
         ) : (
           <div className={s.grpIcon}>
-            <AddNewAvatar type="add" handleAvatarChange={handleAvatarChange} />
+            <AddNewAvatar
+              type="add"
+              handleDropMenuClicks={(e: any) =>
+                handleDropMenuClicks(e, "addAvatar")
+              }
+              handleAvatarChange={handleAvatarChange}
+            />
             <div className={s.mainIcon}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -142,14 +171,9 @@ export const AvatarSection = (props: any) => {
   );
 };
 
-const AddNewAvatar = ({ handleAvatarChange, type }: any) => {
+const AddNewAvatar = ({ type, handleDropMenuClicks }: any) => {
   return (
-    <div className={s.addGroupIcon}>
-      <input
-        type="file"
-        accept="image/png"
-        onChange={(e: any) => handleAvatarChange(e.target.files[0])}
-      />
+    <div onClick={handleDropMenuClicks} className={s.addGroupIcon}>
       <div className={s.addGroupCameraDiv}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
