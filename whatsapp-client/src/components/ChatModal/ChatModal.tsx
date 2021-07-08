@@ -5,11 +5,12 @@ import { GeneralSettingsSection } from "./Components/GeneralSettingsSection/gene
 import { MediaSection } from "./Components/MediaSection/MediaSection";
 import { ParticipantSection } from "./Components/ParticipantSection/ParticipantSection";
 
-const UserInfoModal = (props: any) => {
+const UserInfoModal = ({ setModal }: any) => {
   return (
     <div className={s.userInfoModal}>
       <div className={s.modalHead}>
         <svg
+          onClick={() => setModal(false)}
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           width="24"
@@ -61,12 +62,10 @@ const UserInfoModal = (props: any) => {
   );
 };
 
-export const ChatModal = () => {
+export const ChatModal = ({ modal, setModal }: any) => {
   return (
     <div className={s.chatModal}>
-      <div>
-        <UserInfoModal name="Joel Jaimon" />
-      </div>
+      <UserInfoModal setModal={setModal} name="Joel Jaimon" />
     </div>
   );
 };

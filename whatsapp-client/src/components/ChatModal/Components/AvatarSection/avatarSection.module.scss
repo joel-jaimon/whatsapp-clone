@@ -10,6 +10,12 @@
   width: 160px;
   height: 160px;
   margin: 20px auto;
+  img {
+    object-fit: cover;
+    object-position: center;
+    width: 160px;
+    height: 160px;
+  }
   .mainIcon {
     svg {
       width: 160px;

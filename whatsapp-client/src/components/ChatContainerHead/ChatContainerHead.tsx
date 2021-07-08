@@ -1,10 +1,10 @@
 import { Avatar } from "@material-ui/core";
 import s from "./chatContainerHeader.module.scss";
 
-export const ChatContainerHead = () => {
+export const ChatContainerHead = ({ setModal }: any) => {
   return (
     <div className={s.chatContainerHead}>
-      <div className={s.roomA}>
+      <div onClick={() => setModal(true)} className={s.roomA}>
         <span className={s.avatar}>
           <img src="https://i.pravatar.cc/300" />
         </span>
