@@ -32,6 +32,7 @@
   .infoModalBody {
     overflow-y: scroll;
     height: calc(100vh - 60px);
+    background-color: #0d1418;
     &::-webkit-scrollbar {
       width: 5px;
     }
@@ -52,6 +53,7 @@
     align-items: center;
     font-size: 14px;
     border-bottom: 8px solid #0d1418;
+    background-color: #131c21;
     padding: 0px 20px 0px 20px;
     color: #ef697a;
     svg {
