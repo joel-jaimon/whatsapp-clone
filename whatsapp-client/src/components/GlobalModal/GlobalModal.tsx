@@ -3,6 +3,7 @@ import { globalModalContext } from "../../context/globalModalContext";
 import { RemoveAvatar } from "./Components/RemoveAvatar";
 import { AllowCamera } from "./Components/AllowCamera";
 import { DeniedCamera } from "./Components/DeniedCamera";
+import { TakePhoto } from "./Components/TakePhoto";
 import s from "./globalModalStyles.module.scss";
 
 const Modal = ({ type }: any) => {
@@ -13,6 +14,8 @@ const Modal = ({ type }: any) => {
       return <AllowCamera />;
     case "cameraDenied":
       return <DeniedCamera />;
+    case "takePhoto":
+      return <TakePhoto />;
     default:
       return <div />;
   }

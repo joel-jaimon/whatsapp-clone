@@ -1,6 +1,26 @@
 import s from "../globalModalStyles.module.scss";
+import { useEffect, useContext } from "react";
+import { globalModalContext } from "../../../context/globalModalContext";
 
 export const AllowCamera = () => {
+  const { modal, setModal } = useContext(globalModalContext);
+  useEffect(() => {
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
+      .then(function (stream) {
+        setModal({
+          type: "takePhoto",
+          params: modal?.params,
+        });
+      })
+      .catch(function (err) {
+        // Handle denied modal
+        setModal({
+          type: "cameraDenied",
+          params: modal?.params,
+        });
+      });
+  }, []);
   return (
     <div className={s.allowCameraB}>
       <span>

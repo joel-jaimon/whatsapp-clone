@@ -9,6 +9,7 @@
   align-items: center;
   color: rgb(212, 213, 215);
   font-size: 12px;
+  // padding: 20px; for modal
 
   // Allow Camera Modal
   .allowCamera {
@@ -50,7 +51,6 @@
   //General Modals
   .modal {
     background: #3b4042;
-    padding: 20px;
     min-width: 280px;
     p {
       margin: 0px 0px 40px 0px;
@@ -89,5 +89,78 @@
     &:hover {
       background-color: rgb(1, 201, 177);
     }
+  }
+}
+
+.takeAvatarModal {
+  display: flex;
+
+  .takePhoto,
+  .viewTakenPhoto {
+    .header {
+      display: flex;
+      align-items: center;
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: -0.5px;
+      svg {
+        height: 20px;
+        padding: 10px;
+      }
+    }
+    .retakeBtn {
+      button {
+        color: whitesmoke;
+        svg {
+          height: 20px;
+        }
+      }
+    }
+    .Theader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+    .footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #191f23;
+      span {
+        background-color: #00af9c;
+        border-radius: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        padding: 5px;
+        margin-top: -28px;
+        position: relative;
+        z-index: 2;
+        margin-bottom: 30px;
+        cursor: pointer;
+      }
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+}
+
+.accessDenied,
+.removeAvatar {
+  padding: 15px;
+  max-width: 400px;
+  h3 {
+    margin: 0px 0px 10px 0px;
+    font-size: 17px;
+    font-weight: 400;
+  }
+  p {
+    font-weight: 400;
+    color: whitesmoke;
   }
 }

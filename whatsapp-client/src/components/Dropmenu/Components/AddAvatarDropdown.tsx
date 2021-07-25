@@ -20,7 +20,7 @@ export const AddAvatarDropdown = () => {
         onClick={() =>
           setModal({
             type: "allowCamera",
-            params: {},
+            params: dropMenu.params,
           })
         }
         className={s.list}

@@ -1,8 +1,12 @@
+import { useContext } from "react";
 import s from "../globalModalStyles.module.scss";
+import { globalModalContext } from "../../../context/globalModalContext";
 
 export const DeniedCamera = () => {
+  const { modal, setModal } = useContext(globalModalContext);
+
   return (
-    <div>
+    <div className={s.accessDenied}>
       <h3>Allow camera</h3>
       <p>
         To take photos, WhatsApp needs access to your computer's camera. Click
@@ -10,7 +14,9 @@ export const DeniedCamera = () => {
         camera.”
       </p>
       <div className={s.controlFooter}>
-        <button className={s.coloredBtn}>OK, GOT IT</button>
+        <button onClick={() => setModal(null)} className={s.coloredBtn}>
+          OK, GOT IT
+        </button>
       </div>
     </div>
   );
