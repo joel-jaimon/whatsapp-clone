@@ -1,10 +1,11 @@
 import { useContext } from "react";
 import { dropDownContext } from "../../../context/dropDownContext";
+import { globalModalContext } from "../../../context/globalModalContext";
 import s from "./dropmenu.module.scss";
 
 export const AddAvatarDropdown = () => {
   const { dropMenu }: any = useContext(dropDownContext);
-
+  const { setModal }: any = useContext(globalModalContext);
   return (
     <div
       className={s.dropDown}
@@ -15,7 +16,15 @@ export const AddAvatarDropdown = () => {
         zIndex: 20,
       }}
     >
-      <div className={s.list}>
+      <div
+        onClick={() =>
+          setModal({
+            type: "allowCamera",
+            params: {},
+          })
+        }
+        className={s.list}
+      >
         <p>Take photo</p>
       </div>
       <div className={s.list}>

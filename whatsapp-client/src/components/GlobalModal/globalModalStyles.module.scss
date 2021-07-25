@@ -9,6 +9,45 @@
   align-items: center;
   color: rgb(212, 213, 215);
   font-size: 12px;
+
+  // Allow Camera Modal
+  .allowCamera {
+    padding: 20px;
+    min-width: 200px;
+    p {
+      margin: 0px;
+      margin-bottom: 15px;
+    }
+    .allowCamText {
+      font-size: 24px;
+      font-weight: 300;
+    }
+    .allowCamPara {
+      color: rgb(155, 155, 155);
+      font-size: 13px;
+      letter-spacing: -0.4px;
+    }
+
+    .allowCameraB {
+      min-width: 200px;
+      display: flex;
+      span:first-of-type {
+        height: 48px;
+        width: 48px;
+        svg {
+          height: 22px;
+          width: 22px;
+          padding: 8px;
+          background-color: #1f262b;
+          margin-right: 5px;
+          border-radius: 50%;
+          transform: rotate(45deg);
+        }
+      }
+    }
+  }
+
+  //General Modals
   .modal {
     background: #3b4042;
     padding: 20px;
@@ -21,38 +60,34 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
+  }
 
-    button {
-      background: transparent;
-      border: none;
-      font-size: 10px;
-      outline: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 10px 20px;
-      cursor: pointer;
-      border-radius: 2px;
-    }
+  button {
+    background: transparent;
+    border: none;
+    font-size: 10px;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 2px;
+  }
 
-    .borderBtn {
-      color: rgb(0, 175, 156);
-      border: 0.25px solid #1f262b;
-      margin-right: 4px;
-      &:hover {
-        background-color: #494f52;
-      }
-    }
-
-    .coloredBtn {
-      background-color: rgb(0, 175, 156);
-      color: #3b4042;
-      &:hover {
-        background-color: rgb(1, 201, 177);
-      }
+  .borderBtn {
+    color: rgb(0, 175, 156);
+    border: 0.25px solid #1f262b;
+    margin-right: 4px;
+    &:hover {
+      background-color: #494f52;
     }
   }
-}
-
-.removeAvatar {
+  .coloredBtn {
+    background-color: rgb(0, 175, 156);
+    color: #3b4042;
+    &:hover {
+      background-color: rgb(1, 201, 177);
+    }
+  }
 }

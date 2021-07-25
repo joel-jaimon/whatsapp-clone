@@ -1,12 +1,17 @@
 import { createContext, useState } from "react";
 
+interface MODALPARAMS {
+  type: string;
+  params: any;
+}
+
 export const globalModalContext = createContext({
-  modal: null,
+  modal: null as MODALPARAMS | null,
   setModal: (x: any) => {},
 });
 
 export const GlobalModalProvider = ({ children }: any) => {
-  const [modal, setModal] = useState(null);
+  const [modal, setModal] = useState<MODALPARAMS | null>(null);
   return (
     <globalModalContext.Provider
       value={{
