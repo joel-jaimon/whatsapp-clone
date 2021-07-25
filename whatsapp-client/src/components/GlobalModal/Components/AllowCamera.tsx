@@ -7,13 +7,14 @@ export const AllowCamera = () => {
   useEffect(() => {
     navigator.mediaDevices
       .getUserMedia({ video: true })
-      .then(function (stream) {
+      .then(() => {
+        localStorage.setItem("_streamPermission", "allowed");
         setModal({
           type: "takePhoto",
           params: modal?.params,
         });
       })
-      .catch(function (err) {
+      .catch(() => {
         // Handle denied modal
         setModal({
           type: "cameraDenied",

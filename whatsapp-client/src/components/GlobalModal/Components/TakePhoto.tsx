@@ -23,6 +23,10 @@ export const TakePhoto = () => {
       })
       .catch((e) => {
         if (e.message === "Permission denied") {
+          setModal({
+            type: "cameraDenied",
+            params: {},
+          });
         }
       });
   };
@@ -62,7 +66,6 @@ export const TakePhoto = () => {
 
   const stopStream = async () => {
     await videoRef.current.srcObject.getTracks().forEach((track: any) => {
-      console.log(track);
       track.stop();
     });
     videoRef.current.srcObject = null;

@@ -4,8 +4,25 @@ import { globalModalContext } from "../../../context/globalModalContext";
 import s from "./dropmenu.module.scss";
 
 export const AddAvatarDropdown = () => {
-  const { dropMenu }: any = useContext(dropDownContext);
+  const { dropMenu, setDropMenu }: any = useContext(dropDownContext);
   const { setModal }: any = useContext(globalModalContext);
+
+  const takePhoto = () => {
+    console.log(localStorage.getItem("_streamPermission"));
+    if (localStorage.getItem("_streamPermission")) {
+      setModal({
+        type: "takePhoto",
+        params: dropMenu.params,
+      });
+    } else {
+      setModal({
+        type: "allowCamera",
+        params: dropMenu.params,
+      });
+    }
+    setDropMenu("");
+  };
+
   return (
     <div
       className={s.dropDown}
@@ -16,15 +33,7 @@ export const AddAvatarDropdown = () => {
         zIndex: 20,
       }}
     >
-      <div
-        onClick={() =>
-          setModal({
-            type: "allowCamera",
-            params: dropMenu.params,
-          })
-        }
-        className={s.list}
-      >
+      <div onClick={takePhoto} className={s.list}>
         <p>Take photo</p>
       </div>
       <div className={s.list}>

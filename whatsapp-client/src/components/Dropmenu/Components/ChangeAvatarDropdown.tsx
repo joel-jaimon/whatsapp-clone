@@ -1,9 +1,35 @@
 import { useContext } from "react";
+import { globalModalContext } from "../../../context/globalModalContext";
 import { dropDownContext } from "../../../context/dropDownContext";
 import s from "./dropmenu.module.scss";
 
 export const ChangeAvatarDropdown = () => {
-  const { dropMenu }: any = useContext(dropDownContext);
+  const { dropMenu, setDropMenu }: any = useContext(dropDownContext);
+  const { setModal }: any = useContext(globalModalContext);
+
+  const takePhoto = () => {
+    if (localStorage.getItem("_streamPermission")) {
+      setModal({
+        type: "takePhoto",
+        params: dropMenu.params,
+      });
+    } else {
+      setModal({
+        type: "allowCamera",
+        params: dropMenu.params,
+      });
+    }
+    setDropMenu("");
+  };
+
+  const viewPhoto = () => {
+    setModal({
+      type: "viewPhoto",
+      params: dropMenu.params,
+    });
+    setDropMenu("");
+  };
+
   return (
     <div
       className={s.dropDown}
@@ -14,10 +40,10 @@ export const ChangeAvatarDropdown = () => {
         zIndex: 200,
       }}
     >
-      <div className={s.list}>
+      <div onClick={viewPhoto} className={s.list}>
         <p>View photo</p>
       </div>
-      <div className={s.list}>
+      <div onClick={takePhoto} className={s.list}>
         <p>Take photo</p>
       </div>
       <div className={s.list}>

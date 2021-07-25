@@ -58,6 +58,7 @@ export const AvatarSection = (props: any) => {
         params: {
           handleAvatarChange: handleAvatarChange,
           handleRemoveImage: handleRemoveImage,
+          src: type === "changeAvatar" ? avatar : null,
         },
       });
     } else {
