@@ -12,7 +12,7 @@ export const AddAvatarDropdown = () => {
         position: "absolute",
         left: dropMenu.position.x + 2,
         top: dropMenu.position.y + 2,
-        zIndex: 200,
+        zIndex: 20,
       }}
     >
       <div className={s.list}>

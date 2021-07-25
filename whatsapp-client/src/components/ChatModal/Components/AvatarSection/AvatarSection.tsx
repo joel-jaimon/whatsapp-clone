@@ -14,6 +14,7 @@ export const AvatarSection = (props: any) => {
 
   const handleCompressedImage = (base64Data: string) => {
     setAvatar(base64Data);
+    setDropMenu("");
   };
 
   const handleRemoveImage = () => {
@@ -26,6 +27,7 @@ export const AvatarSection = (props: any) => {
         },
       },
     });
+    setDropMenu("");
   };
 
   const handleAvatarChange = async (file: any) => {

@@ -1,3 +1,4 @@
+import { createRef, useRef } from "react";
 import s from "./App.module.scss";
 import { ChatContainer } from "./components/ChatContainer/ChatContainer";
 import { DropMenu } from "./components/Dropmenu/Dropmenu";
