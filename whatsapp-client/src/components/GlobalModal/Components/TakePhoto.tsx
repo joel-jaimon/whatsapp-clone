@@ -1,5 +1,6 @@
 import { globalModalContext } from "../../../context/globalModalContext";
 import { useRef, useEffect, useState, useContext } from "react";
+import loading from "../Assets/loading.svg";
 import s from "../globalModalStyles.module.scss";
 
 export const TakePhoto = () => {
@@ -7,19 +8,18 @@ export const TakePhoto = () => {
   const canvaRef: any = useRef(null);
   const [photo, setPhoto] = useState<any>(null);
   const { modal, setModal } = useContext(globalModalContext);
+  const [loading, setLoading] = useState(true);
 
   const getStream = () => {
     navigator.mediaDevices
       .getUserMedia({
-        video: {
-          width: 400,
-          height: 300,
-        },
+        video: true,
         audio: false,
       })
       .then((stream) => {
         videoRef.current.srcObject = stream;
         videoRef.current.play();
+        setLoading(false);
       })
       .catch((e) => {
         if (e.message === "Permission denied") {
@@ -82,37 +82,38 @@ export const TakePhoto = () => {
 
   return (
     <div className={s.takeAvatarModal}>
+      {loading ? (
+        <div className={s.loading}>
+          <svg version="1.0" width="40px" height="40px" viewBox="0 0 128 128">
+            <path
+              fill="#00af9c"
+              d="M64.4 16a49 49 0 0 0-50 48 51 51 0 0 0 50 52.2 53 53 0 0 0 54-52c-.7-48-45-55.7-45-55.7s45.3 3.8 49 55.6c.8 32-24.8 59.5-58 60.2-33 .8-61.4-25.7-62-60C1.3 29.8 28.8.6 64.3 0c0 0 8.5 0 8.7 8.4 0 8-8.6 7.6-8.6 7.6z"
+            >
+              <animateTransform
+                attributeName="transform"
+                type="rotate"
+                from="0 64 64"
+                to="360 64 64"
+                dur="600ms"
+                repeatCount="indefinite"
+              ></animateTransform>
+            </path>
+          </svg>
+        </div>
+      ) : null}
       <div
         style={{
           display: photo ? "none" : "unset",
         }}
         className={`${s.takePhoto}`}
       >
-        <div className={s.header}>
-          <svg
-            onClick={closeModal}
-            style={{
-              cursor: "pointer",
-            }}
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            width="24"
-            height="24"
-          >
-            <path
-              fill="currentColor"
-              d="M19.1 17.2l-5.3-5.3 5.3-5.3-1.8-1.8-5.3 5.4-5.3-5.3-1.8 1.7 5.3 5.3-5.3 5.3L6.7 19l5.3-5.3 5.3 5.3 1.8-1.8z"
-            ></path>
-          </svg>
-
-          <span>Take photo</span>
-        </div>
-        <div>
-          <video ref={videoRef} />
-        </div>
-        <div className={s.footer}>
-          <span onClick={takepicture}>
+        {loading ? null : (
+          <div className={s.header}>
             <svg
+              onClick={closeModal}
+              style={{
+                cursor: "pointer",
+              }}
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               width="24"
@@ -120,11 +121,33 @@ export const TakePhoto = () => {
             >
               <path
                 fill="currentColor"
-                d="M21.317 4.381H10.971L9.078 2.45c-.246-.251-.736-.457-1.089-.457H4.905c-.352 0-.837.211-1.078.468L1.201 5.272C.96 5.529.763 6.028.763 6.38v1.878l-.002.01v11.189a1.92 1.92 0 0 0 1.921 1.921h18.634a1.92 1.92 0 0 0 1.921-1.921V6.302a1.92 1.92 0 0 0-1.92-1.921zM12.076 18.51a5.577 5.577 0 1 1 0-11.154 5.577 5.577 0 0 1 0 11.154zm0-9.506a3.929 3.929 0 1 0 0 7.858 3.929 3.929 0 0 0 0-7.858z"
+                d="M19.1 17.2l-5.3-5.3 5.3-5.3-1.8-1.8-5.3 5.4-5.3-5.3-1.8 1.7 5.3 5.3-5.3 5.3L6.7 19l5.3-5.3 5.3 5.3 1.8-1.8z"
               ></path>
             </svg>
-          </span>
+
+            <span>Take photo</span>
+          </div>
+        )}
+        <div>
+          <video ref={videoRef} />
         </div>
+        {loading ? null : (
+          <div className={s.footer}>
+            <span onClick={takepicture}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+              >
+                <path
+                  fill="currentColor"
+                  d="M21.317 4.381H10.971L9.078 2.45c-.246-.251-.736-.457-1.089-.457H4.905c-.352 0-.837.211-1.078.468L1.201 5.272C.96 5.529.763 6.028.763 6.38v1.878l-.002.01v11.189a1.92 1.92 0 0 0 1.921 1.921h18.634a1.92 1.92 0 0 0 1.921-1.921V6.302a1.92 1.92 0 0 0-1.92-1.921zM12.076 18.51a5.577 5.577 0 1 1 0-11.154 5.577 5.577 0 0 1 0 11.154zm0-9.506a3.929 3.929 0 1 0 0 7.858 3.929 3.929 0 0 0 0-7.858z"
+                ></path>
+              </svg>
+            </span>
+          </div>
+        )}
       </div>
       <div
         style={{

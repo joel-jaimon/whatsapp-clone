@@ -94,9 +94,15 @@
 
 .takeAvatarModal {
   display: flex;
-
+  position: relative;
+  height: 395px;
+  width: 400px;
   .takePhoto,
   .viewTakenPhoto {
+    video {
+      height: 300px;
+      width: 400px;
+    }
     .header {
       display: flex;
       align-items: center;
@@ -210,4 +216,15 @@
   height: 100vh;
   overflow: hidden;
   width: 100%;
+}
+
+.loading {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  svg {
+    height: 40px;
+    width: 40px;
+  }
 }
