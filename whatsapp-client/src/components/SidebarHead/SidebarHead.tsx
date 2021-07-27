@@ -1,7 +1,10 @@
 import s from "./sidebarHeadStyles.module.scss";
-import { Avatar } from "@material-ui/core";
+import { useState } from "react";
+import { PersonalSettingDropdown } from "../Sidebar/Components/PersonalSettingDropdown";
 
 export const SidebarHead = () => {
+  const [personalSettingDropdown, setPersonalSettingsDropdown] =
+    useState(false);
   return (
     <div className={s.sidebarHead}>
       <span className={s.avatar}>
@@ -35,7 +38,18 @@ export const SidebarHead = () => {
             ></path>
           </svg>
         </span>
-        <span className="icons">
+        <span
+          style={
+            personalSettingDropdown
+              ? {
+                  backgroundColor: "#292929",
+                }
+              : {}
+          }
+          onClick={() => setPersonalSettingsDropdown(!personalSettingDropdown)}
+          className={`icons ${s.dropDownBtn}`}
+        >
+          {personalSettingDropdown ? <PersonalSettingDropdown /> : null}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
