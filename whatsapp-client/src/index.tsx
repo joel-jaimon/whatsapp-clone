@@ -3,10 +3,16 @@ import ReactDOM from "react-dom";
 import "./common.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { DropDownContextProvider } from "./context/dropDownContext";
+import { GlobalModalProvider } from "./context/globalModalContext";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <GlobalModalProvider>
+      <DropDownContextProvider>
+        <App />
+      </DropDownContextProvider>
+    </GlobalModalProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -8,18 +8,14 @@ export const SidebarChats = () => {
   const { dropMenu, setDropMenu } = useContext(dropDownContext);
 
   const handleDropMenuClicks = (e: any, type: string) => {
-    if (!dropMenu) {
-      setDropMenu({
-        type,
-        position: {
-          x: e.clientX,
-          y: e.clientY,
-        },
-        params: {},
-      });
-    } else {
-      setDropMenu(false);
-    }
+    setDropMenu({
+      type,
+      position: {
+        x: e.clientX,
+        y: e.clientY,
+      },
+      params: {},
+    });
   };
 
   return (

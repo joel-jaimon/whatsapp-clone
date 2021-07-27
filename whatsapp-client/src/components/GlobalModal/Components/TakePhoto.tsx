@@ -11,6 +11,7 @@ export const TakePhoto = () => {
   const [loading, setLoading] = useState(true);
 
   const getStream = () => {
+    setLoading(true);
     navigator.mediaDevices
       .getUserMedia({
         video: true,

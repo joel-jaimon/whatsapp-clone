@@ -48,22 +48,18 @@ export const AvatarSection = (props: any) => {
   };
 
   const handleDropMenuClicks = (e: any, type: string) => {
-    if (!dropMenu) {
-      setDropMenu({
-        type,
-        position: {
-          x: e.clientX,
-          y: e.clientY,
-        },
-        params: {
-          handleAvatarChange: handleAvatarChange,
-          handleRemoveImage: handleRemoveImage,
-          src: type === "changeAvatar" ? avatar : null,
-        },
-      });
-    } else {
-      setDropMenu(false);
-    }
+    setDropMenu({
+      type,
+      position: {
+        x: e.clientX,
+        y: e.clientY,
+      },
+      params: {
+        handleAvatarChange: handleAvatarChange,
+        handleRemoveImage: handleRemoveImage,
+        src: type === "changeAvatar" ? avatar : null,
+      },
+    });
   };
 
   return (
