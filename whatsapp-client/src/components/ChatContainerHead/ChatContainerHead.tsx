@@ -4,7 +4,14 @@ import s from "./chatContainerHeader.module.scss";
 export const ChatContainerHead = ({ setModal }: any) => {
   return (
     <div className={s.chatContainerHead}>
-      <div onClick={() => setModal(true)} className={s.roomA}>
+      <div
+        onClick={() =>
+          setModal({
+            type: "userinfoModal",
+          })
+        }
+        className={s.roomA}
+      >
         <span className={s.avatar}>
           <img src="https://i.pravatar.cc/300" />
         </span>
@@ -15,7 +22,14 @@ export const ChatContainerHead = ({ setModal }: any) => {
       </div>
 
       <div className={s.roomControls}>
-        <span className="icons">
+        <span
+          onClick={() =>
+            setModal({
+              type: "searchMsg",
+            })
+          }
+          className="icons"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"

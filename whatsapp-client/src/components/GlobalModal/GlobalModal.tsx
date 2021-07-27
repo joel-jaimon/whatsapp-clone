@@ -5,7 +5,9 @@ import { AllowCamera } from "./Components/AllowCamera";
 import { DeniedCamera } from "./Components/DeniedCamera";
 import { TakePhoto } from "./Components/TakePhoto";
 import { ViewPhoto } from "./Components/ViewPhoto";
+import { AllowMicrophone } from "./Components/AllowMicrophone";
 import s from "./globalModalStyles.module.scss";
+import { DeniedMicrophone } from "./Components/DeniedMicrophone";
 
 const Modal = ({ type }: any) => {
   switch (type) {
@@ -13,8 +15,12 @@ const Modal = ({ type }: any) => {
       return <RemoveAvatar />;
     case "allowCamera":
       return <AllowCamera />;
+    case "allowMicrophone":
+      return <AllowMicrophone />;
     case "cameraDenied":
       return <DeniedCamera />;
+    case "microphoneDenied":
+      return <DeniedMicrophone />;
     case "takePhoto":
       return <TakePhoto />;
     case "viewPhoto":
@@ -25,6 +31,7 @@ const Modal = ({ type }: any) => {
 };
 
 const fullModal = ["viewPhoto"];
+const transparentModal = ["allowMicrophone", "allowCamera"];
 
 export const GlobalModal = () => {
   const { modal }: any = useContext(globalModalContext);
@@ -37,7 +44,9 @@ export const GlobalModal = () => {
           </div>
         ) : (
           <div
-            className={modal.type === "allowCamera" ? s.allowCamera : s.modal}
+            className={
+              transparentModal.includes(modal.type) ? s.allowCamera : s.modal
+            }
           >
             <Modal type={modal.type} />
           </div>

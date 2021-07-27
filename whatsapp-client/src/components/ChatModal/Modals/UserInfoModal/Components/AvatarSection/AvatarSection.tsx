@@ -1,8 +1,8 @@
 import { createRef, forwardRef, useContext, useRef, useState } from "react";
 import s from "./avatarSection.module.scss";
 import compress from "react-image-file-resizer";
-import { dropDownContext } from "../../../../context/dropDownContext";
-import { globalModalContext } from "../../../../context/globalModalContext";
+import { dropDownContext } from "../../../../../../context/dropDownContext";
+import { globalModalContext } from "../../../../../../context/globalModalContext";
 
 export const AvatarSection = (props: any) => {
   const [editName, setEditName] = useState(false);
