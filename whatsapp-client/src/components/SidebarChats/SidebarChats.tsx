@@ -8,7 +8,6 @@ export const SidebarChats = () => {
   const { dropMenu, setDropMenu } = useContext(dropDownContext);
 
   const handleDropMenuClicks = (e: any, type: string) => {
-    e.preventDefault();
     if (!dropMenu) {
       setDropMenu({
         type,
@@ -25,7 +24,18 @@ export const SidebarChats = () => {
 
   return (
     <div
-      onContextMenu={(e) => handleDropMenuClicks(e, "chatInfo")}
+      onClickCapture={() => setDropMenu(false)}
+      onContextMenu={(e) => {
+        e.preventDefault();
+        setDropMenu({
+          type: "chatInfo",
+          position: {
+            x: e.clientX,
+            y: e.clientY,
+          },
+          params: {},
+        });
+      }}
       className={s.sidebarChats}
     >
       <Avatar />
