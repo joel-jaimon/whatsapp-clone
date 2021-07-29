@@ -28,7 +28,8 @@
   .text,
   .voice,
   .file,
-  .img {
+  .img,
+  .video {
     transform: translate(-30px);
   }
 }
@@ -267,6 +268,76 @@
         height: 100%;
         width: 100%;
         background-color: rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+}
+
+.video {
+  background-color: #056162;
+  padding: 2px;
+  cursor: pointer;
+  border-radius: 5px;
+  .imgPotrait {
+    height: 250px;
+    width: 180px;
+  }
+  .imgLandscape {
+    height: 160px;
+    width: 290px;
+  }
+  .imgPotrait,
+  .imgLandscape {
+    border-radius: 5px;
+    position: relative;
+    img {
+      object-fit: cover;
+      height: 100%;
+      border-radius: 5px;
+      width: 100%;
+    }
+    .smoke {
+      display: none;
+    }
+    &:hover {
+      .smoke {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+    }
+    .thumbnailView {
+      height: 100%;
+      width: 100%;
+      .thumbnail {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .thumbnailFooter {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 1px;
+        ._A {
+          display: flex;
+          align-items: center;
+          small {
+            font-size: 9px;
+          }
+          svg {
+            height: 15px;
+          }
+        }
       }
     }
   }

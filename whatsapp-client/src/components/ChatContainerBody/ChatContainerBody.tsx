@@ -4,6 +4,7 @@ import s from "./chatContainerBodyStyles.module.scss";
 import { File } from "./components/Messages/File";
 import { Picture } from "./components/Messages/Picture";
 import { Text } from "./components/Messages/Text";
+import { Video } from "./components/Messages/Video";
 import { Voice } from "./components/Messages/Voice";
 
 export const ChatContainerBody = () => {
@@ -30,6 +31,9 @@ export const ChatContainerBody = () => {
       </div>
       <div className={s.RightWrap}>
         <Voice type="right" />
+      </div>
+      <div className={s.RightWrap}>
+        <Video type="right" />
       </div>
       <div className={s.RightWrap}>
         <File type="right" />
