@@ -1,23 +1,23 @@
 .app {
-  text-align: center;
-  background-color: #090e11;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  width: 100%;
-  position: relative;
+    text-align: center;
+    background-color: #090e11;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    width: 100%;
+    position: relative;
 }
 
 .appContainer {
-  display: flex;
-  height: 98vh;
-  width: 70%;
-  @media screen and (max-width: 1200px) {
-    height: 100vh;
-    width: 100%;
-  }
-  max-width: 1396px !important;
+    display: flex;
+    height: 98vh;
+    width: 70%;
+    @media screen and (max-width: 1200px) {
+        height: 100vh;
+        width: 100%;
+    }
+    max-width: 1396px !important;
 }

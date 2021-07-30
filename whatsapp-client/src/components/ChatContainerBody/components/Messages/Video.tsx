@@ -25,6 +25,8 @@ export const Video = ({ type }: any) => {
             type: "minimizedVideo",
             params: {
                 src: "https://player.vimeo.com/external/565791593.sd.mp4?s=fa438f0a90f8c5c40133e50260d3559008660dc2&profile_id=165&oauth2_token_id=57447761",
+                xOffset: 100,
+                yOffset: 130,
             },
         });
     };

@@ -1,5 +1,5 @@
 import s from "../movableModal.module.scss";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import CropFreeIcon from "@material-ui/icons/CropFree";
 import CloseIcon from "@material-ui/icons/Close";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
@@ -10,6 +10,7 @@ import VolumeUpIcon from "@material-ui/icons/VolumeUp";
 import VolumeDownIcon from "@material-ui/icons/VolumeDown";
 import VolumeMuteIcon from "@material-ui/icons/VolumeMute";
 import VolumeOffIcon from "@material-ui/icons/VolumeOff";
+import { movalbleModalContext } from "../../../context/movableModalContext";
 
 const VolumeButton = ({ vol }: { vol: number }) => {
     if (vol < 1) return <VolumeOffIcon />;
@@ -24,6 +25,7 @@ export const MinimizedVideo = ({ params }: any) => {
     const [play, setPlay] = useState(false);
     const [currentTime, setCurrentTime] = useState<any>(0);
     const [vol, setVol] = useState(100);
+    const { setMovableModal } = useContext(movalbleModalContext);
 
     const videoRef: any = useRef(null);
     const animationRef: any = useRef(null);
@@ -91,7 +93,7 @@ export const MinimizedVideo = ({ params }: any) => {
             <div className={s.control}>
                 <div className={s.header}>
                     <CropFreeIcon />
-                    <CloseIcon />
+                    <CloseIcon onClick={() => setMovableModal(null)} />
                 </div>
                 <div className={s.footer}>
                     <div className={s.controlBtn}>

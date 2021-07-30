@@ -1,48 +1,49 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", Helvetica Neue;
-  color: white;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        Helvetica Neue;
+    color: white;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+        monospace;
 }
 
 .icons {
-  padding: 5px;
-  margin-right: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
+    padding: 5px;
+    margin-right: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
 
-  &:hover {
-    cursor: pointer;
-  }
+    &:hover {
+        cursor: pointer;
+    }
 
-  &:active {
-    background-color: #292929;
-  }
+    &:active {
+        background-color: #292929;
+    }
 
-  svg {
-    height: 20px;
-    width: 20px;
-    color: #b1b3b5;
-  }
+    svg {
+        height: 20px;
+        width: 20px;
+        color: #b1b3b5;
+    }
 }
 
 .active-icon {
-  svg {
-    color: #00af9c;
-  }
+    svg {
+        color: #00af9c;
+    }
 }
 
 .chatModalSectionTitle {
-  color: #009688;
-  font-size: 12px;
-  text-align: left;
+    color: #009688;
+    font-size: 12px;
+    text-align: left;
 }

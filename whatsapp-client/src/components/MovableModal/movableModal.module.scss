@@ -1,10 +1,14 @@
-.minimizedVideo {
+.movableModal {
     position: absolute;
+    top: 130px;
+    left: 100px;
     z-index: 10000;
+    transform: translate(-50%, -50%);
+}
+.minimizedVideo {
     height: 240px;
     width: 180px;
-    top: 10px;
-    left: 10px;
+    position: relative;
     color: white;
     cursor: move;
     button {
@@ -76,23 +80,29 @@
                     height: 18px;
                 }
                 .volTrack {
-                    transform: rotate(-90deg);
-                    position: absolute;
-                    top: -52px;
-                    width: 80px;
-                    right: -20px;
-                    input {
-                        height: 2px;
-                        --seek-before-width: 100%;
-                        &::before {
+                    display: none;
+                }
+                &:hover {
+                    .volTrack {
+                        display: unset;
+                        transform: rotate(-90deg);
+                        position: absolute;
+                        top: -52px;
+                        width: 80px;
+                        right: -20px;
+                        input {
                             height: 2px;
-                        }
-                        &::-webkit-slider-thumb {
-                            -webkit-appearance: none;
-                            height: 8px !important;
-                            width: 8px !important;
-                            border-radius: 100%;
-                            background-color: white;
+                            --seek-before-width: 100%;
+                            &::before {
+                                height: 2px;
+                            }
+                            &::-webkit-slider-thumb {
+                                -webkit-appearance: none;
+                                height: 8px !important;
+                                width: 8px !important;
+                                border-radius: 100%;
+                                background-color: white;
+                            }
                         }
                     }
                 }
