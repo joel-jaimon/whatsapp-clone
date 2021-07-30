@@ -1,12 +1,14 @@
 import s from "./messages.module.scss";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import VideocamIcon from "@material-ui/icons/Videocam";
 import CheckIcon from "@material-ui/icons/Check";
 import FullscreenExitIcon from "@material-ui/icons/FullscreenExit";
+import { movalbleModalContext } from "../../../../context/movableModalContext";
 
 export const Video = ({ type }: any) => {
+  const { setMovableModal } = useContext(movalbleModalContext);
   const [imageOrientation, setImageOrientation] = useState<any>(null);
 
   const handleImageType = (e: any) => {
@@ -16,6 +18,17 @@ export const Video = ({ type }: any) => {
       setImageOrientation("landscape");
     }
   };
+
+  const openMinimizedVideo = () => {
+    console.log("sad");
+    setMovableModal({
+      type: "minimizedVideo",
+      params: {
+        src: "https://player.vimeo.com/external/565791593.sd.mp4?s=fa438f0a90f8c5c40133e50260d3559008660dc2&profile_id=165&oauth2_token_id=57447761",
+      },
+    });
+  };
+
   return (
     <span className={type === "right" ? s.voiceRight : s.voiceLeft}>
       <div className={s.video}>
@@ -25,7 +38,7 @@ export const Video = ({ type }: any) => {
           }
         >
           <div className={s.smoke}>
-            <FullscreenExitIcon />
+            <FullscreenExitIcon onClick={openMinimizedVideo} />
             <ExpandMoreIcon />
           </div>
           <div className={s.thumbnailView}>

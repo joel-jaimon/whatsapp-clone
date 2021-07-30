@@ -5,14 +5,17 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { DropDownContextProvider } from "./context/dropDownContext";
 import { GlobalModalProvider } from "./context/globalModalContext";
+import { MovableModalContextProvider } from "./context/movableModalContext";
 
 ReactDOM.render(
   <React.StrictMode>
-    <GlobalModalProvider>
-      <DropDownContextProvider>
-        <App />
-      </DropDownContextProvider>
-    </GlobalModalProvider>
+    <MovableModalContextProvider>
+      <GlobalModalProvider>
+        <DropDownContextProvider>
+          <App />
+        </DropDownContextProvider>
+      </GlobalModalProvider>
+    </MovableModalContextProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
