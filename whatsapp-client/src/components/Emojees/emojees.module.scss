@@ -1,82 +1,82 @@
 .emojiContainer {
-  .category {
-    display: flex;
-    color: rgb(95, 95, 95);
-    justify-content: space-around;
-    height: 35px;
-    span {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      svg {
-        height: 20px;
-      }
+    .category {
+        display: flex;
+        color: rgb(95, 95, 95);
+        justify-content: space-around;
+        height: 35px;
+        span {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            svg {
+                height: 20px;
+            }
+        }
+        .activeSvg {
+            color: #b1b3b5;
+            border-bottom: 3px solid #00af9c;
+        }
     }
-    .activeSvg {
-      color: #b1b3b5;
-      border-bottom: 3px solid #00af9c;
+    .search {
+        background-color: #1e2428;
+        top: 0px;
+        height: 40px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+        input {
+            outline: none;
+            font-size: 12px;
+            background-color: #2a3135;
+            width: 94%;
+            margin-top: 5px;
+            padding: 8px 10px 8px 10px;
+            border-radius: 4px;
+            border: none;
+            color: whitesmoke;
+        }
     }
-  }
-  .search {
-    background-color: #1e2428;
-    top: 0px;
-    height: 40px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 10px;
-    input {
-      outline: none;
-      font-size: 12px;
-      background-color: #2a3135;
-      width: 94%;
-      margin-top: 5px;
-      padding: 8px 10px 8px 10px;
-      border-radius: 4px;
-      border: none;
-      color: whitesmoke;
-    }
-  }
-  .emojeesMain {
-    height: 175px;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    position: relative;
-    padding: 0px 5px 0px 5px;
-    &::-webkit-scrollbar {
-      width: 5px;
-    }
-    &::-webkit-scrollbar-thumb {
-      background-color: gray;
-    }
+    .emojeesMain {
+        height: 175px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        position: relative;
+        padding: 0px 5px 0px 5px;
+        &::-webkit-scrollbar {
+            width: 5px;
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: gray;
+        }
 
-    .classWiseEmojees {
-      text-align: left;
-      color: #919191;
-      margin-top: -15px;
-      a {
-        font-size: 12px;
-        text-decoration: none;
-        margin-left: 5px;
-      }
+        .classWiseEmojees {
+            text-align: left;
+            color: #919191;
+            margin-top: -15px;
+            a {
+                font-size: 12px;
+                text-decoration: none;
+                margin-left: 5px;
+            }
+        }
+        .queryEmos {
+            margin-top: 15px;
+        }
+        .emos {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+            p {
+                text-align: center;
+                font-size: 24px;
+                margin: 5px;
+                width: 24px;
+                cursor: pointer;
+            }
+        }
     }
-    .queryEmos {
-      margin-top: 15px;
-    }
-    .emos {
-      display: flex;
-      flex-wrap: wrap;
-      margin-bottom: 15px;
-      p {
-        text-align: center;
-        font-size: 24px;
-        margin: 5px;
-        width: 24px;
-        cursor: pointer;
-      }
-    }
-  }
 }

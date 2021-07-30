@@ -6,24 +6,24 @@ import { ChangeAvatarDropdown } from "./Components/ChangeAvatarDropdown";
 import { ChatInfoDropdown } from "./Components/ChatInfoDropdown";
 
 export const DropMenu = () => {
-  const { dropMenu }: any = useContext(dropDownContext);
+    const { dropMenu }: any = useContext(dropDownContext);
 
-  switch (dropMenu.type) {
-    case "addAvatar":
-      return <AddAvatarDropdown />;
-    case "changeAvatar":
-      return <ChangeAvatarDropdown />;
-    case "chatInfo":
-      return <ChatInfoDropdown />;
-    case "activeChatInfo":
-      return <ActiveChatInfo />;
-    default:
-      return (
-        <div
-          style={{
-            display: "none",
-          }}
-        />
-      );
-  }
+    switch (dropMenu.type) {
+        case "addAvatar":
+            return <AddAvatarDropdown />;
+        case "changeAvatar":
+            return <ChangeAvatarDropdown />;
+        case "chatInfo":
+            return <ChatInfoDropdown />;
+        case "activeChatInfo":
+            return <ActiveChatInfo />;
+        default:
+            return (
+                <div
+                    style={{
+                        display: "none",
+                    }}
+                />
+            );
+    }
 };

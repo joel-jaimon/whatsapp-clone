@@ -1,133 +1,133 @@
 .footer {
-  background-color: #1e2428;
-  height: 45px;
-  width: 100%;
-  display: flex;
-  position: relative;
-  justify-content: space-around;
-  align-items: flex-end;
-  .input {
-    margin: 7px 15px 7px 15px;
-    padding: 0px 10px 0px 10px;
-    border-radius: 15px;
-    background-color: #33383b;
-    height: 30px;
-    font-size: 12px;
+    background-color: #1e2428;
+    height: 45px;
     width: 100%;
-    color: white;
-    text-align: left;
-    position: relative;
     display: flex;
-    justify-content: flex-start;
+    position: relative;
+    justify-content: space-around;
     align-items: flex-end;
+    .input {
+        margin: 7px 15px 7px 15px;
+        padding: 0px 10px 0px 10px;
+        border-radius: 15px;
+        background-color: #33383b;
+        height: 30px;
+        font-size: 12px;
+        width: 100%;
+        color: white;
+        text-align: left;
+        position: relative;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-end;
 
-    .spanPlaceholder {
-      position: absolute;
-      margin: 6px 0px 8px 0px;
-      color: gray;
-      z-index: 0;
-    }
-    .spanInput {
-      z-index: 1;
-      display: flex;
-      justify-content: flex-start;
-      align-items: flex-end;
-
-      span {
-        max-height: 80px;
-        overflow: scroll;
-        margin: 6px 0px 8px 0px;
-        position: absolute;
-
-        outline: none;
-        overflow-x: hidden;
-        width: calc(100% - 20px);
-        &::-webkit-scrollbar {
-          width: 4px;
+        .spanPlaceholder {
+            position: absolute;
+            margin: 6px 0px 8px 0px;
+            color: gray;
+            z-index: 0;
         }
-        &::-webkit-scrollbar-thumb {
-          background-color: rgb(97, 97, 97);
+        .spanInput {
+            z-index: 1;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-end;
+
+            span {
+                max-height: 80px;
+                overflow: scroll;
+                margin: 6px 0px 8px 0px;
+                position: absolute;
+
+                outline: none;
+                overflow-x: hidden;
+                width: calc(100% - 20px);
+                &::-webkit-scrollbar {
+                    width: 4px;
+                }
+                &::-webkit-scrollbar-thumb {
+                    background-color: rgb(97, 97, 97);
+                }
+            }
         }
-      }
     }
-  }
 }
 
 .footerControls {
-  display: flex;
-  align-items: flex-end;
-  span {
-    margin: 8px 0px 8px 8px;
-  }
+    display: flex;
+    align-items: flex-end;
+    span {
+        margin: 8px 0px 8px 8px;
+    }
 }
 
 .recorder {
-  height: 45px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  svg {
-    height: 18px;
-    width: 18px;
-  }
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    svg {
+        height: 18px;
+        width: 18px;
+    }
 }
 
 .attachmentButton {
-  position: relative;
-  .attachments {
-    position: absolute;
-    margin-top: -250px;
-    margin-left: -5px;
-    span {
-      border-radius: 50%;
-      padding: 11px;
-      margin-bottom: 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      cursor: pointer;
-      input {
-        background: linen;
-        cursor: pointer;
+    position: relative;
+    .attachments {
         position: absolute;
-        height: 100%;
-        width: 100%;
-        border-radius: 50%;
-        opacity: 0;
-      }
-      &:nth-of-type(1) {
-        background: linear-gradient(#0458c5 50%, #2974d6 50%);
-      }
+        margin-top: -250px;
+        margin-left: -5px;
+        span {
+            border-radius: 50%;
+            padding: 11px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+            input {
+                background: linen;
+                cursor: pointer;
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                border-radius: 50%;
+                opacity: 0;
+            }
+            &:nth-of-type(1) {
+                background: linear-gradient(#0458c5 50%, #2974d6 50%);
+            }
 
-      &:nth-of-type(2) {
-        background: linear-gradient(#0389cc 50%, #039be5 50%);
-      }
+            &:nth-of-type(2) {
+                background: linear-gradient(#0389cc 50%, #039be5 50%);
+            }
 
-      &:nth-of-type(3) {
-        background: linear-gradient(
-          rgb(78, 71, 185) 50%,
-          rgb(100, 90, 240) 50%
-        );
-      }
+            &:nth-of-type(3) {
+                background: linear-gradient(
+                    rgb(78, 71, 185) 50%,
+                    rgb(100, 90, 240) 50%
+                );
+            }
 
-      &:nth-of-type(4) {
-        background: linear-gradient(
-          rgb(194, 56, 120) 50%,
-          rgb(235, 61, 142) 50%
-        );
-      }
+            &:nth-of-type(4) {
+                background: linear-gradient(
+                    rgb(194, 56, 120) 50%,
+                    rgb(235, 61, 142) 50%
+                );
+            }
 
-      &:nth-of-type(5) {
-        background: linear-gradient(
-          rgb(178, 73, 192) 50%,
-          rgb(210, 85, 226) 50%
-        );
-      }
+            &:nth-of-type(5) {
+                background: linear-gradient(
+                    rgb(178, 73, 192) 50%,
+                    rgb(210, 85, 226) 50%
+                );
+            }
+        }
+        svg {
+            height: 17px;
+            width: 17px;
+        }
     }
-    svg {
-      height: 17px;
-      width: 17px;
-    }
-  }
 }
