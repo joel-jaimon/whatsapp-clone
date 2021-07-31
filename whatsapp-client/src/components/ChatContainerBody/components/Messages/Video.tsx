@@ -41,7 +41,6 @@ export const Video = ({ type, src }: any) => {
                 src,
                 xOffset: 100,
                 yOffset: 130,
-                mode: "mini",
                 orientation: "potrait",
                 previewImg: "",
             },

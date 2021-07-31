@@ -287,10 +287,10 @@
             display: flex;
             justify-content: center;
             position: relative;
-            // max-height: 80%;
-            width: 70%;
+            width: auto;
             img,
             video {
+                max-height: 70vh;
                 object-fit: contain;
             }
         }
