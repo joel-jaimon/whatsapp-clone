@@ -8,50 +8,55 @@ import { ViewPhoto } from "./Components/ViewPhoto";
 import { AllowMicrophone } from "./Components/AllowMicrophone";
 import s from "./globalModalStyles.module.scss";
 import { DeniedMicrophone } from "./Components/DeniedMicrophone";
+import { MessagePreview } from "./Components/MessagePreview";
 
 const Modal = ({ type }: any) => {
-  switch (type) {
-    case "removeAvatar":
-      return <RemoveAvatar />;
-    case "allowCamera":
-      return <AllowCamera />;
-    case "allowMicrophone":
-      return <AllowMicrophone />;
-    case "cameraDenied":
-      return <DeniedCamera />;
-    case "microphoneDenied":
-      return <DeniedMicrophone />;
-    case "takePhoto":
-      return <TakePhoto />;
-    case "viewPhoto":
-      return <ViewPhoto />;
-    default:
-      return <div />;
-  }
+    switch (type) {
+        case "removeAvatar":
+            return <RemoveAvatar />;
+        case "allowCamera":
+            return <AllowCamera />;
+        case "allowMicrophone":
+            return <AllowMicrophone />;
+        case "cameraDenied":
+            return <DeniedCamera />;
+        case "microphoneDenied":
+            return <DeniedMicrophone />;
+        case "takePhoto":
+            return <TakePhoto />;
+        case "viewPhoto":
+            return <ViewPhoto />;
+        case "viewMsgPreview":
+            return <MessagePreview />;
+        default:
+            return <div />;
+    }
 };
 
-const fullModal = ["viewPhoto"];
+const fullModal = ["viewPhoto", "viewMsgPreview"];
 const transparentModal = ["allowMicrophone", "allowCamera"];
 
 export const GlobalModal = () => {
-  const { modal }: any = useContext(globalModalContext);
-  return (
-    modal && (
-      <div className={s.smoke}>
-        {fullModal.includes(modal.type) ? (
-          <div className={s.fullModal}>
-            <Modal type={modal.type} />
-          </div>
-        ) : (
-          <div
-            className={
-              transparentModal.includes(modal.type) ? s.allowCamera : s.modal
-            }
-          >
-            <Modal type={modal.type} />
-          </div>
-        )}
-      </div>
-    )
-  );
+    const { modal }: any = useContext(globalModalContext);
+    return (
+        modal && (
+            <div className={s.smoke}>
+                {fullModal.includes(modal.type) ? (
+                    <div className={s.fullModal}>
+                        <Modal type={modal.type} />
+                    </div>
+                ) : (
+                    <div
+                        className={
+                            transparentModal.includes(modal.type)
+                                ? s.allowCamera
+                                : s.modal
+                        }
+                    >
+                        <Modal type={modal.type} />
+                    </div>
+                )}
+            </div>
+        )
+    );
 };
