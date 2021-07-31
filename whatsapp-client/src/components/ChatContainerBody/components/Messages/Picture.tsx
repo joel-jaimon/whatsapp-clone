@@ -17,7 +17,7 @@ export const Picture = ({ type, src }: any) => {
     const preview = () => {
         setModal({
             type: "viewMsgPreview",
-            params: { src },
+            params: { src, messageType: "image" },
         });
     };
     return (

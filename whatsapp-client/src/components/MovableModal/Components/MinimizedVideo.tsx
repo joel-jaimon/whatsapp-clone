@@ -4,6 +4,7 @@ import CropFreeIcon from "@material-ui/icons/CropFree";
 import CloseIcon from "@material-ui/icons/Close";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
+import FullscreenExitIcon from "@material-ui/icons/FullscreenExit";
 
 // Volume
 import VolumeUpIcon from "@material-ui/icons/VolumeUp";
@@ -11,6 +12,7 @@ import VolumeDownIcon from "@material-ui/icons/VolumeDown";
 import VolumeMuteIcon from "@material-ui/icons/VolumeMute";
 import VolumeOffIcon from "@material-ui/icons/VolumeOff";
 import { movalbleModalContext } from "../../../context/movableModalContext";
+import { globalModalContext } from "../../../context/globalModalContext";
 
 const VolumeButton = ({ vol }: { vol: number }) => {
     if (vol < 1) return <VolumeOffIcon />;
@@ -25,7 +27,9 @@ export const MinimizedVideo = ({ params }: any) => {
     const [play, setPlay] = useState(false);
     const [currentTime, setCurrentTime] = useState<any>(0);
     const [vol, setVol] = useState(100);
+    const [volVisible, setVolVisible] = useState(false);
     const { setMovableModal } = useContext(movalbleModalContext);
+    const { setModal } = useContext(globalModalContext);
 
     const videoRef: any = useRef(null);
     const animationRef: any = useRef(null);
@@ -88,12 +92,34 @@ export const MinimizedVideo = ({ params }: any) => {
         setVol(vol);
     };
 
+    const openMinimizedVideo = () => {
+        setMovableModal({
+            type: "minimizedVideo",
+            params: {
+                src: "https://player.vimeo.com/external/565791593.sd.mp4?s=fa438f0a90f8c5c40133e50260d3559008660dc2&profile_id=165&oauth2_token_id=57447761",
+                xOffset: 100,
+                yOffset: 130,
+                mode: "mini",
+                orientation: "landscape",
+            },
+        });
+        setModal(null);
+    };
+
+    const fullScreenMode = () => {
+        videoRef.current.requestFullscreen();
+    };
+
     return (
         <div className={s.minimizedVideo}>
             <div className={s.control}>
                 <div className={s.header}>
-                    <CropFreeIcon />
-                    <CloseIcon onClick={() => setMovableModal(null)} />
+                    <CropFreeIcon onClick={fullScreenMode} />
+                    {params.mode === "mini" ? (
+                        <CloseIcon onClick={() => setMovableModal(null)} />
+                    ) : (
+                        <FullscreenExitIcon onClick={openMinimizedVideo} />
+                    )}
                 </div>
                 <div className={s.footer}>
                     <div className={s.controlBtn}>
@@ -102,24 +128,35 @@ export const MinimizedVideo = ({ params }: any) => {
                         </button>
                     </div>
                     <input
-                        onMouseOver={(e) => console.log(e)}
                         onChange={changeRange}
                         defaultValue="0"
                         ref={progressbarRef}
                         type="range"
                     />
-                    <div className={s.volController}>
-                        <div className={s.volTrack}>
-                            <input
-                                onChange={changeVolume}
-                                defaultValue={100}
-                                ref={volProgressRef}
-                                type="range"
-                                max={100}
-                                min={0}
-                                className={s.progressBar}
-                            />
-                        </div>
+                    <div
+                        onMouseLeave={() => setVolVisible(false)}
+                        onMouseEnter={() => setVolVisible(true)}
+                        className={s.volController}
+                    >
+                        {volVisible ? (
+                            <div
+                                className={`${s.volTrack} ${
+                                    params.mode === "mini"
+                                        ? s.volTrackMinimized
+                                        : s.volTrackModal
+                                }`}
+                            >
+                                <input
+                                    onChange={changeVolume}
+                                    defaultValue={100}
+                                    ref={volProgressRef}
+                                    type="range"
+                                    max={100}
+                                    min={0}
+                                    className={s.progressBar}
+                                />
+                            </div>
+                        ) : null}
                         <button>{<VolumeButton vol={vol} />}</button>
                     </div>
                 </div>
@@ -132,3 +169,6 @@ export const MinimizedVideo = ({ params }: any) => {
         </div>
     );
 };
+
+//volTrackModal
+//volTrackMinimized

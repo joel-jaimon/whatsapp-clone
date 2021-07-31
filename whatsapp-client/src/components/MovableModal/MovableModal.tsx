@@ -7,7 +7,15 @@ const Modal = ({ type, params }: any) => {
     console.log(type, params);
     switch (type) {
         case "minimizedVideo":
-            return <MinimizedVideo params={params} />;
+            return params.orientation === "potrait" ? (
+                <div className={s.minVidWrapperPotrait}>
+                    <MinimizedVideo params={params} />
+                </div>
+            ) : (
+                <div className={s.minVidWrapperLandscape}>
+                    <MinimizedVideo params={params} />
+                </div>
+            );
         default:
             return <div />;
     }

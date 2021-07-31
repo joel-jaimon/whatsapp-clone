@@ -5,14 +5,25 @@
     z-index: 10000;
     transform: translate(-50%, -50%);
 }
-.minimizedVideo {
+.minVidWrapperPotrait {
     height: 240px;
     width: 180px;
     position: relative;
-    color: white;
     cursor: move;
+}
+.minVidWrapperLandscape {
+    width: 240px;
+    height: 180px;
+    position: relative;
+    cursor: move;
+}
+.minimizedVideo {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    color: white;
     button {
-        background: none;
+        background: none !important;
         outline: none;
         border: none;
         color: white;
@@ -82,27 +93,33 @@
                 .volTrack {
                     display: none;
                 }
-                &:hover {
-                    .volTrack {
-                        display: unset;
-                        transform: rotate(-90deg);
-                        position: absolute;
-                        top: -52px;
-                        width: 80px;
-                        right: -20px;
-                        input {
+
+                .volTrackModal {
+                    top: -40%;
+                    width: 80px;
+                    right: -5%;
+                }
+                .volTrackMinimized {
+                    top: -52px;
+                    width: 80px;
+                    right: -20px;
+                }
+                .volTrack {
+                    display: unset;
+                    transform: rotate(-90deg);
+                    position: absolute;
+                    input {
+                        height: 2px;
+                        --seek-before-width: 100%;
+                        &::before {
                             height: 2px;
-                            --seek-before-width: 100%;
-                            &::before {
-                                height: 2px;
-                            }
-                            &::-webkit-slider-thumb {
-                                -webkit-appearance: none;
-                                height: 8px !important;
-                                width: 8px !important;
-                                border-radius: 100%;
-                                background-color: white;
-                            }
+                        }
+                        &::-webkit-slider-thumb {
+                            -webkit-appearance: none;
+                            height: 8px !important;
+                            width: 8px !important;
+                            border-radius: 100%;
+                            background-color: white;
                         }
                     }
                 }

@@ -283,8 +283,12 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        // height: calc(100%-130px);
         .preview {
+            display: flex;
+            justify-content: center;
+            position: relative;
+            // max-height: 80%;
+            width: 70%;
             img,
             video {
                 object-fit: contain;

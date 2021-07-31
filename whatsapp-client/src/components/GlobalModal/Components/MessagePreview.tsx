@@ -10,6 +10,7 @@ import GetAppIcon from "@material-ui/icons/GetApp";
 import CloseIcon from "@material-ui/icons/Close";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import { MinimizedVideo } from "../../MovableModal/Components/MinimizedVideo";
 
 export const MessagePreview = () => {
     const { modal, setModal }: any = useContext(globalModalContext);
@@ -89,7 +90,11 @@ export const MessagePreview = () => {
                     <ChevronLeftIcon />
                 </button>
                 <div className={s.preview}>
-                    <img src={modal.params.src} alt="msg preview" />
+                    {modal.params.messageType === "image" ? (
+                        <img src={modal.params.src} alt="msg preview" />
+                    ) : (
+                        <MinimizedVideo params={modal.params} />
+                    )}
                 </div>
                 <button onClick={handleRight}>
                     <ChevronRightIcon />

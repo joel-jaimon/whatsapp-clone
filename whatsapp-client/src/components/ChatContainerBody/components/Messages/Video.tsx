@@ -6,9 +6,11 @@ import VideocamIcon from "@material-ui/icons/Videocam";
 import CheckIcon from "@material-ui/icons/Check";
 import FullscreenExitIcon from "@material-ui/icons/FullscreenExit";
 import { movalbleModalContext } from "../../../../context/movableModalContext";
+import { globalModalContext } from "../../../../context/globalModalContext";
 
-export const Video = ({ type }: any) => {
+export const Video = ({ type, src }: any) => {
     const { setMovableModal } = useContext(movalbleModalContext);
+    const { setModal } = useContext(globalModalContext);
     const [imageOrientation, setImageOrientation] = useState<any>(null);
 
     const handleImageType = (e: any) => {
@@ -20,13 +22,28 @@ export const Video = ({ type }: any) => {
     };
 
     const openMinimizedVideo = () => {
-        console.log("sad");
         setMovableModal({
             type: "minimizedVideo",
             params: {
-                src: "https://player.vimeo.com/external/565791593.sd.mp4?s=fa438f0a90f8c5c40133e50260d3559008660dc2&profile_id=165&oauth2_token_id=57447761",
+                src,
                 xOffset: 100,
                 yOffset: 130,
+                mode: "mini",
+                orientation: "potrait",
+            },
+        });
+    };
+
+    const openVideoPreview = () => {
+        setModal({
+            type: "viewMsgPreview",
+            params: {
+                src,
+                xOffset: 100,
+                yOffset: 130,
+                mode: "mini",
+                orientation: "potrait",
+                previewImg: "",
             },
         });
     };
@@ -44,11 +61,16 @@ export const Video = ({ type }: any) => {
                     <div className={s.smoke}>
                         <FullscreenExitIcon onClick={openMinimizedVideo} />
                         <ExpandMoreIcon />
+                        <div
+                            className={s.clickable}
+                            onClick={openVideoPreview}
+                        />
                     </div>
                     <div className={s.thumbnailView}>
                         <div className={s.thumbnail}>
                             <div />
                             <PlayArrowIcon />
+
                             <div className={s.thumbnailFooter}>
                                 <div className={s._A}>
                                     <VideocamIcon />
