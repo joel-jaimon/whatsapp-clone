@@ -4,7 +4,6 @@ import { MinimizedVideo } from "./Components/MinimizedVideo";
 import s from "./movableModal.module.scss";
 
 const Modal = ({ type, params }: any) => {
-    console.log(type, params);
     switch (type) {
         case "minimizedVideo":
             return params.orientation === "potrait" ? (

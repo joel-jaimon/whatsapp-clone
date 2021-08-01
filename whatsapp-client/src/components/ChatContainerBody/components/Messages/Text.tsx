@@ -1,15 +1,24 @@
+import { formatTime } from "../../../../utils/formatTime";
 import s from "./messages.module.scss";
 
-export const Text = ({ msgPosition }: any) => {
+export const Text = ({ msgPosition, timestamp, msgParams }: any) => {
+    const { text } = msgParams;
     return (
         <span className={msgPosition === "right" ? s.textRight : s.textLeft}>
-            <p className={s.text}>
-                Hey guys! I have been working on this app lately, so I would
-                really appreciate if you could download this app from google
-                playstore.
-                <br /> <br /> This app is now <strong>live</strong>. Please give
-                your valuable feedback and don't forget to rate it if you like.
-            </p>
+            <div className={s.text}>
+                <p
+                    className={s.textMsg}
+                    dangerouslySetInnerHTML={{
+                        __html: text,
+                    }}
+                />
+                <div className={s.msgTiming}>
+                    <div>
+                        <small>{formatTime(timestamp)}</small>
+                        <small></small>
+                    </div>
+                </div>
+            </div>
         </span>
     );
 };

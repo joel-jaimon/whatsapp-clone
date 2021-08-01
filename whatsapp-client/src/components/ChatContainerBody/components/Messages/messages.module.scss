@@ -3,12 +3,27 @@
     font-size: 11.5px;
     line-height: 17px;
     width: fit-content;
-    padding: 5px;
     border-radius: 5px;
     max-width: 55%;
     text-align: start;
-    margin: 0px;
+    .textMsg {
+        margin: 0px;
+        padding: 5px;
+    }
+    .msgTiming {
+        display: flex;
+        justify-content: flex-end;
+        font-size: 11px;
+        color: rgb(211, 211, 211);
+        small {
+            margin: 0px 3px 1px 0px;
+        }
+    }
 }
+.msgTiming {
+    display: flex;
+}
+
 .textLeft,
 .voiceLeft,
 .fileLeft,

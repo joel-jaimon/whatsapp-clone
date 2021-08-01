@@ -71,7 +71,7 @@ export const MinimizedVideo = ({ params }: any) => {
     };
 
     const whilePlaying = () => {
-        progressbarRef.current.value = videoRef.current.currentTime;
+        progressbarRef.current.value = videoRef.current?.currentTime;
         changePlayerCurrentTime();
         animationRef.current = requestAnimationFrame(whilePlaying);
     };

@@ -15,7 +15,7 @@ const Message = ({ data, owner }: any) => {
         case "text":
             return (
                 <div className={_classname}>
-                    <Text msgPosition={_side} />
+                    <Text msgPosition={_side} {...data} />
                 </div>
             );
         case "video":

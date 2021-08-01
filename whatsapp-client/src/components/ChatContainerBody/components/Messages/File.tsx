@@ -1,8 +1,9 @@
 import s from "./messages.module.scss";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { useState } from "react";
+import { formatTime } from "../../../../utils/formatTime";
 
-export const File = ({ msgPosition, msgParams }: any) => {
+export const File = ({ msgPosition, msgParams, timestamp }: any) => {
     const { fileName, fileSize, url } = msgParams;
     const [loading, setLoading] = useState(false);
 
@@ -45,11 +46,11 @@ export const File = ({ msgPosition, msgParams }: any) => {
                 </div>
                 <div className={s.fileInfo}>
                     <div>
-                        <small>JPG</small>
+                        <small>{fileName.split(".")[1].toUpperCase()}</small>
                         <small>{fileSize}</small>
                     </div>
                     <div>
-                        <small>7:49 PM</small>
+                        <small>{formatTime(timestamp)}</small>
                         <small></small>
                     </div>
                 </div>
