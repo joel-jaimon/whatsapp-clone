@@ -7,11 +7,18 @@ import CheckIcon from "@material-ui/icons/Check";
 import FullscreenExitIcon from "@material-ui/icons/FullscreenExit";
 import { movalbleModalContext } from "../../../../context/movableModalContext";
 import { globalModalContext } from "../../../../context/globalModalContext";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import CloseIcon from "@material-ui/icons/Close";
+import ForwardIcon from "@material-ui/icons/Forward";
+import { formatTime } from "../../../../utils/formatTime";
 
-export const Video = ({ type, src }: any) => {
+export const Video = ({ msgPosition, msgParams, timestamp }: any) => {
+    const { thumbnail, url, size, duration } = msgParams;
     const { setMovableModal } = useContext(movalbleModalContext);
     const { setModal } = useContext(globalModalContext);
     const [imageOrientation, setImageOrientation] = useState<any>(null);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [downloaded, setDownloaded] = useState<boolean>(false);
 
     const handleImageType = (e: any) => {
         if (e.target.naturalHeight > e.target.naturalWidth) {
@@ -25,11 +32,11 @@ export const Video = ({ type, src }: any) => {
         setMovableModal({
             type: "minimizedVideo",
             params: {
-                src,
+                src: url,
                 xOffset: 100,
                 yOffset: 130,
                 mode: "mini",
-                orientation: "potrait",
+                orientation: imageOrientation,
             },
         });
     };
@@ -38,17 +45,29 @@ export const Video = ({ type, src }: any) => {
         setModal({
             type: "viewMsgPreview",
             params: {
-                src,
+                src: url,
                 xOffset: 100,
                 yOffset: 130,
-                orientation: "potrait",
+                orientation: imageOrientation,
                 previewImg: "",
             },
         });
     };
 
+    const downloadVideo = () => {
+        setLoading(true);
+        setTimeout(() => {
+            setDownloaded(true);
+            setLoading(false);
+        }, 3000);
+    };
+
+    const cancelDownload = () => {
+        setLoading(false);
+    };
+
     return (
-        <span className={type === "right" ? s.voiceRight : s.voiceLeft}>
+        <span className={msgPosition === "right" ? s.voiceRight : s.voiceLeft}>
             <div className={s.video}>
                 <div
                     className={
@@ -62,29 +81,67 @@ export const Video = ({ type, src }: any) => {
                         <ExpandMoreIcon />
                         <div
                             className={s.clickable}
-                            onClick={openVideoPreview}
+                            onClick={
+                                downloaded
+                                    ? openVideoPreview
+                                    : loading
+                                    ? cancelDownload
+                                    : downloadVideo
+                            }
                         />
                     </div>
                     <div className={s.thumbnailView}>
-                        <div className={s.thumbnail}>
+                        <div className={s.thumbnailControl}>
                             <div />
-                            <PlayArrowIcon />
-
+                            {!downloaded ? (
+                                <div
+                                    onClick={
+                                        loading ? cancelDownload : downloadVideo
+                                    }
+                                    className={s.downloadWrapper}
+                                >
+                                    {loading ? (
+                                        <button
+                                            onClick={cancelDownload}
+                                            className={s.loader}
+                                        >
+                                            <CloseIcon
+                                                className={s.closeIcon}
+                                            />
+                                            <CircularProgress
+                                                className={s.icon}
+                                            />
+                                        </button>
+                                    ) : (
+                                        <button
+                                            onClick={downloadVideo}
+                                            className={s.download}
+                                        >
+                                            <ForwardIcon
+                                                className={s.downloadIcon}
+                                            />
+                                            <small>{size}</small>
+                                        </button>
+                                    )}
+                                </div>
+                            ) : (
+                                <PlayArrowIcon />
+                            )}
                             <div className={s.thumbnailFooter}>
                                 <div className={s._A}>
                                     <VideocamIcon />
-                                    <small>00:15</small>
+                                    <small>{duration}</small>
                                 </div>
                                 <div className={s._A}>
-                                    <small>7:30 PM</small>
+                                    <small>{formatTime(timestamp)}</small>
                                     <CheckIcon />
                                 </div>
                             </div>
                         </div>
                         <img
-                            src={
-                                "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gIoSUNDX1BST0ZJTEUAAQEAAAIYAAAAAAIQAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAAHRyWFlaAAABZAAAABRnWFlaAAABeAAAABRiWFlaAAABjAAAABRyVFJDAAABoAAAAChnVFJDAAABoAAAAChiVFJDAAABoAAAACh3dHB0AAAByAAAABRjcHJ0AAAB3AAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAFgAAAAcAHMAUgBHAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFhZWiAAAAAAAABvogAAOPUAAAOQWFlaIAAAAAAAAGKZAAC3hQAAGNpYWVogAAAAAAAAJKAAAA+EAAC2z3BhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABYWVogAAAAAAAA9tYAAQAAAADTLW1sdWMAAAAAAAAAAQAAAAxlblVTAAAAIAAAABwARwBvAG8AZwBsAGUAIABJAG4AYwAuACAAMgAwADEANv/bAEMAAwICAgICAwICAgMDAwMEBgQEBAQECAYGBQYJCAoKCQgJCQoMDwwKCw4LCQkNEQ0ODxAQERAKDBITEhATDxAQEP/bAEMBAwMDBAMECAQECBALCQsQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEP/AABEIAeABgAMBIgACEQEDEQH/xAAVAAEBAAAAAAAAAAAAAAAAAAAACf/EABQQAQAAAAAAAAAAAAAAAAAAAAD/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AlUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//2Q=="
-                            }
+                            draggable={false}
+                            className={downloaded ? s.releasedImg : s.thumbnail}
+                            src={thumbnail}
                             alt="file-thumbnail"
                             onLoad={handleImageType}
                         />
