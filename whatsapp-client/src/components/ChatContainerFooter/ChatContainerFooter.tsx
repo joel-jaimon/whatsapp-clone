@@ -2,6 +2,7 @@ import { AudioRecorder } from "../AudioRecorder/AudioRecorder";
 import { useEffect, useRef, useState } from "react";
 import { Activity } from "../Activity/Activity";
 import s from "./chatContainerFooterStyles.module.scss";
+import SendIcon from "@material-ui/icons/Send";
 
 export const ChatContainerFooter = () => {
     const [height, setHeight] = useState(0);
@@ -9,8 +10,15 @@ export const ChatContainerFooter = () => {
     const [recording, setRecording] = useState(false);
     const [recordTime, setRecordTime] = useState(0);
     const [attachmentMenu, setAttachmentMenu] = useState(false);
+    const [typing, setTyping] = useState(false);
     const inputRef = useRef(null);
     const attachmentBtnRef = useRef(null);
+
+    const sendMsg = () => {
+        // @ts-ignore
+        const msg = inputRef.current.innerText.replaceAll("\n", "<br/>");
+        console.log(msg);
+    };
 
     return (
         <>
@@ -198,14 +206,23 @@ export const ChatContainerFooter = () => {
                     }}
                     className={s.input}
                 >
-                    <span className={s.spanPlaceholder}>Type a message</span>
+                    {typing ? null : (
+                        <span className={s.spanPlaceholder}>
+                            Type a message
+                        </span>
+                    )}
                     <div className={s.spanInput}>
                         <span
                             ref={inputRef}
                             contentEditable="true"
                             data-tab="6"
                             id="custom-input"
-                            onInput={(e) => {
+                            onInput={(e: any) => {
+                                if (e.target.innerText.length > 0) {
+                                    setTyping(true);
+                                } else {
+                                    setTyping(false);
+                                }
                                 //@ts-ignore
                                 if (!(height === e.target?.offsetHeight)) {
                                     //@ts-ignore
@@ -217,7 +234,11 @@ export const ChatContainerFooter = () => {
                         ></span>
                     </div>
                 </div>
-                {recording ? (
+                {typing ? (
+                    <div className={`icons ${s.sendButton}`}>
+                        <SendIcon onClick={sendMsg} />
+                    </div>
+                ) : recording ? (
                     <AudioRecorder setRecording={setRecording} />
                 ) : (
                     <div className={s.recorder}>

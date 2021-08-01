@@ -3,8 +3,9 @@ import s from "./messages.module.scss";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
 import MicIcon from "@material-ui/icons/Mic";
+import { formatTime } from "../../../../utils/formatTime";
 
-export const Voice = ({ msgPosition }: any) => {
+export const Voice = ({ msgPosition, timestamp }: any) => {
     const [duration, setDuration] = useState<any>(null);
     const [audioState, setAudioState] = useState(false);
     const [currentTime, setCurrentTime] = useState<any>(0);
@@ -96,7 +97,7 @@ export const Voice = ({ msgPosition }: any) => {
                             <small>
                                 {currentTime ? getDuration(currentTime) : null}
                             </small>
-                            <small>11:43 PM</small>
+                            <small>{formatTime(timestamp)}</small>
                         </div>
                     </div>
                 </div>

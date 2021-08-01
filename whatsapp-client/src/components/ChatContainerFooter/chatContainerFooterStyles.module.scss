@@ -6,6 +6,9 @@
     position: relative;
     justify-content: space-around;
     align-items: flex-end;
+    .sendButton {
+        margin-bottom: 5px;
+    }
     .input {
         margin: 7px 15px 7px 15px;
         padding: 0px 10px 0px 10px;
