@@ -13,6 +13,10 @@ import VolumeMuteIcon from "@material-ui/icons/VolumeMute";
 import VolumeOffIcon from "@material-ui/icons/VolumeOff";
 import { movalbleModalContext } from "../../../context/movableModalContext";
 import { globalModalContext } from "../../../context/globalModalContext";
+import {
+    landscapeOffset,
+    potraitOffset,
+} from "../../../constants/movableModal";
 
 const VolumeButton = ({ vol }: { vol: number }) => {
     if (vol < 1) return <VolumeOffIcon />;
@@ -35,6 +39,9 @@ export const MinimizedVideo = ({ params }: any) => {
     const animationRef: any = useRef(null);
     const progressbarRef: any = useRef(null);
     const volProgressRef: any = useRef(null);
+
+    const offset =
+        params.orientation === "potrait" ? potraitOffset : landscapeOffset;
 
     const getDuration = (secs: number) => {
         const seconds = Math.floor(secs % 60);
@@ -96,11 +103,10 @@ export const MinimizedVideo = ({ params }: any) => {
         setMovableModal({
             type: "minimizedVideo",
             params: {
+                ...offset,
                 src: "https://player.vimeo.com/external/565791593.sd.mp4?s=fa438f0a90f8c5c40133e50260d3559008660dc2&profile_id=165&oauth2_token_id=57447761",
-                xOffset: 100,
-                yOffset: 130,
                 mode: "mini",
-                orientation: "landscape",
+                orientation: params.orientation,
             },
         });
         setModal(null);

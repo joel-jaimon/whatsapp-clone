@@ -1,7 +1,5 @@
 .movableModal {
     position: absolute;
-    top: 130px;
-    left: 100px;
     z-index: 10000;
     transform: translate(-50%, -50%);
 }
@@ -12,7 +10,7 @@
     cursor: move;
 }
 .minVidWrapperLandscape {
-    width: 240px;
+    width: 300px;
     height: 180px;
     position: relative;
     cursor: move;

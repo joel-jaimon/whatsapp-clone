@@ -11,6 +11,10 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import CloseIcon from "@material-ui/icons/Close";
 import ForwardIcon from "@material-ui/icons/Forward";
 import { formatTime } from "../../../../utils/formatTime";
+import {
+    landscapeOffset,
+    potraitOffset,
+} from "../../../../constants/movableModal";
 
 export const Video = ({ msgPosition, msgParams, timestamp }: any) => {
     const { thumbnail, url, size, duration } = msgParams;
@@ -19,6 +23,9 @@ export const Video = ({ msgPosition, msgParams, timestamp }: any) => {
     const [imageOrientation, setImageOrientation] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [downloaded, setDownloaded] = useState<boolean>(false);
+
+    const offset =
+        imageOrientation === "potrait" ? potraitOffset : landscapeOffset;
 
     const handleImageType = (e: any) => {
         if (e.target.naturalHeight > e.target.naturalWidth) {
@@ -33,10 +40,9 @@ export const Video = ({ msgPosition, msgParams, timestamp }: any) => {
             type: "minimizedVideo",
             params: {
                 src: url,
-                xOffset: 100,
-                yOffset: 130,
                 mode: "mini",
                 orientation: imageOrientation,
+                ...offset,
             },
         });
     };
@@ -46,10 +52,9 @@ export const Video = ({ msgPosition, msgParams, timestamp }: any) => {
             type: "viewMsgPreview",
             params: {
                 src: url,
-                xOffset: 100,
-                yOffset: 130,
                 orientation: imageOrientation,
                 previewImg: "",
+                ...offset,
             },
         });
     };
@@ -59,7 +64,7 @@ export const Video = ({ msgPosition, msgParams, timestamp }: any) => {
         setTimeout(() => {
             setDownloaded(true);
             setLoading(false);
-        }, 3000);
+        }, 1000);
     };
 
     const cancelDownload = () => {

@@ -68,6 +68,10 @@ export const MovableModal = () => {
             onDragStart={handleGhostPreview}
             ref={draggableContainerRef}
             className={s.movableModal}
+            style={{
+                top: movableModal?.params?.yOffset,
+                left: movableModal?.params?.xOffset,
+            }}
         >
             <Modal {...movableModal} />
         </div>
