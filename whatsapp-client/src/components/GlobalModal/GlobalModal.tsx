@@ -9,6 +9,7 @@ import { AllowMicrophone } from "./Components/AllowMicrophone";
 import s from "./globalModalStyles.module.scss";
 import { DeniedMicrophone } from "./Components/DeniedMicrophone";
 import { MessagePreview } from "./Components/MessagePreview";
+import { connect } from "react-redux";
 
 const Modal = ({ type }: any) => {
     switch (type) {
@@ -36,8 +37,13 @@ const Modal = ({ type }: any) => {
 const fullModal = ["viewPhoto", "viewMsgPreview"];
 const transparentModal = ["allowMicrophone", "allowCamera"];
 
-export const GlobalModal = () => {
-    const { modal }: any = useContext(globalModalContext);
+const mapStateToProps = ({ globalModal }: any) => ({
+    modal: globalModal.modal,
+});
+
+// connect takes two args (stateToProps, dispatchToProps)
+export const GlobalModal = connect(mapStateToProps)(({ modal }: any) => {
+    // const { modal }: any = useContext(globalModalContext);
     return (
         modal && (
             <div className={s.smoke}>
@@ -59,4 +65,4 @@ export const GlobalModal = () => {
             </div>
         )
     );
-};
+});
