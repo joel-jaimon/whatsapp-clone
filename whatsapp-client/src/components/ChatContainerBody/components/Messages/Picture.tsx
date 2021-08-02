@@ -5,13 +5,24 @@ import { useContext, useState } from "react";
 import { globalModalContext } from "../../../../context/globalModalContext";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import CloseIcon from "@material-ui/icons/Close";
+import { setGlobalModal } from "../../../../redux/actions/setGlobalModal";
+import { connect } from "react-redux";
 
-export const Picture = ({ msgPosition, msgParams }: any) => {
+const mapDispatchToProps = (dispatch: any) => ({
+    setGlobalModal: (modal: any) => dispatch(setGlobalModal(modal)),
+});
+
+// using HOC
+
+export const Picture = connect(
+    null,
+    mapDispatchToProps
+)(({ msgPosition, msgParams, setGlobalModal }: any) => {
     const { thumbnail, url, size } = msgParams;
     const [imageOrientation, setImageOrientation] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [downloaded, setDownloaded] = useState<boolean>(false);
-    const { setModal } = useContext(globalModalContext);
+    // const { setModal } = useContext(globalModalContext);
 
     const handleImageType = (e: any) => {
         if (e.target.naturalHeight > e.target.naturalWidth) {
@@ -22,7 +33,7 @@ export const Picture = ({ msgPosition, msgParams }: any) => {
     };
 
     const preview = () => {
-        setModal({
+        setGlobalModal({
             type: "viewMsgPreview",
             params: { src: url, messageType: "image" },
         });
@@ -90,4 +101,4 @@ export const Picture = ({ msgPosition, msgParams }: any) => {
             </div>
         </span>
     );
-};
+});

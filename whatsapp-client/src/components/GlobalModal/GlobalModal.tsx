@@ -38,28 +38,29 @@ const fullModal = ["viewPhoto", "viewMsgPreview"];
 const transparentModal = ["allowMicrophone", "allowCamera"];
 
 const mapStateToProps = ({ globalModal }: any) => ({
-    modal: globalModal.modal,
+    globalModal: globalModal.modal,
 });
 
 // connect takes two args (stateToProps, dispatchToProps)
-export const GlobalModal = connect(mapStateToProps)(({ modal }: any) => {
+export const GlobalModal = connect(mapStateToProps)(({ globalModal }: any) => {
     // const { modal }: any = useContext(globalModalContext);
+
     return (
-        modal && (
+        globalModal && (
             <div className={s.smoke}>
-                {fullModal.includes(modal.type) ? (
+                {fullModal.includes(globalModal.type) ? (
                     <div className={s.fullModal}>
-                        <Modal type={modal.type} />
+                        <Modal type={globalModal.type} />
                     </div>
                 ) : (
                     <div
                         className={
-                            transparentModal.includes(modal.type)
+                            transparentModal.includes(globalModal.type)
                                 ? s.allowCamera
                                 : s.modal
                         }
                     >
-                        <Modal type={modal.type} />
+                        <Modal type={globalModal.type} />
                     </div>
                 )}
             </div>

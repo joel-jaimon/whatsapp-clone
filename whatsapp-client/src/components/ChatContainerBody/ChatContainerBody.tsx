@@ -75,7 +75,9 @@ export const ChatContainerBody = () => {
         >
             {dummyChat.map((chatData: any) => {
                 const owner = chatData.user === me;
-                return <Message owner={owner} data={chatData} />;
+                return (
+                    <Message key={chatData.id} owner={owner} data={chatData} />
+                );
             })}
         </div>
     );

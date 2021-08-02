@@ -11,9 +11,23 @@ import CloseIcon from "@material-ui/icons/Close";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import { MinimizedVideo } from "../../MovableModal/Components/MinimizedVideo";
+import { connect } from "react-redux";
+import { setGlobalModal } from "../../../redux/actions/setGlobalModal";
 
-export const MessagePreview = () => {
-    const { modal, setModal }: any = useContext(globalModalContext);
+const mapDispatchToProps = (dispatch: any) => ({
+    setGlobalModal: (modal: any) => dispatch(setGlobalModal(modal)),
+});
+
+const mapStateToProps = ({ globalModal }: any) => ({
+    globalModal: globalModal.modal,
+});
+
+export const MessagePreview = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(({ globalModal, setGlobalModal }: any) => {
+    // const dispatch = useDispatch();
+    // const { modal, setModal }: any = useContext(globalModalContext);
     const [activeMsg, setActiveMsg] = useState(0);
     const sliderRef: any = useRef(null);
     const mainRef: any = useRef(null);
@@ -70,7 +84,7 @@ export const MessagePreview = () => {
         >
             <div className={s.header}>
                 <div className={s.info}>
-                    <img src={modal.params.src} alt="avatar" />
+                    <img src={globalModal.params.src} alt="avatar" />
                     <div>
                         <strong>You @ Hum3</strong>
                         <br />
@@ -82,7 +96,7 @@ export const MessagePreview = () => {
                     <StarIcon />
                     <ReplyIcon />
                     <GetAppIcon />
-                    <CloseIcon onClick={() => setModal(null)} />
+                    <CloseIcon onClick={() => setGlobalModal(null)} />
                 </div>
             </div>
             <div className={s.main}>
@@ -90,10 +104,10 @@ export const MessagePreview = () => {
                     <ChevronLeftIcon />
                 </button>
                 <div className={s.preview}>
-                    {modal.params.messageType === "image" ? (
-                        <img src={modal.params.src} alt="msg preview" />
+                    {globalModal.params.messageType === "image" ? (
+                        <img src={globalModal.params.src} alt="msg preview" />
                     ) : (
-                        <MinimizedVideo params={modal.params} />
+                        <MinimizedVideo params={globalModal.params} />
                     )}
                 </div>
                 <button onClick={handleRight}>
@@ -112,7 +126,7 @@ export const MessagePreview = () => {
                                         ? s.previewActive
                                         : s.previewDefault
                                 }
-                                src={modal.params.src}
+                                src={globalModal.params.src}
                                 alt="smallPreview"
                             />
                         </div>
@@ -121,4 +135,4 @@ export const MessagePreview = () => {
             </div>
         </div>
     );
-};
+});
