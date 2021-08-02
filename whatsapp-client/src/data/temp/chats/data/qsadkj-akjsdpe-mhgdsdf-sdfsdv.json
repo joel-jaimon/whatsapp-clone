@@ -52,35 +52,6 @@
     },
 
     {
-        "id": "asjhdkj-askjdh-asadjvcjd",
-        "user": "kasjhdk-askjdh-asdhkaw2sjd",
-        "msgType": "text",
-        "timestamp": 1627836761253,
-        "msgParams": {
-            "text": "I have been working on this app lately, so I would really appreciate if you could download this app from google playstore. Please give your valuable feedback and don't forget to rate it if you like."
-        }
-    },
-    {
-        "id": "asjhdkj-a2skjdh-asdjvcjd",
-        "user": "kasjhdk-askjdh-asdhkasjd",
-        "msgType": "text",
-        "timestamp": 1627836762053,
-        "msgParams": {
-            "text": "I would really appreciate if you could download this app from google playstore. This app is now live. Please give your valuable feedback and don't forget to rate it if you like."
-        }
-    },
-    {
-        "id": "zxcasljd-jsarkk-poiaqwe",
-        "user": "asdiojasdk-askjdkl-asskjdt",
-        "msgType": "image",
-        "timestamp": 1627836763253,
-        "msgParams": {
-            "size": "531 kB",
-            "thumbnail": "https://firebasestorage.googleapis.com/v0/b/my-portfolio-15c91.appspot.com/o/temp%2F1.jpg?alt=media&token=75149bcd-ef63-4dba-b58f-bb9722c18741",
-            "url": "https://images.unsplash.com/photo-1521676259650-675b5bfec1ae?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80"
-        }
-    },
-    {
         "id": "xcasljd-arkk-poiaqwe",
         "user": "kasjhdk-askjdh-asdhkaw2sjd",
         "msgType": "video",

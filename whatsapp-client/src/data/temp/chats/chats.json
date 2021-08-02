@@ -1,0 +1,26 @@
+[
+    {
+        "id": "akjsadkj-akjsd-mhgdsdf-sdfsdv",
+        "type": "group",
+        "name": "RoomId",
+        "avatar": "",
+        "viewedOn": 23847234,
+        "createdOn": 29374932
+    },
+    {
+        "id": "jsadkj-akjsd-hgdsdf-bsdfsdv",
+        "type": "chat",
+        "name": "James 2",
+        "avatar": "",
+        "viewedOn": 23847234,
+        "createdOn": 29374932
+    },
+    {
+        "id": "qsadkj-akjsdpe-mhgdsdf-sdfsdv",
+        "type": "chat",
+        "name": "Ava Wayne",
+        "avatar": "",
+        "viewedOn": 23847234,
+        "createdOn": 29374932
+    }
+]

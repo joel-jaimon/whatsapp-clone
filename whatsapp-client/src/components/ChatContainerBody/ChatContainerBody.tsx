@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { dropDownContext } from "../../context/dropDownContext";
 import s from "./chatContainerBodyStyles.module.scss";
 import { File } from "./components/Messages/File";
@@ -6,7 +6,7 @@ import { Picture } from "./components/Messages/Picture";
 import { Text } from "./components/Messages/Text";
 import { Video } from "./components/Messages/Video";
 import { Voice } from "./components/Messages/Voice";
-import dummyChat from "../../data/chats/alexa.json";
+import dummyChat from "../../data/temp/chats/data/akjsadkj-akjsd-mhgdsdf-sdfsdv.json";
 
 const Message = ({ data, owner }: any) => {
     const _classname = owner ? s.RightWrap : s.LeftWrap;
@@ -48,10 +48,17 @@ const Message = ({ data, owner }: any) => {
 
 export const ChatContainerBody = () => {
     const { dropMenu, setDropMenu } = useContext(dropDownContext);
+    // const [loading, setLoading] = useState(true);
+    const chatRef: any = useRef(null);
     const me = "kasjhdk-askjdh-asdhkaw2sjd";
 
+    const onChatLoaded = () => {
+        chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    };
     return (
         <div
+            ref={chatRef}
+            onLoad={onChatLoaded}
             onClickCapture={() => setDropMenu(false)}
             onContextMenu={(e) => {
                 e.preventDefault();
