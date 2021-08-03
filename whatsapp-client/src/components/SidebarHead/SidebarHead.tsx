@@ -24,8 +24,8 @@ export const SidebarHead = connect(
             setPersonalSettingsDropdown({
                 type: "personalSetting",
                 position: {
-                    x: e.target.offsetLeft - 115,
-                    y: e.target.offsetHeight + 17,
+                    x: e.target.getBoundingClientRect().left - 110,
+                    y: e.target.getBoundingClientRect().top + 34,
                 },
                 params: {},
             });

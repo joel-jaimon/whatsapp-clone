@@ -1,7 +1,35 @@
-import { Avatar } from "@material-ui/core";
+import { setDropDown } from "../../redux/actions/setDropDown";
 import s from "./chatContainerHeader.module.scss";
+import { connect } from "react-redux";
 
-export const ChatContainerHead = ({ setModal }: any) => {
+const passStateToProps = ({ dropDownMenu }: any) => ({
+    dropDown: dropDownMenu.dropDown,
+});
+
+const passDispatchToProps = (dispatch: any) => ({
+    setDropDown: (dropMenu: any) => dispatch(setDropDown(dropMenu)),
+});
+
+export const ChatContainerHead = connect(
+    passStateToProps,
+    passDispatchToProps
+)(({ setModal, dropDown, setDropDown }: any) => {
+    const toggleDropdown = (e: any) => {
+        if (dropDown.type === "activeChatInfoToggle") {
+            setDropDown({
+                type: "",
+            });
+        } else {
+            setDropDown({
+                type: "activeChatInfoToggle",
+                position: {
+                    x: e.target.getBoundingClientRect().left - 110,
+                    y: e.target.getBoundingClientRect().top + 34,
+                },
+                params: {},
+            });
+        }
+    };
     return (
         <div className={s.chatContainerHead}>
             <div
@@ -42,8 +70,21 @@ export const ChatContainerHead = ({ setModal }: any) => {
                         ></path>
                     </svg>
                 </span>
-                <span className={`icons`}>
+                <span
+                    style={
+                        dropDown.type === "activeChatInfoToggle"
+                            ? {
+                                  backgroundColor: "#292929",
+                              }
+                            : {}
+                    }
+                    onClick={toggleDropdown}
+                    className={`icons`}
+                >
                     <svg
+                        style={{
+                            pointerEvents: "none",
+                        }}
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                         width="24"
@@ -58,4 +99,4 @@ export const ChatContainerHead = ({ setModal }: any) => {
             </div>
         </div>
     );
-};
+});
