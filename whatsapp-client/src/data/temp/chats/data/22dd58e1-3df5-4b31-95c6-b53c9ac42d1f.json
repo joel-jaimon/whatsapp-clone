@@ -1,7 +1,7 @@
 [
     {
         "id": "asjhdkj-askjdh-asdjvcjd",
-        "user": "kasjhdk-askjdh-asdhkaw2sjd",
+        "user": "b088aec3-ccbf-489e-a113-08177c2697b0",
         "msgType": "text",
         "timestamp": 1627836754253,
         "msgParams": {
@@ -10,7 +10,7 @@
     },
     {
         "id": "jashd-askjhd-akjshjaskja",
-        "user": "aoisaodi-asoidjas-asdhaskd",
+        "user": "2339b0c3-cbdc-4944-9b67-3812998d9879",
         "msgType": "document",
         "timestamp": 1627836760003,
         "msgParams": {
@@ -21,7 +21,7 @@
     },
     {
         "id": "asljd-jsakk-aqwe",
-        "user": "kasjhdk-askjdh-asdhkaw2sjd",
+        "user": "b088aec3-ccbf-489e-a113-08177c2697b0",
         "msgType": "image",
         "timestamp": 1627836760113,
         "msgParams": {
@@ -32,7 +32,7 @@
     },
     {
         "id": "kjaskdhask-askjdh-asdkjh",
-        "user": "aslkdnka-3489ksd932kjf-asdkjn",
+        "user": "b088aec3-ccbf-489e-a113-08177c2697b0",
         "msgType": "voice",
         "timestamp": 1627836760153,
         "msgParams": {
@@ -42,7 +42,7 @@
     },
     {
         "id": "kjaskdha2sk-askjdh-asdkjh",
-        "user": "kasjhdk-askjdh-asdhkaw2sjd",
+        "user": "2339b0c3-cbdc-4944-9b67-3812998d9879",
         "msgType": "voice",
         "timestamp": 1627836760253,
         "msgParams": {
@@ -53,55 +53,23 @@
 
     {
         "id": "asjhdkj-askjdh-asadjvcjd",
-        "user": "kasjhdk-askjdh-asdhkaw2sjd",
+        "user": "b088aec3-ccbf-489e-a113-08177c2697b0",
         "msgType": "text",
         "timestamp": 1627836761253,
         "msgParams": {
             "text": "I have been working on this app lately, so I would really appreciate if you could download this app from google playstore. Please give your valuable feedback and don't forget to rate it if you like."
         }
     },
-    {
-        "id": "asjhdkj-a2skjdh-asdjvcjd",
-        "user": "kasjhdk-askjdh-asdhkasjd",
-        "msgType": "text",
-        "timestamp": 1627836762053,
-        "msgParams": {
-            "text": "I would really appreciate if you could download this app from google playstore. This app is now live. Please give your valuable feedback and don't forget to rate it if you like."
-        }
-    },
+
     {
         "id": "zxcasljd-jsarkk-poiaqwe",
-        "user": "asdiojasdk-askjdkl-asskjdt",
+        "user": "2339b0c3-cbdc-4944-9b67-3812998d9879",
         "msgType": "image",
         "timestamp": 1627836763253,
         "msgParams": {
             "size": "531 kB",
             "thumbnail": "https://firebasestorage.googleapis.com/v0/b/my-portfolio-15c91.appspot.com/o/temp%2F1.jpg?alt=media&token=75149bcd-ef63-4dba-b58f-bb9722c18741",
             "url": "https://images.unsplash.com/photo-1521676259650-675b5bfec1ae?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80"
-        }
-    },
-    {
-        "id": "xcasljd-arkk-po2iaqwe",
-        "user": "kasjhdk-askjdh-asdhkaw2sjd",
-        "msgType": "video",
-        "timestamp": 1627836764153,
-        "msgParams": {
-            "size": "281 kB",
-            "duration": "00:15",
-            "thumbnail": "https://firebasestorage.googleapis.com/v0/b/my-portfolio-15c91.appspot.com/o/temp%2Fthumbnailvid1-min.png?alt=media&token=ccd32251-9bac-443b-83e8-fa5e1c776956",
-            "url": "https://storage.coverr.co/videos/YMcI3HlMOuSf6T1DDQOGzSQhUlobNQGh?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6Ijg3NjdFMzIzRjlGQzEzN0E4QTAyIiwiaWF0IjoxNjI3ODM0NTcyfQ.vR71qiS6CRn4_pr1HUeVohCefPII5fzznL4lX-lkGtI"
-        }
-    },
-    {
-        "id": "xcasljd-arkk-poiaqwe",
-        "user": "sdiojasdk-askjdkl-asskjdt",
-        "msgType": "video",
-        "timestamp": 1627836764253,
-        "msgParams": {
-            "size": "981 kB",
-            "duration": "00:45",
-            "thumbnail": "https://firebasestorage.googleapis.com/v0/b/my-portfolio-15c91.appspot.com/o/temp%2Fthumbnailvid2-min.png?alt=media&token=d54a6899-8613-47aa-be39-619a18a78358",
-            "url": "https://player.vimeo.com/external/565791593.sd.mp4?s=fa438f0a90f8c5c40133e50260d3559008660dc2&profile_id=165&oauth2_token_id=57447761"
         }
     }
 ]

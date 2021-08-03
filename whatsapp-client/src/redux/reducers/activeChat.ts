@@ -1,6 +1,6 @@
 import { activeChatTypes } from "../types/activeChatTypes";
 import info from "../../data/temp/chats/chats.json";
-import chat from "../../data/temp/chats/data/akjsadkj-akjsd-mhgdsdf-sdfsdv.json";
+import chat from "../../data/temp/chats/data/8bc44bbe-b4b0-492a-82d3-33de98251aa6.json";
 
 const initialState = {
     chat: {

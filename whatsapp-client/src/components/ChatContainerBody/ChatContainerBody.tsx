@@ -6,7 +6,7 @@ import { Video } from "./components/Messages/Video";
 import { Voice } from "./components/Messages/Voice";
 import { connect } from "react-redux";
 import { setDropDown } from "../../redux/actions/setDropDown";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 const Message = ({ data, owner }: any) => {
     const _classname = owner ? s.RightWrap : s.LeftWrap;
@@ -59,16 +59,15 @@ export const ChatContainerBody = connect(
     passDispatchToProps
 )(({ activeChat: { messages }, setDropMenu }: any) => {
     const chatRef: any = useRef(null);
-    const me = "kasjhdk-askjdh-asdhkaw2sjd";
+    const me = "2339b0c3-cbdc-4944-9b67-3812998d9879";
 
-    const onChatLoaded = () => {
+    useEffect(() => {
         chatRef.current.scrollTop = chatRef.current.scrollHeight;
-    };
+    }, []);
 
     return (
         <div
             ref={chatRef}
-            onLoad={onChatLoaded}
             onClickCapture={() => setDropMenu(false)}
             onContextMenu={(e) => {
                 e.preventDefault();
