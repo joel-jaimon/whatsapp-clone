@@ -11,7 +11,10 @@ export const ChatInfoDropdown = connect(passStateToProps)(
             <div
                 style={{
                     position: "absolute",
-                    left: dropMenu.position.x + 2,
+                    left:
+                        dropMenu.position.x + 142 > window.innerWidth
+                            ? dropMenu.position.x - 142
+                            : dropMenu.position.x + 2,
                     top: dropMenu.position.y + 2,
                     zIndex: 200,
                 }}
