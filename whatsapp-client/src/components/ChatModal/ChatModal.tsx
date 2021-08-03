@@ -1,18 +1,26 @@
 import s from "./chatModal.module.scss";
+import { connect } from "react-redux";
 import { SearchInMsgModal } from "./Modals/SearchInMsgModal/SearchInMsgModal";
 import { UserInfoModal } from "./Modals/UserInfoModal/UserInfoModal";
 
-export const ChatModal = ({ modal, setModal }: any) => {
+const passStateToProps = ({ chatModal }: any) => ({
+    chatContainerModal: chatModal.modal,
+});
+
+const passDispatchToProps = (dispatch: any) => {};
+
+export const ChatModal = connect(
+    passStateToProps,
+    passDispatchToProps
+)(({ chatContainerModal }: any) => {
     const _modal = () => {
-        switch (modal.type) {
+        switch (chatContainerModal.type) {
             case "searchMsg":
-                return (
-                    <SearchInMsgModal setModal={setModal} name="Joel Jaimon" />
-                );
+                return <SearchInMsgModal name="Joel Jaimon" />;
             case "userinfoModal":
-                return <UserInfoModal setModal={setModal} name="Joel Jaimon" />;
+                return <UserInfoModal name="Joel Jaimon" />;
         }
     };
 
     return <div className={s.chatModal}>{_modal()}</div>;
-};
+});

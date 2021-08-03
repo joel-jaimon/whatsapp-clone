@@ -1,8 +1,22 @@
-import { CircularProgress } from "@material-ui/core";
 import s from "../../chatModal.module.scss";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
+import { connect } from "react-redux";
+import { CircularProgress } from "@material-ui/core";
+import { setChatContainerModal } from "../../../../redux/actions/chatContainerModal";
 
-export const SearchInMsgModal = ({ setModal }: any) => {
+const passStateToProps = ({ chatModal }: any) => ({
+    chatContainerModal: chatModal.modal,
+});
+
+const passDispatchToProps = (dispatch: any) => ({
+    setChatContainerModal: (modal: any) =>
+        dispatch(setChatContainerModal(modal)),
+});
+
+export const SearchInMsgModal = connect(
+    passStateToProps,
+    passDispatchToProps
+)(({ setChatContainerModal }: any) => {
     const [loading, setLoading] = useState(false);
     const [inputFocused, setInputFocused] = useState(false);
     const [back, setBack] = useState(false);
@@ -11,7 +25,7 @@ export const SearchInMsgModal = ({ setModal }: any) => {
         <div className={s.userInfoModal}>
             <div className={s.modalHead}>
                 <svg
-                    onClick={() => setModal(false)}
+                    onClick={() => setChatContainerModal(false)}
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     width="24"
@@ -75,4 +89,4 @@ export const SearchInMsgModal = ({ setModal }: any) => {
             </div>
         </div>
     );
-};
+});

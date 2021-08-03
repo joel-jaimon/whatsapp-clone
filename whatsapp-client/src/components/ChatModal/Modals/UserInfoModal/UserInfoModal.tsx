@@ -1,16 +1,30 @@
 import s from "../../chatModal.module.scss";
+import { connect } from "react-redux";
 import { AvatarSection } from "./Components/AvatarSection/AvatarSection";
 import { DescSection } from "./Components/DescSection/DescSection";
 import { GeneralSettingsSection } from "./Components/GeneralSettingsSection/generalSettingsSection";
 import { MediaSection } from "./Components/MediaSection/MediaSection";
 import { ParticipantSection } from "./Components/ParticipantSection/ParticipantSection";
+import { setChatContainerModal } from "../../../../redux/actions/chatContainerModal";
 
-export const UserInfoModal = ({ setModal }: any) => {
+const passStateToProps = ({ chatModal }: any) => ({
+    chatContainerModal: chatModal.modal,
+});
+
+const passDispatchToProps = (dispatch: any) => ({
+    setChatContainerModal: (modal: any) =>
+        dispatch(setChatContainerModal(modal)),
+});
+
+export const UserInfoModal = connect(
+    passStateToProps,
+    passDispatchToProps
+)(({ setChatContainerModal }: any) => {
     return (
         <div className={s.userInfoModal}>
             <div className={s.modalHead}>
                 <svg
-                    onClick={() => setModal(false)}
+                    onClick={() => setChatContainerModal(false)}
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     width="24"
@@ -60,4 +74,4 @@ export const UserInfoModal = ({ setModal }: any) => {
             </div>
         </div>
     );
-};
+});
