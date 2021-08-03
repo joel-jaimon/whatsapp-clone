@@ -1,4 +1,3 @@
-import dummyChat from "../../data/temp/chats/data/akjsadkj-akjsd-mhgdsdf-sdfsdv.json";
 import s from "./chatContainerBodyStyles.module.scss";
 import { File } from "./components/Messages/File";
 import { Picture } from "./components/Messages/Picture";
@@ -47,20 +46,25 @@ const Message = ({ data, owner }: any) => {
     return <div />;
 };
 
+const passStateToProps = ({ activeChat }: any) => ({
+    activeChat: activeChat.chat,
+});
+
 const passDispatchToProps = (dispatch: any) => ({
     setDropMenu: (dropMenu: any) => dispatch(setDropDown(dropMenu)),
 });
 
 export const ChatContainerBody = connect(
-    null,
+    passStateToProps,
     passDispatchToProps
-)(({ setDropMenu }: any) => {
+)(({ activeChat: { messages }, setDropMenu }: any) => {
     const chatRef: any = useRef(null);
     const me = "kasjhdk-askjdh-asdhkaw2sjd";
 
     const onChatLoaded = () => {
         chatRef.current.scrollTop = chatRef.current.scrollHeight;
     };
+
     return (
         <div
             ref={chatRef}
@@ -79,7 +83,8 @@ export const ChatContainerBody = connect(
             }}
             className={s.chatContainerBody}
         >
-            {dummyChat.map((chatData: any) => {
+            {messages.map((chatData: any) => {
+                console.log(chatData);
                 const owner = chatData.user === me;
                 return (
                     <Message key={chatData.id} owner={owner} data={chatData} />

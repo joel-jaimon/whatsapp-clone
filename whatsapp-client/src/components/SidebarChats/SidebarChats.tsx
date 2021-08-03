@@ -3,15 +3,21 @@ import s from "./chatStyles.module.scss";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { connect } from "react-redux";
 import { setDropDown } from "../../redux/actions/setDropDown";
+import { setActiveChat } from "../../redux/actions/activeChat";
+
+const passStateToProps = ({ activeChat }: any) => ({
+    activeChat: activeChat.chat,
+});
 
 const passDispatchToProps = (dispatch: any) => ({
     setDropMenu: (dropMenu: any) => dispatch(setDropDown(dropMenu)),
+    setActiveChat: (activeChat: any) => dispatch(setActiveChat(activeChat)),
 });
 
 export const SidebarChats = connect(
-    null,
+    passStateToProps,
     passDispatchToProps
-)(({ data, setDropMenu }: any) => {
+)(({ data, setDropMenu, setActiveChat }: any) => {
     const handleDropMenuClicks = (e: any, type: string) => {
         setDropMenu({
             type,
@@ -23,9 +29,17 @@ export const SidebarChats = connect(
         });
     };
 
+    const handleActiveChat = () => {
+        setDropMenu(false);
+        setActiveChat({
+            chatInfo: data,
+            messages: require(`../../data/temp/chats/data/${data.id}.json`),
+        });
+    };
+
     return (
         <div
-            onClickCapture={() => setDropMenu(false)}
+            onClickCapture={handleActiveChat}
             onContextMenu={(e) => {
                 e.preventDefault();
                 setDropMenu({
@@ -39,7 +53,7 @@ export const SidebarChats = connect(
             }}
             className={s.sidebarChats}
         >
-            <Avatar />
+            <Avatar src={data.avatar} alt="sidebar-chat-avatar" />
             <span className={s.chatInfo}>
                 <div>
                     <p>{data.name}</p>

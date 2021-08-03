@@ -8,7 +8,6 @@ const globalModalReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case globalModalTypes.SET_GLOBAL_MODAL:
             return {
-                ...state,
                 modal: action.payload,
             };
 

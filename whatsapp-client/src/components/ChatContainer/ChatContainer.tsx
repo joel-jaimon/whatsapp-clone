@@ -1,6 +1,5 @@
-import { useState } from "react";
-import s from "./chatContainerStyles.module.scss";
 import { connect } from "react-redux";
+import s from "./chatContainerStyles.module.scss";
 import { ChatModal } from "../ChatModal/ChatModal";
 import { ChatContainerBody } from "../ChatContainerBody/ChatContainerBody";
 import { ChatContainerFooter } from "../ChatContainerFooter/ChatContainerFooter";

@@ -5,8 +5,10 @@ import globalModalReducer from "./reducers/globalModal";
 import { movableModalReducers } from "./reducers/movableModal";
 import { sidebarChatModalReducers } from "./reducers/sidebarChatModal";
 import { chatContainerModalReducers } from "./reducers/chatContainerModal";
+import { chatReducer } from "./reducers/activeChat";
 
 export default combineReducers({
+    activeChat: chatReducer,
     dropDownMenu: dropDownReducer,
     globalModal: globalModalReducer,
     movableModal: movableModalReducers,
