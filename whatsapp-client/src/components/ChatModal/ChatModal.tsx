@@ -13,6 +13,7 @@ export const ChatModal = connect(
     passStateToProps,
     passDispatchToProps
 )(({ chatContainerModal }: any) => {
+    console.log(chatContainerModal);
     const _modal = () => {
         switch (chatContainerModal.type) {
             case "searchMsg":

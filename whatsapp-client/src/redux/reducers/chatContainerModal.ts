@@ -8,7 +8,7 @@ export const chatContainerModalReducers = (
     state = initialState,
     action: any
 ) => {
-    switch (action.types) {
+    switch (action.type) {
         case chatContainerModalTypes.SET_CHAT_CONTAINER_MODAL:
             return {
                 modal: action.payload,

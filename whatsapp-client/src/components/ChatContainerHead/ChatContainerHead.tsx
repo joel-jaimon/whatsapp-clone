@@ -1,6 +1,7 @@
-import { setDropDown } from "../../redux/actions/setDropDown";
-import s from "./chatContainerHeader.module.scss";
 import { connect } from "react-redux";
+import s from "./chatContainerHeader.module.scss";
+import { setDropDown } from "../../redux/actions/setDropDown";
+import { setChatContainerModal } from "../../redux/actions/chatContainerModal";
 
 const passStateToProps = ({ dropDownMenu }: any) => ({
     dropDown: dropDownMenu.dropDown,
@@ -8,12 +9,14 @@ const passStateToProps = ({ dropDownMenu }: any) => ({
 
 const passDispatchToProps = (dispatch: any) => ({
     setDropDown: (dropMenu: any) => dispatch(setDropDown(dropMenu)),
+    setChatContainerModal: (modal: any) =>
+        dispatch(setChatContainerModal(modal)),
 });
 
 export const ChatContainerHead = connect(
     passStateToProps,
     passDispatchToProps
-)(({ setModal, dropDown, setDropDown }: any) => {
+)(({ setChatContainerModal, dropDown, setDropDown }: any) => {
     const toggleDropdown = (e: any) => {
         if (dropDown.type === "activeChatInfoToggle") {
             setDropDown({
@@ -34,7 +37,7 @@ export const ChatContainerHead = connect(
         <div className={s.chatContainerHead}>
             <div
                 onClick={() =>
-                    setModal({
+                    setChatContainerModal({
                         type: "userinfoModal",
                     })
                 }
@@ -52,7 +55,7 @@ export const ChatContainerHead = connect(
             <div className={s.roomControls}>
                 <span
                     onClick={() =>
-                        setModal({
+                        setChatContainerModal({
                             type: "searchMsg",
                         })
                     }
