@@ -3,6 +3,7 @@ import { AddAvatarDropdown } from "./Components/AddAvatarDropdown";
 import { ChangeAvatarDropdown } from "./Components/ChangeAvatarDropdown";
 import { ChatInfoDropdown } from "./Components/ChatInfoDropdown";
 import { connect } from "react-redux";
+import { PersonalSettingDropdown } from "./Components/PersonalSettingDropdown";
 
 const passStateToProps = ({ dropDownMenu }: any) => ({
     dropMenu: dropDownMenu.dropDown,
@@ -18,6 +19,8 @@ export const DropMenu = connect(passStateToProps)(({ dropMenu }: any) => {
             return <ChatInfoDropdown />;
         case "activeChatInfo":
             return <ActiveChatInfo />;
+        case "personalSetting":
+            return <PersonalSettingDropdown />;
         default:
             return (
                 <div
