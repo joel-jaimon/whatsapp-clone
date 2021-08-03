@@ -1,12 +1,17 @@
 import { Avatar } from "@material-ui/core";
 import s from "./chatStyles.module.scss";
-import { useContext } from "react";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { dropDownContext } from "../../context/dropDownContext";
+import { connect } from "react-redux";
+import { setDropDown } from "../../redux/actions/setDropDown";
 
-export const SidebarChats = ({ data }: any) => {
-    const { dropMenu, setDropMenu } = useContext(dropDownContext);
+const passDispatchToProps = (dispatch: any) => ({
+    setDropMenu: (dropMenu: any) => dispatch(setDropDown(dropMenu)),
+});
 
+export const SidebarChats = connect(
+    null,
+    passDispatchToProps
+)(({ data, setDropMenu }: any) => {
     const handleDropMenuClicks = (e: any, type: string) => {
         setDropMenu({
             type,
@@ -56,4 +61,4 @@ export const SidebarChats = ({ data }: any) => {
             </span>
         </div>
     );
-};
+});

@@ -1,14 +1,19 @@
+import { useEffect } from "react";
+import { connect } from "react-redux";
 import s from "./audioRecorder.module.scss";
-import { useEffect, useState, useContext } from "react";
-import { globalModalContext } from "../../context/globalModalContext";
+import { setGlobalModal } from "../../redux/actions/setGlobalModal";
 
-export const AudioRecorder = ({ setRecording }: any) => {
-    const [recordedAudio, setRecordedAudio] = useState(null);
-    const { setModal } = useContext(globalModalContext);
+const passDispatchToProps = (dispatch: any) => ({
+    setGlobalModal: (modal: any) => dispatch(setGlobalModal(modal)),
+});
 
+export const AudioRecorder = connect(
+    null,
+    passDispatchToProps
+)(({ setRecording, setGlobalModal }: any) => {
     useEffect(() => {
         if (!localStorage.getItem("_microphoneAccess"))
-            setModal({
+            setGlobalModal({
                 type: "allowMicrophone",
                 params: {},
             });
@@ -18,11 +23,11 @@ export const AudioRecorder = ({ setRecording }: any) => {
             })
             .then((stream) => {
                 localStorage.setItem("_microphoneAccess", "allowed");
-                setModal(null);
+                setGlobalModal(null);
                 console.log(stream);
             })
             .catch((err) => {
-                setModal({
+                setGlobalModal({
                     type: "microphoneDenied",
                     params: {},
                 });
@@ -69,4 +74,4 @@ export const AudioRecorder = ({ setRecording }: any) => {
             </svg>
         </div>
     );
-};
+});

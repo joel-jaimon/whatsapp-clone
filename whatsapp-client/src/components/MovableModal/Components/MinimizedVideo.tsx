@@ -1,5 +1,5 @@
 import s from "../movableModal.module.scss";
-import { useContext, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import CropFreeIcon from "@material-ui/icons/CropFree";
 import CloseIcon from "@material-ui/icons/Close";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
@@ -11,12 +11,13 @@ import VolumeUpIcon from "@material-ui/icons/VolumeUp";
 import VolumeDownIcon from "@material-ui/icons/VolumeDown";
 import VolumeMuteIcon from "@material-ui/icons/VolumeMute";
 import VolumeOffIcon from "@material-ui/icons/VolumeOff";
-import { movalbleModalContext } from "../../../context/movableModalContext";
-import { globalModalContext } from "../../../context/globalModalContext";
 import {
     landscapeOffset,
     potraitOffset,
 } from "../../../constants/movableModal";
+import { connect } from "react-redux";
+import { setMovableModal } from "../../../redux/actions/movalbleModal";
+import { setGlobalModal } from "../../../redux/actions/setGlobalModal";
 
 const VolumeButton = ({ vol }: { vol: number }) => {
     if (vol < 1) return <VolumeOffIcon />;
@@ -26,14 +27,20 @@ const VolumeButton = ({ vol }: { vol: number }) => {
     return <div />;
 };
 
-export const MinimizedVideo = ({ params }: any) => {
+const passDispatchToProps = (dispatch: any) => ({
+    setMovableModal: (modal: any) => dispatch(setMovableModal(modal)),
+    setGlobalModal: (modal: any) => dispatch(setGlobalModal(modal)),
+});
+
+export const MinimizedVideo = connect(
+    null,
+    passDispatchToProps
+)(({ params, setGlobalModal, setMovableModal }: any) => {
     const [duration, setDuration] = useState<any>(null);
     const [play, setPlay] = useState(false);
     const [currentTime, setCurrentTime] = useState<any>(0);
     const [vol, setVol] = useState(100);
     const [volVisible, setVolVisible] = useState(false);
-    const { setMovableModal } = useContext(movalbleModalContext);
-    const { setModal } = useContext(globalModalContext);
 
     const videoRef: any = useRef(null);
     const animationRef: any = useRef(null);
@@ -109,7 +116,7 @@ export const MinimizedVideo = ({ params }: any) => {
                 orientation: params.orientation,
             },
         });
-        setModal(null);
+        setGlobalModal(null);
     };
 
     const fullScreenMode = () => {
@@ -174,7 +181,7 @@ export const MinimizedVideo = ({ params }: any) => {
             />
         </div>
     );
-};
+});
 
 //volTrackModal
 //volTrackMinimized

@@ -1,8 +1,7 @@
 import s from "./messages.module.scss";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ForwardIcon from "@material-ui/icons/Forward";
-import { useContext, useState } from "react";
-import { globalModalContext } from "../../../../context/globalModalContext";
+import { useState } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import CloseIcon from "@material-ui/icons/Close";
 import { setGlobalModal } from "../../../../redux/actions/setGlobalModal";
@@ -12,8 +11,6 @@ const mapDispatchToProps = (dispatch: any) => ({
     setGlobalModal: (modal: any) => dispatch(setGlobalModal(modal)),
 });
 
-// using HOC
-
 export const Picture = connect(
     null,
     mapDispatchToProps
@@ -22,7 +19,6 @@ export const Picture = connect(
     const [imageOrientation, setImageOrientation] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [downloaded, setDownloaded] = useState<boolean>(false);
-    // const { setModal } = useContext(globalModalContext);
 
     const handleImageType = (e: any) => {
         if (e.target.naturalHeight > e.target.naturalWidth) {

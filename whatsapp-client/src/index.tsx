@@ -3,22 +3,13 @@ import ReactDOM from "react-dom";
 import "./common.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { DropDownContextProvider } from "./context/dropDownContext";
-import { GlobalModalProvider } from "./context/globalModalContext";
-import { MovableModalContextProvider } from "./context/movableModalContext";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 
 ReactDOM.render(
     <Provider store={store}>
         <React.StrictMode>
-            <MovableModalContextProvider>
-                <GlobalModalProvider>
-                    <DropDownContextProvider>
-                        <App />
-                    </DropDownContextProvider>
-                </GlobalModalProvider>
-            </MovableModalContextProvider>
+            <App />
         </React.StrictMode>
     </Provider>,
     document.getElementById("root")

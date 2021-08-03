@@ -1,6 +1,5 @@
 import s from "../globalModalStyles.module.scss";
-import { useContext, useEffect, useRef, useState } from "react";
-import { globalModalContext } from "../../../context/globalModalContext";
+import { useEffect, useRef, useState } from "react";
 
 // Icons
 import ChatBubbleOutlineOutlinedIcon from "@material-ui/icons/ChatBubbleOutlineOutlined";
@@ -14,20 +13,18 @@ import { MinimizedVideo } from "../../MovableModal/Components/MinimizedVideo";
 import { connect } from "react-redux";
 import { setGlobalModal } from "../../../redux/actions/setGlobalModal";
 
-const mapDispatchToProps = (dispatch: any) => ({
-    setGlobalModal: (modal: any) => dispatch(setGlobalModal(modal)),
-});
-
 const mapStateToProps = ({ globalModal }: any) => ({
     globalModal: globalModal.modal,
+});
+
+const mapDispatchToProps = (dispatch: any) => ({
+    setGlobalModal: (modal: any) => dispatch(setGlobalModal(modal)),
 });
 
 export const MessagePreview = connect(
     mapStateToProps,
     mapDispatchToProps
 )(({ globalModal, setGlobalModal }: any) => {
-    // const dispatch = useDispatch();
-    // const { modal, setModal }: any = useContext(globalModalContext);
     const [activeMsg, setActiveMsg] = useState(0);
     const sliderRef: any = useRef(null);
     const mainRef: any = useRef(null);
