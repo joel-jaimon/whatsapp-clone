@@ -1,21 +1,29 @@
-import { useContext } from "react";
-import { dropDownContext } from "../../../context/dropDownContext";
-import { globalModalContext } from "../../../context/globalModalContext";
+import { connect } from "react-redux";
+import { setDropDown } from "../../../redux/actions/setDropDown";
+import { setGlobalModal } from "../../../redux/actions/setGlobalModal";
 import s from "./dropmenu.module.scss";
 
-export const AddAvatarDropdown = () => {
-    const { dropMenu, setDropMenu }: any = useContext(dropDownContext);
-    const { setModal }: any = useContext(globalModalContext);
+const passStateToProps = ({ dropDownMenu }: any) => ({
+    dropMenu: dropDownMenu.dropDown,
+});
 
+const passDispatchToProps = (dispatch: any) => ({
+    setDropMenu: (dropMenu: any) => dispatch(setDropDown(dropMenu)),
+    setGlobalModal: (modal: any) => dispatch(setGlobalModal(modal)),
+});
+
+export const AddAvatarDropdown = connect(
+    passStateToProps,
+    passDispatchToProps
+)(({ dropMenu, setDropMenu, setGlobalModal }: any) => {
     const takePhoto = () => {
-        console.log(localStorage.getItem("_streamPermission"));
         if (localStorage.getItem("_streamPermission")) {
-            setModal({
+            setGlobalModal({
                 type: "takePhoto",
                 params: dropMenu.params,
             });
         } else {
-            setModal({
+            setGlobalModal({
                 type: "allowCamera",
                 params: dropMenu.params,
             });
@@ -48,4 +56,4 @@ export const AddAvatarDropdown = () => {
             </div>
         </div>
     );
-};
+});

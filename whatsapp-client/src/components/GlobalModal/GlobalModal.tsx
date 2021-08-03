@@ -1,5 +1,3 @@
-import { useContext } from "react";
-import { globalModalContext } from "../../context/globalModalContext";
 import { RemoveAvatar } from "./Components/RemoveAvatar";
 import { AllowCamera } from "./Components/AllowCamera";
 import { DeniedCamera } from "./Components/DeniedCamera";
@@ -43,8 +41,6 @@ const mapStateToProps = ({ globalModal }: any) => ({
 
 // connect takes two args (stateToProps, dispatchToProps)
 export const GlobalModal = connect(mapStateToProps)(({ globalModal }: any) => {
-    // const { modal }: any = useContext(globalModalContext);
-
     return (
         globalModal && (
             <div className={s.smoke}>

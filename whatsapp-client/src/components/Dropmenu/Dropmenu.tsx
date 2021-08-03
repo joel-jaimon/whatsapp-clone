@@ -1,13 +1,14 @@
-import { createRef, forwardRef, useContext, useEffect } from "react";
-import { dropDownContext } from "../../context/dropDownContext";
 import { ActiveChatInfo } from "./Components/ActiveChatInfo";
 import { AddAvatarDropdown } from "./Components/AddAvatarDropdown";
 import { ChangeAvatarDropdown } from "./Components/ChangeAvatarDropdown";
 import { ChatInfoDropdown } from "./Components/ChatInfoDropdown";
+import { connect } from "react-redux";
 
-export const DropMenu = () => {
-    const { dropMenu }: any = useContext(dropDownContext);
+const passStateToProps = ({ dropDownMenu }: any) => ({
+    dropMenu: dropDownMenu.dropDown,
+});
 
+export const DropMenu = connect(passStateToProps)(({ dropMenu }: any) => {
     switch (dropMenu.type) {
         case "addAvatar":
             return <AddAvatarDropdown />;
@@ -26,4 +27,4 @@ export const DropMenu = () => {
                 />
             );
     }
-};
+});

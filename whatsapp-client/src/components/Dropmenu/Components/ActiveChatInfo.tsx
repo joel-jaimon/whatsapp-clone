@@ -1,9 +1,11 @@
-import { useContext } from "react";
-import { dropDownContext } from "../../../context/dropDownContext";
 import s from "./dropmenu.module.scss";
+import { connect } from "react-redux";
 
-export const ActiveChatInfo = () => {
-    const { dropMenu, setDropMenu }: any = useContext(dropDownContext);
+const passStateToProps = ({ dropDownMenu }: any) => ({
+    dropMenu: dropDownMenu.dropDown,
+});
+
+export const ActiveChatInfo = connect(passStateToProps)(({ dropMenu }: any) => {
     return (
         <div
             style={{
@@ -31,4 +33,4 @@ export const ActiveChatInfo = () => {
             </div>
         </div>
     );
-};
+});
