@@ -1,14 +1,5 @@
 [
     {
-        "id": "asjhdkj-askjdh-asdjvcjd",
-        "user": "b088aec3-ccbf-489e-a113-08177c2697b0",
-        "msgType": "text",
-        "timestamp": 1627836754253,
-        "msgParams": {
-            "text": "Hey guys! I have been working on this app lately, so I would really appreciate if you could download this app from google playstore. This app is now live. Please give your valuable feedback and don't forget to rate it if you like."
-        }
-    },
-    {
         "id": "jashd-askjhd-akjshjaskja",
         "user": "2339b0c3-cbdc-4944-9b67-3812998d9879",
         "msgType": "document",
@@ -19,6 +10,16 @@
             "url": "abc@abc.com"
         }
     },
+    {
+        "id": "asjhdkj-askjdh-asdjvcjd",
+        "user": "b088aec3-ccbf-489e-a113-08177c2697b0",
+        "msgType": "text",
+        "timestamp": 1627836754253,
+        "msgParams": {
+            "text": "Hey guys! I have been working on this app lately, so I would really appreciate if you could download this app from google playstore. This app is now live. Please give your valuable feedback and don't forget to rate it if you like."
+        }
+    },
+
     {
         "id": "asljd-jsakk-aqwe",
         "user": "b088aec3-ccbf-489e-a113-08177c2697b0",

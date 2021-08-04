@@ -1,3 +1,10 @@
+import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
+
 export const Picture = () => {
-    return <div></div>;
+    return (
+        <small>
+            <PhotoCameraIcon />
+            Photo
+        </small>
+    );
 };

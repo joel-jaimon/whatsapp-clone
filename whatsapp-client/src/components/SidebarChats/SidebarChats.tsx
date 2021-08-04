@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { setDropDown } from "../../redux/actions/setDropDown";
 import { setActiveChat } from "../../redux/actions/activeChat";
 import { setChatContainerModal } from "../../redux/actions/chatContainerModal";
+import { MsgPreview } from "./Components/MsgPreview";
 
 const passStateToProps = ({ activeChat }: any) => ({
     activeChat: activeChat.chat,
@@ -64,10 +65,7 @@ export const SidebarChats = connect(
                     <p className={s.time}>Thursday</p>
                 </div>
                 <div>
-                    <small>
-                        Ipsom: Askjdh askjd aks dkjas kd aksjd hkasjdhkas dkjas
-                        kdjha skdj hkasjd kasj kdjash kdj hkasjhd k askdj aks jd
-                    </small>
+                    <MsgPreview {...data} />
                     <ExpandMoreIcon
                         onClick={(e) => handleDropMenuClicks(e, "chatInfo")}
                         style={{
