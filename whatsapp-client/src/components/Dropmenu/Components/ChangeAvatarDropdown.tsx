@@ -2,6 +2,7 @@ import s from "./dropmenu.module.scss";
 import { connect } from "react-redux";
 import { setDropDown } from "../../../redux/actions/setDropDown";
 import { setGlobalModal } from "../../../redux/actions/setGlobalModal";
+import { DropdownAnimation } from "../../../animations/dropdown/DropdownAnimation";
 
 const passStateToProps = ({ dropDownMenu }: any) => ({
     dropMenu: dropDownMenu.dropDown,
@@ -39,18 +40,17 @@ export const ChangeAvatarDropdown = connect(
         setDropMenu("");
     };
 
+    const sizeParam = {
+        height: 136,
+        width: 140,
+        yOffset: 0,
+        xOffset: 142,
+    };
     return (
-        <div
+        <DropdownAnimation
+            sizeParam={sizeParam}
+            locationParams={dropMenu.position}
             className={s.dropDown}
-            style={{
-                position: "absolute",
-                left:
-                    dropMenu.position.x + 142 > window.innerWidth
-                        ? dropMenu.position.x - 142
-                        : dropMenu.position.x + 2,
-                top: dropMenu.position.y + 2,
-                zIndex: 200,
-            }}
         >
             <div onClick={viewPhoto} className={s.list}>
                 <p>View photo</p>
@@ -71,6 +71,6 @@ export const ChangeAvatarDropdown = connect(
             <div onClick={dropMenu.params.handleRemoveImage} className={s.list}>
                 <p>Remove photo</p>
             </div>
-        </div>
+        </DropdownAnimation>
     );
 });

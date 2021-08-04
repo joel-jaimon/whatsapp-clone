@@ -1,29 +1,22 @@
 import s from "./dropmenu.module.scss";
 import { connect } from "react-redux";
-import { useRef } from "react";
+import { DropdownAnimation } from "../../../animations/dropdown/DropdownAnimation";
 
 const passStateToProps = ({ dropDownMenu }: any) => ({
     dropMenu: dropDownMenu.dropDown,
 });
 
 export const ActiveChatInfo = connect(passStateToProps)(({ dropMenu }: any) => {
-    const dropDownRef = useRef(null);
-
+    const sizeParam = {
+        height: 170,
+        width: 140,
+        yOffset: 175,
+        xOffset: 142,
+    };
     return (
-        <div
-            ref={dropDownRef}
-            style={{
-                position: "absolute",
-                left:
-                    dropMenu.position.x + 142 > window.innerWidth
-                        ? dropMenu.position.x - 142
-                        : dropMenu.position.x + 2,
-                top:
-                    dropMenu.position.y + 175 > window.innerHeight
-                        ? dropMenu.position.y - 175
-                        : dropMenu.position.y + 2,
-                zIndex: 200,
-            }}
+        <DropdownAnimation
+            sizeParam={sizeParam}
+            locationParams={dropMenu.position}
             className={s.dropDown}
         >
             <div className={s.list}>
@@ -41,6 +34,6 @@ export const ActiveChatInfo = connect(passStateToProps)(({ dropMenu }: any) => {
             <div className={s.list}>
                 <p>Delete chat</p>
             </div>
-        </div>
+        </DropdownAnimation>
     );
 });

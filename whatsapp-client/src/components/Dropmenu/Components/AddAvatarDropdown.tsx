@@ -1,4 +1,5 @@
 import { connect } from "react-redux";
+import { DropdownAnimation } from "../../../animations/dropdown/DropdownAnimation";
 import { setDropDown } from "../../../redux/actions/setDropDown";
 import { setGlobalModal } from "../../../redux/actions/setGlobalModal";
 import s from "./dropmenu.module.scss";
@@ -31,18 +32,17 @@ export const AddAvatarDropdown = connect(
         setDropMenu("");
     };
 
+    const sizeParam = {
+        height: 68,
+        width: 140,
+        yOffset: 73,
+        xOffset: 142,
+    };
     return (
-        <div
+        <DropdownAnimation
+            sizeParam={sizeParam}
+            locationParams={dropMenu.position}
             className={s.dropDown}
-            style={{
-                position: "absolute",
-                left:
-                    dropMenu.position.x + 142 > window.innerWidth
-                        ? dropMenu.position.x - 142
-                        : dropMenu.position.x + 2,
-                top: dropMenu.position.y + 2,
-                zIndex: 20,
-            }}
         >
             <div onClick={takePhoto} className={s.list}>
                 <p>Take photo</p>
@@ -57,6 +57,6 @@ export const AddAvatarDropdown = connect(
                 />
                 <p>Upload photo</p>
             </div>
-        </div>
+        </DropdownAnimation>
     );
 });

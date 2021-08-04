@@ -1,4 +1,5 @@
 import { connect } from "react-redux";
+import { DropdownAnimation } from "../../../animations/dropdown/DropdownAnimation";
 import s from "./dropmenu.module.scss";
 
 const passStateToProps = ({ dropDownMenu }: any) => ({
@@ -7,17 +8,16 @@ const passStateToProps = ({ dropDownMenu }: any) => ({
 
 export const ChatInfoDropdown = connect(passStateToProps)(
     ({ dropMenu }: any) => {
+        const sizeParam = {
+            height: 170,
+            width: 140,
+            yOffset: 175,
+            xOffset: 142,
+        };
         return (
-            <div
-                style={{
-                    position: "absolute",
-                    left:
-                        dropMenu.position.x + 142 > window.innerWidth
-                            ? dropMenu.position.x - 142
-                            : dropMenu.position.x + 2,
-                    top: dropMenu.position.y + 2,
-                    zIndex: 200,
-                }}
+            <DropdownAnimation
+                sizeParam={sizeParam}
+                locationParams={dropMenu.position}
                 className={s.dropDown}
             >
                 <div className={s.list}>
@@ -35,7 +35,7 @@ export const ChatInfoDropdown = connect(passStateToProps)(
                 <div className={s.list}>
                     <p>Mark as unread</p>
                 </div>
-            </div>
+            </DropdownAnimation>
         );
     }
 );
