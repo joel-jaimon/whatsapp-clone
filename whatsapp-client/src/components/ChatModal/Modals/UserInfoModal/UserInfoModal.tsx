@@ -19,12 +19,12 @@ const passDispatchToProps = (dispatch: any) => ({
 export const UserInfoModal = connect(
     passStateToProps,
     passDispatchToProps
-)(({ setChatContainerModal }: any) => {
+)(({ setChatContainerModal, setReverseAnimation }: any) => {
     return (
         <div className={s.userInfoModal}>
             <div className={s.modalHead}>
                 <svg
-                    onClick={() => setChatContainerModal(false)}
+                    onClick={() => setReverseAnimation(true)}
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     width="24"

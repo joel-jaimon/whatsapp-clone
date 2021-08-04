@@ -5,8 +5,8 @@
     background: #131c21;
     z-index: 10;
     border-left: 0.25px solid rgb(75, 75, 75);
-
     @media screen and (min-width: 1200px) {
+        max-width: 350px;
         width: 80%;
         position: relative;
     }
