@@ -4,6 +4,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { connect } from "react-redux";
 import { setDropDown } from "../../redux/actions/setDropDown";
 import { setActiveChat } from "../../redux/actions/activeChat";
+import { setChatContainerModal } from "../../redux/actions/chatContainerModal";
 
 const passStateToProps = ({ activeChat }: any) => ({
     activeChat: activeChat.chat,
@@ -12,12 +13,14 @@ const passStateToProps = ({ activeChat }: any) => ({
 const passDispatchToProps = (dispatch: any) => ({
     setDropMenu: (dropMenu: any) => dispatch(setDropDown(dropMenu)),
     setActiveChat: (activeChat: any) => dispatch(setActiveChat(activeChat)),
+    setChatModal: (chatModal: any) =>
+        dispatch(setChatContainerModal(chatModal)),
 });
 
 export const SidebarChats = connect(
     passStateToProps,
     passDispatchToProps
-)(({ data, setDropMenu, setActiveChat }: any) => {
+)(({ data, setDropMenu, setActiveChat, setChatModal }: any) => {
     const handleDropMenuClicks = (e: any, type: string) => {
         setDropMenu({
             type,
@@ -31,6 +34,7 @@ export const SidebarChats = connect(
 
     const handleActiveChat = () => {
         setDropMenu(false);
+        setChatModal(null);
         setActiveChat({
             chatInfo: data,
             messages: require(`../../data/temp/chats/data/${data.id}.json`),

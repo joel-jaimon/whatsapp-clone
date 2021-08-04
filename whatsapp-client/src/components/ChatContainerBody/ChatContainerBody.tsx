@@ -83,7 +83,6 @@ export const ChatContainerBody = connect(
             className={s.chatContainerBody}
         >
             {messages.map((chatData: any) => {
-                console.log(chatData);
                 const owner = chatData.user === me;
                 return (
                     <Message key={chatData.id} owner={owner} data={chatData} />

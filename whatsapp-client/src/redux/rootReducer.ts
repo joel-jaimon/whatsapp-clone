@@ -6,8 +6,10 @@ import { movableModalReducers } from "./reducers/movableModal";
 import { sidebarChatModalReducers } from "./reducers/sidebarChatModal";
 import { chatContainerModalReducers } from "./reducers/chatContainerModal";
 import { chatReducer } from "./reducers/activeChat";
+import { authReducer } from "./reducers/auth";
 
 export default combineReducers({
+    authState: authReducer,
     activeChat: chatReducer,
     dropDownMenu: dropDownReducer,
     globalModal: globalModalReducer,

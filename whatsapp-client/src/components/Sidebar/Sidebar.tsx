@@ -1,12 +1,14 @@
+import s from "./sidebarStyles.module.scss";
+import chats from "../../data/temp/chats/chats.json";
 import { SidebarChats } from "../SidebarChats/SidebarChats";
 import { SidebarHead } from "../SidebarHead/SidebarHead";
 import { SidebarSearch } from "../SidebarSearch/SidebarSearch";
-import s from "./sidebarStyles.module.scss";
-import chats from "../../data/temp/chats/chats.json";
+import { SidebarModal } from "../SidebarModal/SidebarModal";
 
 export const Sidebar = () => {
     return (
         <div className={s.sidebar}>
+            <SidebarModal />
             <SidebarHead />
             <SidebarSearch />
             <div className={s.chatsContainer}>
