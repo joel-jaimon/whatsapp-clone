@@ -1,0 +1,463 @@
+// Text
+.text {
+    font-size: 11.5px;
+    line-height: 17px;
+    width: fit-content;
+    border-radius: 5px;
+    max-width: 55%;
+    text-align: start;
+    .textMsg {
+        margin: 0px;
+        padding: 5px;
+    }
+    .msgTiming {
+        display: flex;
+        justify-content: flex-end;
+        font-size: 11px;
+        color: rgb(211, 211, 211);
+        small {
+            margin: 0px 4px 1px 0px;
+        }
+    }
+}
+.msgTiming {
+    display: flex;
+}
+
+.textLeft,
+.voiceLeft,
+.fileLeft,
+.imgLeft {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    .text,
+    .voice,
+    .file,
+    .img,
+    .video {
+        --bar-bg: #50505056;
+        --seek-before-width: 0;
+        --seek-before-color: #5e5e5e;
+        --knobby: #585858;
+        --selectedKnobby: #585858;
+
+        background-color: #262d31;
+        .fileControl {
+            background-color: #1f2427;
+        }
+    }
+}
+.textRight,
+.voiceRight,
+.fileRight,
+.imgRight {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    .text,
+    .voice,
+    .file,
+    .img,
+    .video {
+        --bar-bg: #50818856;
+        --seek-before-width: 0;
+        --seek-before-color: #5f9899;
+        --knobby: #5f9899;
+        --selectedKnobby: #26c9c3;
+
+        transform: translate(-30px);
+        background-color: #056162;
+        .fileControl {
+            background-color: #044041c0;
+        }
+    }
+}
+
+// Voice
+.voice {
+    display: flex;
+    align-items: center;
+    color: rgba(197, 198, 200, 0.5);
+    width: fit-content;
+    padding: 2px 2px 2px 10px;
+    border-radius: 5px;
+    width: 225px;
+
+    .userImg {
+        display: flex;
+        align-items: center;
+        margin: 1px 0px 1px 0px;
+        position: relative;
+        img {
+            height: 50px;
+            width: 50px;
+            border-radius: 100%;
+        }
+        svg {
+            position: absolute;
+            top: 30px;
+            right: -5px;
+            z-index: 1;
+            height: 22px;
+            color: var(--seek-before-color);
+        }
+    }
+    .audioInfo {
+        display: flex;
+
+        button {
+            background-color: transparent;
+            border: none;
+            color: rgba(197, 198, 200, 0.5);
+            cursor: pointer;
+        }
+    }
+    .audioTrack {
+        display: flex;
+        justify-content: space-between;
+        small {
+            font-size: 9px;
+        }
+    }
+}
+
+// Progress bar
+.progressBar {
+    appearance: none;
+    background: var(--bar-bg);
+    border-radius: 10px;
+    position: relative;
+    width: 100%;
+    height: 3px;
+    top: -4px;
+    outline: none;
+}
+
+/* progress bar - safari */
+.progressBar::-webkit-slider-runnable-track {
+    background: var(--bar-bg);
+    border-radius: 10px;
+    position: relative;
+    width: 100%;
+    height: 3px;
+    outline: none;
+}
+
+/* progress bar - firefox */
+.progressBar::-moz-range-track {
+    background: var(--bar-bg);
+    border-radius: 10px;
+    position: relative;
+    width: 100%;
+    height: 3px;
+
+    outline: none;
+}
+
+.progressBar::-moz-focus-outer {
+    border: 0;
+}
+
+/* progress bar - chrome and safari */
+.progressBar::before {
+    content: "";
+    height: 3px;
+    width: var(--seek-before-width);
+    background-color: var(--seek-before-color);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    cursor: pointer;
+}
+
+/* progress bar - firefox */
+.progressBar::-moz-range-progress {
+    background-color: var(--seek-before-color);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    height: 3px;
+}
+
+/* knobby - chrome and safari */
+.progressBar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--knobby);
+    cursor: pointer;
+    position: relative;
+    margin: -3.25px 0 0 0;
+    z-index: 3;
+    box-sizing: border-box;
+}
+
+/* knobby while dragging - chrome and safari */
+.progressBar:active::-webkit-slider-thumb {
+    transform: scale(1.2);
+    background: var(--selectedKnobby);
+}
+
+/* knobby - firefox */
+.progressBar::-moz-range-thumb {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    border: transparent;
+    background-color: var(--knobby);
+    cursor: pointer;
+    position: relative;
+    z-index: 3;
+    box-sizing: border-box;
+}
+
+/* knobby while dragging - firefox */
+.progressBar:active::-moz-range-thumb {
+    transform: scale(1.2);
+    background: var(--selectedKnobby);
+}
+
+// Document
+.file {
+    padding: 2px;
+    width: 240.5px;
+    border-radius: 5px;
+    .fileControl {
+        padding: 10px 15px 10px 15px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        div {
+            display: flex;
+            align-items: center;
+        }
+        img {
+            height: 25px;
+        }
+        svg {
+            opacity: 0.2;
+            height: 28px;
+            color: white;
+            cursor: pointer;
+        }
+        small {
+            font-size: 11.5px;
+            padding: 7px;
+        }
+    }
+    .fileInfo {
+        display: flex;
+        justify-content: space-between;
+        div {
+            display: flex;
+        }
+        small {
+            padding: 1px 2px 1px 2px;
+            font-size: 9px;
+            color: rgba(197, 198, 200, 0.6);
+        }
+    }
+}
+//
+// Image
+.img {
+    padding: 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    .imgPotrait {
+        height: 250px;
+        width: 180px;
+        overflow: hidden;
+    }
+    .imgLandscape {
+        height: 160px;
+        width: 290px;
+        overflow: hidden;
+    }
+    .imgPotrait,
+    .imgLandscape {
+        border-radius: 5px;
+        position: relative;
+        .releasedImg {
+            object-fit: cover;
+            height: 100%;
+            border-radius: 5px;
+            width: 100%;
+        }
+        .thumbnail {
+            filter: blur(10px);
+            object-fit: cover;
+            height: 100%;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .smoke {
+            display: none;
+        }
+        &:hover {
+            .smoke {
+                display: flex;
+                justify-content: flex-end;
+                align-items: flex-start;
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                background-color: rgba(0, 0, 0, 0.1);
+            }
+        }
+    }
+}
+
+.video {
+    padding: 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    .imgPotrait {
+        height: 250px;
+        width: 180px;
+        overflow: hidden;
+    }
+    .imgLandscape {
+        height: 160px;
+        width: 290px;
+        overflow: hidden;
+    }
+    .imgPotrait,
+    .imgLandscape {
+        border-radius: 5px;
+        position: relative;
+
+        .releasedImg {
+            object-fit: cover;
+            height: 100%;
+            border-radius: 5px;
+            width: 100%;
+            filter: blur(5px);
+        }
+        .thumbnail {
+            object-fit: cover;
+            height: 100%;
+            border-radius: 5px;
+            width: 100%;
+            filter: blur(10px);
+        }
+        .smoke {
+            display: none;
+        }
+        &:hover {
+            .smoke {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                background-color: rgba(0, 0, 0, 0.1);
+                z-index: 2;
+                svg {
+                    z-index: 2;
+                }
+                .clickable {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    z-index: 1;
+                }
+            }
+        }
+        .thumbnailView {
+            height: 100%;
+            width: 100%;
+            .thumbnailControl {
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                z-index: 1;
+            }
+            .thumbnailFooter {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                margin-bottom: 1px;
+                ._A {
+                    display: flex;
+                    align-items: center;
+                    small {
+                        font-size: 9px;
+                    }
+                    svg {
+                        height: 15px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.downloadWrapper {
+    cursor: pointer;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .loader {
+        background-color: rgba(0, 0, 0, 0.407);
+        border-radius: 100%;
+        border: none;
+        outline: none;
+        height: 45px;
+        width: 45px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        .icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: whitesmoke;
+        }
+        .closeIcon {
+            color: whitesmoke;
+            position: absolute;
+            height: 18px;
+        }
+    }
+    .download {
+        cursor: pointer;
+        background-color: rgba(0, 0, 0, 0.407);
+        color: whitesmoke;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 8px 10px 8px 10px;
+        border-radius: 25px;
+        border: none;
+        outline: none;
+
+        .downloadIcon {
+            transform: rotate(90deg);
+            height: 20px;
+        }
+        small {
+            margin: 5px;
+        }
+    }
+}
