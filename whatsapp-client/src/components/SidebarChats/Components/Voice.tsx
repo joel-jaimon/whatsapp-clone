@@ -3,8 +3,10 @@ import MusicNoteIcon from "@material-ui/icons/MusicNote";
 export const Voice = () => {
     return (
         <small>
-            <MusicNoteIcon />
-            Audio
+            <div className="a-f-a">
+                <MusicNoteIcon />
+                Audio
+            </div>
         </small>
     );
 };

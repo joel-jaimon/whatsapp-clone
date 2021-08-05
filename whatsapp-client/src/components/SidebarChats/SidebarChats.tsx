@@ -6,6 +6,7 @@ import { setDropDown } from "../../redux/actions/setDropDown";
 import { setActiveChat } from "../../redux/actions/activeChat";
 import { setChatContainerModal } from "../../redux/actions/chatContainerModal";
 import { MsgPreview } from "./Components/MsgPreview";
+import { useState } from "react";
 
 const passStateToProps = ({ activeChat }: any) => ({
     activeChat: activeChat.chat,
@@ -42,8 +43,12 @@ export const SidebarChats = connect(
         });
     };
 
+    const [expandMore, setExpandMore] = useState(false);
+
     return (
         <div
+            onMouseOver={() => setExpandMore(true)}
+            onMouseLeave={() => setExpandMore(false)}
             onClickCapture={handleActiveChat}
             onContextMenu={(e) => {
                 e.preventDefault();
@@ -66,13 +71,15 @@ export const SidebarChats = connect(
                 </div>
                 <div>
                     <MsgPreview {...data} />
-                    <ExpandMoreIcon
-                        onClick={(e) => handleDropMenuClicks(e, "chatInfo")}
-                        style={{
-                            height: 20,
-                            color: "rgb(130, 134, 137)",
-                        }}
-                    />
+                    {expandMore ? (
+                        <ExpandMoreIcon
+                            onClick={(e) => handleDropMenuClicks(e, "chatInfo")}
+                            style={{
+                                height: 20,
+                                color: "rgb(130, 134, 137)",
+                            }}
+                        />
+                    ) : null}
                 </div>
             </span>
         </div>

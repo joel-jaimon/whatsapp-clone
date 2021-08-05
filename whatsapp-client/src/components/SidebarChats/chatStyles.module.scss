@@ -22,9 +22,10 @@
             align-items: center;
             p {
                 border-bottom: 0px;
-                font-size: 14px;
+                font-size: 13.5px;
                 margin: 0px;
-                line-height: 18px;
+                line-height: 14px;
+                margin-top: 6px;
             }
             small {
                 font-size: 12px;
@@ -32,11 +33,19 @@
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                display: flex;
-                align-items: center;
+                line-height: 20px;
+                .a-f-a {
+                    margin: 0px;
+                    height: 20px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                }
                 svg {
                     height: 15px;
                     width: 20px;
+                    margin-left: -3px;
                 }
             }
             .time {
