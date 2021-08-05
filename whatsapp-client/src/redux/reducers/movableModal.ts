@@ -5,10 +5,12 @@ const initialState = {
 };
 
 export const movableModalReducers = (state = initialState, action: any) => {
-    switch (action.types) {
+    console.log(action);
+    switch (action.type) {
         case movalbleModalTypes.SET_MOVALBLE_MODAL:
             return {
-                movableModal: action.payload,
+                ...state,
+                modal: action.payload,
             };
         default:
             return state;
