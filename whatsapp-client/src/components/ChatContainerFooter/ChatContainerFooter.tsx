@@ -31,6 +31,7 @@ export const ChatContainerFooter = () => {
     const [reverseActivityAnimation, setReverseActivityAnimation] =
         useState(false);
     const [typing, setTyping] = useState(false);
+    const [input, setInput] = useState("");
 
     const inputRef = useRef(null);
 
@@ -78,6 +79,7 @@ export const ChatContainerFooter = () => {
             {activity ? (
                 <Activity
                     ref={inputRef}
+                    setInput={setInput}
                     onClose={closeActivityContainer}
                     reverseActivityAnimation={reverseActivityAnimation}
                 />
@@ -165,6 +167,16 @@ export const ChatContainerFooter = () => {
                             contentEditable="true"
                             data-tab="6"
                             id="custom-input"
+                            onDrop={(e) => e.preventDefault()}
+                            onPaste={(e: any) => {
+                                e.preventDefault();
+                                // [Incomplete]
+                                // setInput(e?.clipboardData?.getData("Text"));
+                                // if (!(height === e.target?.offsetHeight)) {
+                                //     //@ts-ignore
+                                //     setHeight(e.target?.offsetHeight);
+                                // }
+                            }}
                             onInput={(e: any) => {
                                 if (e.target.innerText.length > 0) {
                                     setTyping(true);
@@ -179,7 +191,8 @@ export const ChatContainerFooter = () => {
                             }}
                             dir="ltr"
                             spellCheck="true"
-                        ></span>
+                            dangerouslySetInnerHTML={{ __html: input }}
+                        />
                     </div>
                 </div>
                 {typing ? (

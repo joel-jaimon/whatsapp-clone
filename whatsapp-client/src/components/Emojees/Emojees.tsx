@@ -9,11 +9,10 @@ import EmojiSymbolsOutlinedIcon from "@material-ui/icons/EmojiSymbolsOutlined";
 import SentimentSatisfiedOutlinedIcon from "@material-ui/icons/SentimentSatisfiedOutlined";
 import PublicOutlinedIcon from "@material-ui/icons/PublicOutlined";
 import { emojiList } from "../../data/emojiSorted";
-import { useEffect, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { emojiSearchList } from "../../data/emoje";
 
-export const Emojees = (ref: any) => {
-    console.log(ref);
+export const Emojees = forwardRef(({ setInput }: any, ref: any) => {
     const [presentVisibleCat, setPresentVisibleCat] =
         useState("Smileys&People");
     const [query, setQuery] = useState<null | string>(null);
@@ -35,7 +34,7 @@ export const Emojees = (ref: any) => {
     };
 
     const addEmoji = (emo: any) => {
-        document.querySelector("#custom-input")?.append("<a>Hello</a>");
+        setInput(ref.current.innerText + emo);
     };
 
     useEffect(() => {
@@ -179,7 +178,7 @@ export const Emojees = (ref: any) => {
                                 })
                                 .map((e) => (
                                     <p
-                                        onClick={() => addEmoji(e)}
+                                        onClick={() => addEmoji(e.code_decimal)}
                                         dangerouslySetInnerHTML={{
                                             __html: e.code_decimal,
                                         }}
@@ -199,6 +198,9 @@ export const Emojees = (ref: any) => {
                                     {e.data.map((e) => {
                                         return (
                                             <p
+                                                onClick={() =>
+                                                    addEmoji(e.code_decimal)
+                                                }
                                                 dangerouslySetInnerHTML={{
                                                     __html: e.code_decimal,
                                                 }}
@@ -213,4 +215,4 @@ export const Emojees = (ref: any) => {
             </div>
         </div>
     );
-};
+});

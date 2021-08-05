@@ -4,14 +4,14 @@ import { Emojees } from "../Emojees/Emojees";
 import s from "./activityStyles.module.scss";
 
 export const Activity = forwardRef(
-    ({ onClose, reverseActivityAnimation }: any, ref: any) => {
+    ({ onClose, setInput, reverseActivityAnimation }: any, ref: any) => {
         return (
             <EmojiDrawerAnimation
                 className={s.activity}
                 onClose={onClose}
                 reverse={reverseActivityAnimation}
             >
-                <Emojees ref={ref} />
+                <Emojees ref={ref} setInput={setInput} />
             </EmojiDrawerAnimation>
         );
     }

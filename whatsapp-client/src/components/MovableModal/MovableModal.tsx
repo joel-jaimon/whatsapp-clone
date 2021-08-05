@@ -26,7 +26,6 @@ const passStateToProps = ({ movableModal }: any) => ({
 
 export const MovableModal = connect(passStateToProps)(
     ({ movableModal }: any) => {
-        console.log(movableModal);
         return (
             <MovableModalAnimation
                 movableModal={movableModal}
