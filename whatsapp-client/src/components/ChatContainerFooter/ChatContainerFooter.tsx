@@ -16,15 +16,56 @@ import {
     StickerIcon,
     VideoCallIcon,
 } from "./icons/ChatFooterIcons";
+import { ShowAttachmentAnimations } from "../../animations/chatFooterAnimation/ShowAttachmentAnimations";
+import { ExpandOptions } from "../../animations/chatFooterAnimation/ExpandOptions";
+import { RecorderAnimation } from "../../animations/chatFooterAnimation/RecorderAnimation";
 
 export const ChatContainerFooter = () => {
     const [height, setHeight] = useState(0);
     const [activity, setActivity] = useState<boolean | string>(false);
     const [recording, setRecording] = useState(false);
-    const [recordTime, setRecordTime] = useState(0);
     const [attachmentMenu, setAttachmentMenu] = useState(false);
+    const [reverseRecordingAnimation, setReverseRecording] = useState(false);
+    const [reverseAnimationAttachmentMenu, setReverseAnimationAttachmentMenu] =
+        useState(false);
+    const [reverseActivityAnimation, setReverseActivityAnimation] =
+        useState(false);
     const [typing, setTyping] = useState(false);
+
     const inputRef = useRef(null);
+
+    const closeAttachmentMenu = () => {
+        if (reverseAnimationAttachmentMenu) {
+            setReverseAnimationAttachmentMenu(false);
+            setAttachmentMenu(false);
+        }
+    };
+
+    const closeActivityContainer = () => {
+        if (reverseActivityAnimation) {
+            setReverseActivityAnimation(false);
+            setActivity(false);
+        }
+    };
+
+    const stopRecording = () => {
+        if (reverseRecordingAnimation) {
+            setReverseRecording(false);
+            setRecording(false);
+        }
+    };
+
+    const attachmentsArray = [
+        <VideoCallIcon className={s.videoIcon} />,
+        <AvatarIcon className={s.avatarIcon} />,
+        <DocumentIcon className={s.docIcon}>
+            <input type="file" accept=".docx, .doc, .pdf" />
+        </DocumentIcon>,
+        <CameraIcon className={s.cameraIcon} />,
+        <PictureIcon className={s.pictureIcon}>
+            <input type="file" accept="image/png" />
+        </PictureIcon>,
+    ];
 
     const sendMsg = () => {
         // @ts-ignore
@@ -34,7 +75,13 @@ export const ChatContainerFooter = () => {
 
     return (
         <>
-            {activity ? <Activity ref={inputRef} /> : null}
+            {activity ? (
+                <Activity
+                    ref={inputRef}
+                    onClose={closeActivityContainer}
+                    reverseActivityAnimation={reverseActivityAnimation}
+                />
+            ) : null}
             <div
                 style={{
                     height: height === 0 ? 45 : 29 + height,
@@ -43,10 +90,14 @@ export const ChatContainerFooter = () => {
             >
                 <div className={s.footerControls}>
                     {activity ? (
-                        <CloseIcon
-                            onClick={() => setActivity(false)}
-                            className="icons"
-                        />
+                        <ExpandOptions reverse={reverseActivityAnimation}>
+                            <CloseIcon
+                                onClick={() =>
+                                    setReverseActivityAnimation(true)
+                                }
+                                className="icons"
+                            />
+                        </ExpandOptions>
                     ) : null}
                     <SmileIcon
                         onClick={() => setActivity("emojiDrawer")}
@@ -56,7 +107,7 @@ export const ChatContainerFooter = () => {
                     />
 
                     {activity ? (
-                        <>
+                        <ExpandOptions reverse={reverseActivityAnimation}>
                             <GifIcon
                                 onClick={() => setActivity("gifDrawer")}
                                 className={`icons ${
@@ -73,28 +124,26 @@ export const ChatContainerFooter = () => {
                                         : ""
                                 }`}
                             />
-                        </>
+                        </ExpandOptions>
                     ) : null}
 
                     <div className={s.attachmentButton}>
                         {attachmentMenu ? (
-                            <div className={s.attachments}>
-                                <VideoCallIcon />
-                                <AvatarIcon />
-                                <DocumentIcon>
-                                    <input
-                                        type="file"
-                                        accept=".docx, .doc, .pdf"
-                                    />
-                                </DocumentIcon>
-                                <CameraIcon />
-                                <PictureIcon>
-                                    <input type="file" accept="image/png" />
-                                </PictureIcon>
-                            </div>
+                            <ShowAttachmentAnimations
+                                items={attachmentsArray}
+                                className={s.attachments}
+                                reverse={reverseAnimationAttachmentMenu}
+                                onClose={closeAttachmentMenu}
+                            />
                         ) : null}
                         <AttachmentIcon
-                            onClick={() => setAttachmentMenu(!attachmentMenu)}
+                            onClick={() => {
+                                if (attachmentMenu) {
+                                    setReverseAnimationAttachmentMenu(true);
+                                } else {
+                                    setAttachmentMenu(true);
+                                }
+                            }}
                             className="icons"
                         />
                     </div>
@@ -138,7 +187,12 @@ export const ChatContainerFooter = () => {
                         <SendIcon onClick={sendMsg} />
                     </div>
                 ) : recording ? (
-                    <AudioRecorder setRecording={setRecording} />
+                    <RecorderAnimation
+                        onClose={stopRecording}
+                        reverse={reverseRecordingAnimation}
+                    >
+                        <AudioRecorder closeOption={setReverseRecording} />
+                    </RecorderAnimation>
                 ) : (
                     <div className={s.recorder}>
                         <MicIcon

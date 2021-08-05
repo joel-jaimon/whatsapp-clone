@@ -10,7 +10,7 @@ const passDispatchToProps = (dispatch: any) => ({
 export const AudioRecorder = connect(
     null,
     passDispatchToProps
-)(({ setRecording, setGlobalModal }: any) => {
+)(({ closeOption, setGlobalModal }: any) => {
     useEffect(() => {
         if (!localStorage.getItem("_microphoneAccess"))
             setGlobalModal({
@@ -31,7 +31,7 @@ export const AudioRecorder = connect(
                     type: "microphoneDenied",
                     params: {},
                 });
-                setRecording(false);
+                closeOption(true);
                 console.log(err.message);
             });
     }, []);
@@ -39,7 +39,7 @@ export const AudioRecorder = connect(
     return (
         <div className={s.recorderActive}>
             <svg
-                onClick={() => setRecording(false)}
+                onClick={() => closeOption(true)}
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="16"
