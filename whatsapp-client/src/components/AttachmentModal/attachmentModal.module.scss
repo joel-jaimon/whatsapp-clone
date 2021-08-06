@@ -29,7 +29,7 @@
     align-items: center;
     background-color: #191f23;
     position: relative;
-    button {
+    .button {
         background-color: #00af9c;
         border: none;
         outline: none;
@@ -47,6 +47,72 @@
             padding: 5px;
             height: 22px;
             width: 22px;
+        }
+    }
+}
+
+.footer {
+    height: 100%;
+    width: calc(100%);
+    overflow-x: scroll;
+    overflow-y: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &::-webkit-scrollbar {
+        height: 4px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: #3b4042;
+        border-radius: 5px;
+    }
+    img {
+        object-fit: cover;
+        cursor: pointer;
+        border: 2px solid transparent;
+        &:hover {
+            border: 2px solid gray;
+        }
+        &:active {
+            height: 50px;
+            width: 50px;
+            margin: 7px 5px 7px 5px;
+        }
+    }
+    .previewDefault {
+        height: 58px;
+        margin: 3px 1px 3px 1px;
+        width: 58px;
+    }
+    .previewActive {
+        border: 2px solid gray;
+        height: 58px;
+        margin: 3px 1px 3px 1px;
+        width: 58px;
+    }
+    .addFileButton {
+        height: 54px;
+        border: 2px solid transparent;
+        margin: 3px 1px 9px 1px;
+        width: 57px;
+        font-size: 11px;
+        color: #68bbe4;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #262d31;
+        position: relative;
+        input {
+            position: absolute;
+            width: 100%;
+            cursor: pointer;
+            opacity: 0;
+            height: 100%;
+        }
+        p {
+            margin: 0px;
+            font-size: 11px;
         }
     }
 }

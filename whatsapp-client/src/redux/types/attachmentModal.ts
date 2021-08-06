@@ -1,3 +1,6 @@
 export const attachmentModalTypes = {
     SET_ATTACHMENT_MODAL: "SET_ATTACHMENT_MODAL",
+    ADD_FILE: "ADD_FILE",
+    REMOVE_FILE: "REMOVE_FILE",
+    CHANGE_IN_PREVIEW: "CHANGE_IN_PREVIEW",
 };
