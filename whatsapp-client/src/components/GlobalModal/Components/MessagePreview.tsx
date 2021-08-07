@@ -13,8 +13,9 @@ import { MinimizedVideo } from "../../MovableModal/Components/MinimizedVideo";
 import { connect } from "react-redux";
 import { setGlobalModal } from "../../../redux/actions/setGlobalModal";
 
-const mapStateToProps = ({ globalModal }: any) => ({
+const mapStateToProps = ({ globalModal, activeChat }: any) => ({
     globalModal: globalModal.modal,
+    activeChat: activeChat.chat,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
@@ -24,7 +25,7 @@ const mapDispatchToProps = (dispatch: any) => ({
 export const MessagePreview = connect(
     mapStateToProps,
     mapDispatchToProps
-)(({ globalModal, setGlobalModal }: any) => {
+)(({ globalModal, activeChat, setGlobalModal }: any) => {
     const [activeMsg, setActiveMsg] = useState(0);
     const sliderRef: any = useRef(null);
     const mainRef: any = useRef(null);
@@ -81,9 +82,9 @@ export const MessagePreview = connect(
         >
             <div className={s.header}>
                 <div className={s.info}>
-                    <img src={globalModal.params.src} alt="avatar" />
+                    <img src={activeChat.chatInfo.avatar} alt="avatar" />
                     <div>
-                        <strong>You @ Hum3</strong>
+                        <strong>You @ {activeChat.chatInfo.name}</strong>
                         <br />
                         <small>today at 9:55 AM</small>
                     </div>

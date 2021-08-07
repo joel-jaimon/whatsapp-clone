@@ -1,5 +1,5 @@
 import { AudioRecorder } from "../AudioRecorder/AudioRecorder";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Activity } from "../Activity/Activity";
 import s from "./chatContainerFooterStyles.module.scss";
 import SendIcon from "@material-ui/icons/Send";
@@ -21,17 +21,20 @@ import { ExpandOptions } from "../../animations/ExpandOptions";
 import { RecorderAnimation } from "../../animations/chatFooterAnimation/RecorderAnimation";
 import {
     addAttachments,
+    resetFileAttachmentModal,
     setAttachmentModal,
 } from "../../redux/actions/attachmentModal";
 import { connect } from "react-redux";
 
-const passStateFromProps = ({ activeChat }: any) => ({
+const passStateFromProps = ({ activeChat, attachmentModal }: any) => ({
     activeChat: activeChat.chat,
+    attachmentModal,
 });
 
 const passDispatchToProps = (dispatch: any) => ({
     setAttachmentModal: (modal: any) => dispatch(setAttachmentModal(modal)),
     addAttachments: (files: any[]) => dispatch(addAttachments(files)),
+    resetAttachmentModal: () => dispatch(resetFileAttachmentModal()),
 });
 
 export const ChatContainerFooter = connect(
@@ -44,6 +47,8 @@ export const ChatContainerFooter = connect(
         activeChat: {
             chatInfo: { id },
         },
+        attachmentModal,
+        resetAttachmentModal,
     }: any) => {
         const [height, setHeight] = useState(0);
         const [activity, setActivity] = useState<boolean | string>(false);
@@ -89,6 +94,9 @@ export const ChatContainerFooter = connect(
         };
 
         const handleAttachments = (e: any) => {
+            if (attachmentModal.files[0]) {
+                resetAttachmentModal();
+            }
             setReverseAnimationAttachmentMenu(true);
             setAttachmentModal(id);
             addAttachments(e.target?.files);

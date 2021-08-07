@@ -46,8 +46,9 @@ const Message = ({ data, owner }: any) => {
     return <div />;
 };
 
-const passStateToProps = ({ activeChat }: any) => ({
+const passStateToProps = ({ activeChat, authState }: any) => ({
     activeChat: activeChat.chat,
+    authState: authState.auth,
 });
 
 const passDispatchToProps = (dispatch: any) => ({
@@ -57,9 +58,8 @@ const passDispatchToProps = (dispatch: any) => ({
 export const ChatContainerBody = connect(
     passStateToProps,
     passDispatchToProps
-)(({ activeChat: { messages }, setDropMenu }: any) => {
+)(({ activeChat: { messages }, setDropMenu, authState }: any) => {
     const chatRef: any = useRef(null);
-    const me = "2339b0c3-cbdc-4944-9b67-3812998d9879";
 
     useEffect(() => {
         chatRef.current.scrollTop = chatRef.current.scrollHeight;
@@ -83,7 +83,7 @@ export const ChatContainerBody = connect(
             className={s.chatContainerBody}
         >
             {messages.map((chatData: any) => {
-                const owner = chatData.user === me;
+                const owner = chatData.user === authState.uid;
                 return (
                     <Message key={chatData.id} owner={owner} data={chatData} />
                 );
