@@ -28,7 +28,7 @@ export const DropdownAnimation = ({
     const styles = useSpring({
         config: {
             mass: 1,
-            tension: 300,
+            tension: 340,
         },
         to: [{ opacity: 1, transform: `scale(1) translate(0px, 0px)` }],
         from: {
