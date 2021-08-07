@@ -79,9 +79,9 @@ export const ChatContainerFooter = connect(
     };
 
     const handleAttachments = (e: any) => {
+        setReverseAnimationAttachmentMenu(true);
         setAttachmentModal(true);
         addAttachments(e.target?.files);
-        setReverseRecording(true);
     };
 
     const attachmentsArray = [

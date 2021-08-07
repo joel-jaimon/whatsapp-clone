@@ -5,10 +5,8 @@ import VolumeDownIcon from "@material-ui/icons/VolumeDown";
 import VolumeMuteIcon from "@material-ui/icons/VolumeMute";
 import VolumeOffIcon from "@material-ui/icons/VolumeOff";
 import CropFreeIcon from "@material-ui/icons/CropFree";
-import CloseIcon from "@material-ui/icons/Close";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
-import FullscreenExitIcon from "@material-ui/icons/FullscreenExit";
 
 const VolumeButton = ({ vol }: { vol: number }) => {
     if (vol < 1) return <VolumeOffIcon />;
@@ -22,7 +20,6 @@ export const VideoPlayer = ({ src }: any) => {
     const [duration, setDuration] = useState<any>(null);
     const [play, setPlay] = useState(false);
     const [control, setControl] = useState(false);
-    const [currentTime, setCurrentTime] = useState<any>(0);
     const [vol, setVol] = useState(100);
     const [volVisible, setVolVisible] = useState(false);
 
@@ -30,14 +27,6 @@ export const VideoPlayer = ({ src }: any) => {
     const animationRef: any = useRef(null);
     const progressbarRef: any = useRef(null);
     const volProgressRef: any = useRef(null);
-
-    const getDuration = (secs: number) => {
-        const seconds = Math.floor(secs % 60);
-        const minutes = Math.floor(secs / 60);
-        const formatedMins = minutes < 10 ? `0${minutes}` : `${minutes}`;
-        const formatedSecs = seconds < 10 ? `0${seconds}` : `${seconds}`;
-        return `${formatedMins}:${formatedSecs}`;
-    };
 
     const loadDuration = ({ duration }: any) => {
         if (duration) {
@@ -79,7 +68,6 @@ export const VideoPlayer = ({ src }: any) => {
             "--seek-before-width",
             `${(progressbarRef.current.value / duration) * 100}%`
         );
-        setCurrentTime(progressbarRef.current.value);
     };
 
     const changeVolume = () => {
