@@ -21,7 +21,6 @@ const passDispatchToProps = (dispatch: any) => ({
     removeFile: (fileIndex: number) => dispatch(removeAttachment(fileIndex)),
     changeFileInPreview: (fileIndex: number) =>
         dispatch(changeFileInPreview(fileIndex)),
-    setAttachmentModal: (modal: any) => dispatch(setAttachmentModal(modal)),
 });
 
 export const PreviewFooter = connect(
@@ -33,7 +32,7 @@ export const PreviewFooter = connect(
         attachmentModal,
         removeFile,
         changeFileInPreview,
-        setAttachmentModal,
+        closeAttachmentModal,
     }: any) => {
         const sliderRef: any = useRef(null);
         const mainRef: any = useRef(null);
@@ -83,8 +82,7 @@ export const PreviewFooter = connect(
 
         const handleFileRemoval = (index: number) => {
             if (attachmentModal.files.length === 1) {
-                changeFileInPreview(0);
-                setAttachmentModal(false);
+                closeAttachmentModal();
                 return;
             }
             if (attachmentModal.files[index + 1]) {

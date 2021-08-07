@@ -17,7 +17,7 @@ import {
     VideoCallIcon,
 } from "./icons/ChatFooterIcons";
 import { ShowAttachmentAnimations } from "../../animations/chatFooterAnimation/ShowAttachmentAnimations";
-import { ExpandOptions } from "../../animations/chatFooterAnimation/ExpandOptions";
+import { ExpandOptions } from "../../animations/ExpandOptions";
 import { RecorderAnimation } from "../../animations/chatFooterAnimation/RecorderAnimation";
 import {
     addAttachments,

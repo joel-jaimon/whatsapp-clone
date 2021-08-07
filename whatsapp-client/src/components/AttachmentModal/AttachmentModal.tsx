@@ -4,12 +4,14 @@ import { Image } from "./components/Image";
 import { Video } from "./components/Video";
 import { File } from "./components/File";
 import { PreviewFooter } from "./components/PreviewFooter";
+import { useState } from "react";
 import { connect } from "react-redux";
 import {
     changeFileInPreview,
     resetFileAttachmentModal,
 } from "../../redux/actions/attachmentModal";
 import { VideoPlayer } from "../VideoPlayer/VideoPlayer";
+import { BlendFromBottomAnimation } from "../../animations/BlendFromBottomAnimation";
 
 export const FilePreview = ({ file, iconPreview }: any) => {
     if (!file) {
@@ -47,10 +49,29 @@ export const AttachmentModal = connect(
     passStateToProps,
     passDispatchToProps
 )(({ attachmentModal, fileInPreview, resetAttachmentModal }: any) => {
+    const [
+        reverseAttachmentModalAnimation,
+        setReverseAttachmentModalAnimation,
+    ] = useState(false);
+
+    const onClose = () => {
+        if (reverseAttachmentModalAnimation) {
+            setReverseAttachmentModalAnimation(false);
+            resetAttachmentModal();
+        }
+    };
+
+    const closeAttachmentModal = () => {
+        setReverseAttachmentModalAnimation(true);
+    };
     return attachmentModal ? (
-        <div className={s.attachmentModal}>
+        <BlendFromBottomAnimation
+            onClose={onClose}
+            reverse={reverseAttachmentModalAnimation}
+            className={s.attachmentModal}
+        >
             <header>
-                <CloseIcon onClick={() => resetAttachmentModal()} />
+                <CloseIcon onClick={closeAttachmentModal} />
                 <strong>Preview</strong>
             </header>
             <div className={s.previewInFocus}>
@@ -61,8 +82,8 @@ export const AttachmentModal = connect(
                     <small>{fileInPreview?.name}</small>
                 ) : null}
             </div>
-            <PreviewFooter />
-        </div>
+            <PreviewFooter closeAttachmentModal={closeAttachmentModal} />
+        </BlendFromBottomAnimation>
     ) : (
         <div />
     );
