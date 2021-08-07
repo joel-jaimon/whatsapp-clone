@@ -126,7 +126,7 @@ export const PreviewFooter = connect(
                                     onClick={() => scrollTo(i)}
                                 />
 
-                                <FilePreview file={e} />
+                                <FilePreview file={e} iconPreview={true} />
                             </div>
                         );
                     })}

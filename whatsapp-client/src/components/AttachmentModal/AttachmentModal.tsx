@@ -8,10 +8,10 @@ import { connect } from "react-redux";
 import {
     changeFileInPreview,
     resetFileAttachmentModal,
-    setAttachmentModal,
 } from "../../redux/actions/attachmentModal";
+import { VideoPlayer } from "../VideoPlayer/VideoPlayer";
 
-export const FilePreview = ({ file }: any) => {
+export const FilePreview = ({ file, iconPreview }: any) => {
     if (!file) {
         return <div />;
     }
@@ -20,7 +20,13 @@ export const FilePreview = ({ file }: any) => {
         case "image":
             return <Image file={file} />;
         case "video":
-            return <Video file={file} />;
+            return iconPreview ? (
+                <Video file={file} />
+            ) : (
+                <div className={s.videoPlayerWrapper}>
+                    <VideoPlayer src={URL.createObjectURL(file)} />
+                </div>
+            );
         default:
             return <File file={file} />;
     }

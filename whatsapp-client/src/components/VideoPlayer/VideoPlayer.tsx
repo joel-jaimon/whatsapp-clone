@@ -1,23 +1,14 @@
-import s from "../movableModal.module.scss";
+import s from "./videoPlayer.module.scss";
 import { useRef, useState } from "react";
+import VolumeUpIcon from "@material-ui/icons/VolumeUp";
+import VolumeDownIcon from "@material-ui/icons/VolumeDown";
+import VolumeMuteIcon from "@material-ui/icons/VolumeMute";
+import VolumeOffIcon from "@material-ui/icons/VolumeOff";
 import CropFreeIcon from "@material-ui/icons/CropFree";
 import CloseIcon from "@material-ui/icons/Close";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
 import FullscreenExitIcon from "@material-ui/icons/FullscreenExit";
-
-// Volume
-import VolumeUpIcon from "@material-ui/icons/VolumeUp";
-import VolumeDownIcon from "@material-ui/icons/VolumeDown";
-import VolumeMuteIcon from "@material-ui/icons/VolumeMute";
-import VolumeOffIcon from "@material-ui/icons/VolumeOff";
-import {
-    landscapeOffset,
-    potraitOffset,
-} from "../../../constants/movableModal";
-import { connect } from "react-redux";
-import { setMovableModal } from "../../../redux/actions/movalbleModal";
-import { setGlobalModal } from "../../../redux/actions/setGlobalModal";
 
 const VolumeButton = ({ vol }: { vol: number }) => {
     if (vol < 1) return <VolumeOffIcon />;
@@ -27,17 +18,10 @@ const VolumeButton = ({ vol }: { vol: number }) => {
     return <div />;
 };
 
-const passDispatchToProps = (dispatch: any) => ({
-    setMovableModal: (modal: any) => dispatch(setMovableModal(modal)),
-    setGlobalModal: (modal: any) => dispatch(setGlobalModal(modal)),
-});
-
-export const MinimizedVideo = connect(
-    null,
-    passDispatchToProps
-)(({ params, setGlobalModal, setMovableModal }: any) => {
+export const VideoPlayer = ({ src }: any) => {
     const [duration, setDuration] = useState<any>(null);
     const [play, setPlay] = useState(false);
+    const [control, setControl] = useState(false);
     const [currentTime, setCurrentTime] = useState<any>(0);
     const [vol, setVol] = useState(100);
     const [volVisible, setVolVisible] = useState(false);
@@ -46,9 +30,6 @@ export const MinimizedVideo = connect(
     const animationRef: any = useRef(null);
     const progressbarRef: any = useRef(null);
     const volProgressRef: any = useRef(null);
-
-    const offset =
-        params.orientation === "potrait" ? potraitOffset : landscapeOffset;
 
     const getDuration = (secs: number) => {
         const seconds = Math.floor(secs % 60);
@@ -111,33 +92,24 @@ export const MinimizedVideo = connect(
         setVol(vol);
     };
 
-    const openMinimizedVideo = () => {
-        setMovableModal({
-            type: "minimizedVideo",
-            params: {
-                ...offset,
-                src: "https://player.vimeo.com/external/565791593.sd.mp4?s=fa438f0a90f8c5c40133e50260d3559008660dc2&profile_id=165&oauth2_token_id=57447761",
-                mode: "mini",
-                orientation: params.orientation,
-            },
-        });
-        setGlobalModal(null);
-    };
-
     const fullScreenMode = () => {
         videoRef.current.requestFullscreen();
     };
 
     return (
-        <div className={s.minimizedVideo}>
-            <div className={s.control}>
+        <div
+            onMouseEnter={() => setControl(true)}
+            onMouseLeave={() => setControl(false)}
+            className={s.minimizedVideo}
+        >
+            <div
+                style={{
+                    opacity: control ? 1 : 0,
+                }}
+                className={s.control}
+            >
                 <div className={s.header}>
                     <CropFreeIcon onClick={fullScreenMode} />
-                    {params.mode === "mini" ? (
-                        <CloseIcon onClick={() => setMovableModal(null)} />
-                    ) : (
-                        <FullscreenExitIcon onClick={openMinimizedVideo} />
-                    )}
                 </div>
                 <div className={s.footer}>
                     <div className={s.controlBtn}>
@@ -157,13 +129,7 @@ export const MinimizedVideo = connect(
                         className={s.volController}
                     >
                         {volVisible ? (
-                            <div
-                                className={`${s.volTrack} ${
-                                    params.mode === "mini"
-                                        ? s.volTrackMinimized
-                                        : s.volTrackModal
-                                }`}
-                            >
+                            <div className={s.volTrack}>
                                 <input
                                     onChange={changeVolume}
                                     defaultValue={100}
@@ -181,13 +147,10 @@ export const MinimizedVideo = connect(
             </div>
             <video
                 ref={videoRef}
-                src={params.src}
+                src={src}
                 onEnded={(e) => setPlay(false)}
                 onDurationChange={(e) => loadDuration(e.target)}
             />
         </div>
     );
-});
-
-//volTrackModal
-//volTrackMinimized
+};
