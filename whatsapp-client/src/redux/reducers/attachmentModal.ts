@@ -1,7 +1,7 @@
 import { attachmentModalTypes } from "../types/attachmentModal";
 
 const initialState = {
-    modal: null,
+    modalFor: null,
     files: [],
     fileInPreview: 0,
 };
@@ -11,7 +11,7 @@ export const attachmentModalReducer = (state = initialState, action: any) => {
         case attachmentModalTypes.SET_ATTACHMENT_MODAL:
             return {
                 ...state,
-                modal: action.payload,
+                modalFor: action.payload,
             };
         case attachmentModalTypes.ADD_FILE:
             return {

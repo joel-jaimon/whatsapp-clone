@@ -34,9 +34,10 @@ export const FilePreview = ({ file, iconPreview }: any) => {
     }
 };
 
-const passStateToProps = ({ attachmentModal }: any) => ({
-    attachmentModal: attachmentModal.modal,
+const passStateToProps = ({ attachmentModal, activeChat }: any) => ({
+    attachmentModalFor: attachmentModal.modalFor,
     fileInPreview: attachmentModal.files[attachmentModal.fileInPreview],
+    activeChat: activeChat.chat,
 });
 
 const passDispatchToProps = (dispatch: any) => ({
@@ -48,43 +49,51 @@ const passDispatchToProps = (dispatch: any) => ({
 export const AttachmentModal = connect(
     passStateToProps,
     passDispatchToProps
-)(({ attachmentModal, fileInPreview, resetAttachmentModal }: any) => {
-    const [
-        reverseAttachmentModalAnimation,
-        setReverseAttachmentModalAnimation,
-    ] = useState(false);
+)(
+    ({
+        attachmentModalFor,
+        fileInPreview,
+        resetAttachmentModal,
+        activeChat,
+    }: any) => {
+        const [
+            reverseAttachmentModalAnimation,
+            setReverseAttachmentModalAnimation,
+        ] = useState(false);
 
-    const onClose = () => {
-        if (reverseAttachmentModalAnimation) {
-            setReverseAttachmentModalAnimation(false);
-            resetAttachmentModal();
-        }
-    };
+        const onClose = () => {
+            if (reverseAttachmentModalAnimation) {
+                setReverseAttachmentModalAnimation(false);
+                resetAttachmentModal();
+            }
+        };
 
-    const closeAttachmentModal = () => {
-        setReverseAttachmentModalAnimation(true);
-    };
-    return attachmentModal ? (
-        <BlendFromBottomAnimation
-            onClose={onClose}
-            reverse={reverseAttachmentModalAnimation}
-            className={s.attachmentModal}
-        >
-            <header>
-                <CloseIcon onClick={closeAttachmentModal} />
-                <strong>Preview</strong>
-            </header>
-            <div className={s.previewInFocus}>
-                <FilePreview file={fileInPreview} />
-                {!["image", "video"].includes(
-                    fileInPreview?.type?.split("/")[0]
-                ) ? (
-                    <small>{fileInPreview?.name}</small>
-                ) : null}
-            </div>
-            <PreviewFooter closeAttachmentModal={closeAttachmentModal} />
-        </BlendFromBottomAnimation>
-    ) : (
-        <div />
-    );
-});
+        const closeAttachmentModal = () => {
+            setReverseAttachmentModalAnimation(true);
+        };
+
+        return attachmentModalFor === activeChat.chatInfo.id ? (
+            <BlendFromBottomAnimation
+                onClose={onClose}
+                reverse={reverseAttachmentModalAnimation}
+                className={s.attachmentModal}
+            >
+                <header>
+                    <CloseIcon onClick={closeAttachmentModal} />
+                    <strong>Preview</strong>
+                </header>
+                <div className={s.previewInFocus}>
+                    <FilePreview file={fileInPreview} />
+                    {!["image", "video"].includes(
+                        fileInPreview?.type?.split("/")[0]
+                    ) ? (
+                        <small>{fileInPreview?.name}</small>
+                    ) : null}
+                </div>
+                <PreviewFooter closeAttachmentModal={closeAttachmentModal} />
+            </BlendFromBottomAnimation>
+        ) : (
+            <div />
+        );
+    }
+);
