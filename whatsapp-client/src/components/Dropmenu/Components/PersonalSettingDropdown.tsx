@@ -8,7 +8,7 @@ const passStateToProps = ({ dropDownMenu }: any) => ({
 });
 
 export const PersonalSettingDropdown = connect(passStateToProps)(
-    ({ dropMenu }: any) => {
+    ({ dropMenu, fixedDropdown }: any) => {
         const sizeParam = {
             height: 205,
             width: 140,
@@ -20,6 +20,7 @@ export const PersonalSettingDropdown = connect(passStateToProps)(
                 sizeParam={sizeParam}
                 locationParams={dropMenu.position}
                 className={s.dropDown}
+                fixedDropdown={true}
             >
                 <div className={s.list}>
                     <p>New group</p>

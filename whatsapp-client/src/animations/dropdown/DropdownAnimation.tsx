@@ -1,10 +1,18 @@
 import { useSpring, animated as a } from "@react-spring/web";
 
+const animateFrom = (height: number, width: number, { x, y }: any) => {
+    console.log({ x, y });
+    return `scale(0) translate(${(!x ? -1 : 1) * width}px, ${
+        (!y ? -1 : 1) * height
+    }px)`;
+};
+
 export const DropdownAnimation = ({
     locationParams,
     className,
     sizeParam: { xOffset, yOffset, height, width },
     children,
+    fixedDropdown,
 }: any) => {
     const positionParams = {
         left:
@@ -20,26 +28,37 @@ export const DropdownAnimation = ({
     const styles = useSpring({
         config: {
             mass: 1,
-            tension: 400,
+            tension: 300,
         },
-        to: [{ width, height, opacity: 1, ...positionParams }],
+        to: [{ opacity: 1, transform: `scale(1) translate(0px, 0px)` }],
         from: {
-            width: 0,
-            height: 0,
             opacity: 0,
-            ...positionParams,
+            transform: animateFrom(height, width, {
+                x: fixedDropdown,
+                y: locationParams.y + yOffset > window.innerHeight,
+            }),
         },
     });
     return (
-        <a.div
-            className={className}
+        <div
             style={{
+                height,
+                width,
+                overflow: "hidden",
                 position: "absolute",
-                zIndex: 200,
-                ...styles,
+                ...positionParams,
             }}
         >
-            {children}
-        </a.div>
+            <a.div
+                className={className}
+                style={{
+                    zIndex: 200,
+                    ...styles,
+                    position: "absolute",
+                }}
+            >
+                {children}
+            </a.div>
+        </div>
     );
 };

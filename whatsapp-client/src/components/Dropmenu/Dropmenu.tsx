@@ -18,7 +18,7 @@ export const DropMenu = connect(passStateToProps)(({ dropMenu }: any) => {
         case "chatInfo":
             return <ChatInfoDropdown />;
         case "activeChatInfoToggle":
-            return <ActiveChatInfo />;
+            return <ActiveChatInfo fixedDropdown={true} />;
         case "activeChatInfo":
             return <ActiveChatInfo />;
         case "personalSetting":
