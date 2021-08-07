@@ -19,3 +19,7 @@ export const changeFileInPreview = (payload: any) => ({
     type: attachmentModalTypes.CHANGE_IN_PREVIEW,
     payload,
 });
+
+export const resetFileAttachmentModal = () => ({
+    type: attachmentModalTypes.RESET,
+});

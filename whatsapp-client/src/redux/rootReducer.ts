@@ -7,6 +7,7 @@ import { sidebarChatModalReducers } from "./reducers/sidebarChatModal";
 import { chatContainerModalReducers } from "./reducers/chatContainerModal";
 import { chatReducer } from "./reducers/activeChat";
 import { authReducer } from "./reducers/auth";
+import { attachmentModalReducer } from "./reducers/attachmentModal";
 
 export default combineReducers({
     authState: authReducer,
@@ -16,4 +17,5 @@ export default combineReducers({
     movableModal: movableModalReducers,
     chatModal: chatContainerModalReducers,
     sidebarModal: sidebarChatModalReducers,
+    attachmentModal: attachmentModalReducer,
 });

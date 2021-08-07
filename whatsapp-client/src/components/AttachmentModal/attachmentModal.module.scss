@@ -19,8 +19,28 @@
 }
 
 .previewInFocus {
-    height: calc(100% - 150px);
+    height: calc(100% - 145px);
     width: 100%;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .fileIcon {
+        height: 45px !important;
+        object-fit: contain !important;
+    }
+    img,
+    video {
+        position: relative;
+        max-height: 80%;
+        object-fit: contain;
+    }
+    small {
+        font-size: 12px;
+        margin-top: 15px;
+    }
 }
 
 .previewFooter {
@@ -53,12 +73,12 @@
 
 .footer {
     height: 100%;
-    width: calc(100%);
+    width: 100%;
+    position: relative;
     overflow-x: scroll;
     overflow-y: hidden;
     display: flex;
     align-items: center;
-    justify-content: center;
     &::-webkit-scrollbar {
         height: 4px;
     }
@@ -66,17 +86,45 @@
         background-color: #3b4042;
         border-radius: 5px;
     }
-    img {
+    .previewDefault,
+    .previewActive {
         object-fit: cover;
         cursor: pointer;
         border: 2px solid transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        .close {
+            display: none;
+            height: 15px;
+            top: 3px;
+            right: 1px;
+            z-index: 2;
+            cursor: pointer;
+            position: absolute;
+        }
+        .overlay {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            z-index: 1;
+        }
+        .fileIcon {
+            height: 30px !important;
+            object-fit: contain !important;
+        }
+        img,
+        video {
+            object-fit: cover;
+            height: 58px;
+            width: 58px;
+        }
         &:hover {
             border: 2px solid gray;
-        }
-        &:active {
-            height: 50px;
-            width: 50px;
-            margin: 7px 5px 7px 5px;
+            .close {
+                display: unset;
+            }
         }
     }
     .previewDefault {
@@ -93,7 +141,7 @@
     .addFileButton {
         height: 54px;
         border: 2px solid transparent;
-        margin: 3px 1px 9px 1px;
+        margin: 3px 1px 3px 1px;
         width: 57px;
         font-size: 11px;
         color: #68bbe4;
@@ -111,6 +159,7 @@
             height: 100%;
         }
         p {
+            width: 57px;
             margin: 0px;
             font-size: 11px;
         }

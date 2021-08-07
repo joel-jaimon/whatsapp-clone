@@ -3,4 +3,5 @@ export const attachmentModalTypes = {
     ADD_FILE: "ADD_FILE",
     REMOVE_FILE: "REMOVE_FILE",
     CHANGE_IN_PREVIEW: "CHANGE_IN_PREVIEW",
+    RESET: "RESET",
 };

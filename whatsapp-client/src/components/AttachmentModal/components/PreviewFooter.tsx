@@ -1,86 +1,148 @@
 import s from "../attachmentModal.module.scss";
 import SendIcon from "@material-ui/icons/Send";
-import { useEffect, useRef, useState } from "react";
+import CloseIcon from "@material-ui/icons/Close";
+import { forwardRef, useEffect, useRef, useState } from "react";
 import AddIcon from "@material-ui/icons/Add";
+import {
+    addAttachments,
+    changeFileInPreview,
+    removeAttachment,
+    setAttachmentModal,
+} from "../../../redux/actions/attachmentModal";
+import { connect } from "react-redux";
+import { FilePreview } from "../AttachmentModal";
 
-export const PreviewFooter = () => {
-    const [activeMsg, setActiveMsg] = useState(0);
-    const sliderRef: any = useRef(null);
+const passStateToProps = ({ attachmentModal }: any) => ({
+    attachmentModal: attachmentModal,
+});
 
-    const scrollTo = (index: number) => {
-        const px = index * 64;
-        sliderRef.current.scroll({
-            left: px,
-            behavior: "smooth",
-        });
-        setActiveMsg(index);
-    };
+const passDispatchToProps = (dispatch: any) => ({
+    addFile: (file: any) => dispatch(addAttachments(file)),
+    removeFile: (fileIndex: number) => dispatch(removeAttachment(fileIndex)),
+    changeFileInPreview: (fileIndex: number) =>
+        dispatch(changeFileInPreview(fileIndex)),
+    setAttachmentModal: (modal: any) => dispatch(setAttachmentModal(modal)),
+});
 
-    const handleLeft = () => {
-        const px = (activeMsg - 1) * 64;
-        sliderRef.current.scroll({
-            left: px,
-            behavior: "smooth",
-        });
-        setActiveMsg((prev) => (prev === 0 ? 0 : prev - 1));
-    };
+export const PreviewFooter = connect(
+    passStateToProps,
+    passDispatchToProps
+)(
+    ({
+        addFile,
+        attachmentModal,
+        removeFile,
+        changeFileInPreview,
+        setAttachmentModal,
+    }: any) => {
+        const sliderRef: any = useRef(null);
+        const mainRef: any = useRef(null);
 
-    const handleRight = () => {
-        setActiveMsg((prev) => prev + 1);
-        const px = (activeMsg + 1) * 64;
-        sliderRef.current.scroll({
-            left: px,
-            behavior: "smooth",
-        });
-    };
+        const handleLeft = () => {
+            const px = (attachmentModal.fileInPreview - 1) * 64;
+            sliderRef.current.scroll({
+                left: px,
+                behavior: "smooth",
+            });
+            changeFileInPreview((prev: number) => (prev === 0 ? 0 : prev - 1));
+        };
 
-    const handleKeyPress = (e: any) => {
-        switch (e.keyCode) {
-            case 37:
-                handleLeft();
-                break;
-            case 39:
-                handleRight();
-                break;
-        }
-        return;
-    };
+        const handleRight = () => {
+            changeFileInPreview((prev: number) => prev + 1);
+            const px = (attachmentModal.fileInPreview + 1) * 64;
+            sliderRef.current.scroll({
+                left: px,
+                behavior: "smooth",
+            });
+        };
 
-    useEffect(() => {
-        sliderRef.current.focus();
-    }, []);
+        const handleKeyPress = (e: any) => {
+            switch (e.keyCode) {
+                case 37:
+                    handleLeft();
+                    break;
+                case 39:
+                    handleRight();
+                    break;
+            }
+            return;
+        };
 
-    return (
-        <div className={s.previewFooter}>
-            <button className={s.button}>
-                <SendIcon />
-            </button>
-            <div ref={sliderRef} className={s.footer}>
-                {[...Array(2)].map((e: any, i: number) => {
-                    return (
-                        <div>
-                            <img
-                                onClick={() => scrollTo(i)}
-                                draggable={false}
+        const scrollTo = (index: number) => {
+            const px = index * 64;
+            sliderRef.current.scroll({
+                left: px,
+                behavior: "smooth",
+            });
+            changeFileInPreview(index);
+        };
+
+        const handleFileAddition = (e: any) => {
+            if (e.target.files) addFile(e.target.files);
+        };
+
+        const handleFileRemoval = (index: number) => {
+            if (attachmentModal.files.length === 1) {
+                changeFileInPreview(0);
+                setAttachmentModal(false);
+                return;
+            }
+            if (attachmentModal.files[index + 1]) {
+                changeFileInPreview(index + 1);
+            }
+            removeFile(index);
+        };
+
+        useEffect(() => {
+            if (mainRef.current) mainRef.current.focus();
+        }, []);
+
+        return (
+            <div className={s.previewFooter}>
+                <button className={s.button}>
+                    <SendIcon />
+                </button>
+                <div
+                    id="attachement-modal-footer"
+                    ref={sliderRef}
+                    className={s.footer}
+                >
+                    {attachmentModal.files.map((e: any, i: number) => {
+                        return (
+                            <div
+                                key={i}
                                 className={
-                                    i === activeMsg
+                                    i === attachmentModal.fileInPreview
                                         ? s.previewActive
                                         : s.previewDefault
                                 }
-                                src="https://images.unsplash.com/photo-1628158589861-713e28fea6dd?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=60"
-                                alt="smallPreview"
-                            />
-                        </div>
-                    );
-                })}
-                <div className={s.addFileButton}>
-                    <input type="file" />
-                    <p>
-                        <AddIcon />
-                    </p>
-                    <small>ADD FILE</small>
+                            >
+                                <CloseIcon
+                                    className={s.close}
+                                    onClick={() => handleFileRemoval(i)}
+                                />
+                                <div
+                                    className={s.overlay}
+                                    onClick={() => scrollTo(i)}
+                                />
+
+                                <FilePreview file={e} />
+                            </div>
+                        );
+                    })}
+                    <div className={s.addFileButton}>
+                        <input
+                            multiple={true}
+                            onChange={handleFileAddition}
+                            type="file"
+                        />
+                        <p>
+                            <AddIcon />
+                        </p>
+                        <small>ADD FILE</small>
+                    </div>
                 </div>
             </div>
-        </div>
-    );
-};
+        );
+    }
+);

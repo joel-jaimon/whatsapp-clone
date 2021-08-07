@@ -19,8 +19,25 @@ import {
 import { ShowAttachmentAnimations } from "../../animations/chatFooterAnimation/ShowAttachmentAnimations";
 import { ExpandOptions } from "../../animations/chatFooterAnimation/ExpandOptions";
 import { RecorderAnimation } from "../../animations/chatFooterAnimation/RecorderAnimation";
+import {
+    addAttachments,
+    setAttachmentModal,
+} from "../../redux/actions/attachmentModal";
+import { connect } from "react-redux";
 
-export const ChatContainerFooter = () => {
+const passStateFromProps = ({ activeChat }: any) => ({
+    activeChat: activeChat.chat,
+});
+
+const passDispatchToProps = (dispatch: any) => ({
+    setAttachmentModal: (modal: any) => dispatch(setAttachmentModal(modal)),
+    addAttachments: (files: any[]) => dispatch(addAttachments(files)),
+});
+
+export const ChatContainerFooter = connect(
+    passStateFromProps,
+    passDispatchToProps
+)(({ setAttachmentModal, addAttachments, activeChat }: any) => {
     const [height, setHeight] = useState(0);
     const [activity, setActivity] = useState<boolean | string>(false);
     const [recording, setRecording] = useState(false);
@@ -32,7 +49,6 @@ export const ChatContainerFooter = () => {
         useState(false);
     const [typing, setTyping] = useState(false);
     const [input, setInput] = useState("");
-
     const inputRef = useRef(null);
 
     const closeAttachmentMenu = () => {
@@ -56,23 +72,39 @@ export const ChatContainerFooter = () => {
         }
     };
 
-    const attachmentsArray = [
-        <VideoCallIcon className={s.videoIcon} />,
-        <AvatarIcon className={s.avatarIcon} />,
-        <DocumentIcon className={s.docIcon}>
-            <input type="file" accept=".docx, .doc, .pdf" />
-        </DocumentIcon>,
-        <CameraIcon className={s.cameraIcon} />,
-        <PictureIcon className={s.pictureIcon}>
-            <input type="file" accept="image/png" />
-        </PictureIcon>,
-    ];
-
     const sendMsg = () => {
         // @ts-ignore
         const msg = inputRef.current.innerText.replaceAll("\n", "<br/>");
         console.log(msg);
     };
+
+    const handleAttachments = (e: any) => {
+        setAttachmentModal(true);
+        addAttachments(e.target?.files);
+        setReverseRecording(true);
+    };
+
+    const attachmentsArray = [
+        <VideoCallIcon className={s.videoIcon} />,
+        <AvatarIcon className={s.avatarIcon} />,
+        <DocumentIcon className={s.docIcon}>
+            <input
+                onChange={handleAttachments}
+                type="file"
+                multiple={true}
+                accept=".docx, .doc, .pdf, .zip, .rar"
+            />
+        </DocumentIcon>,
+        <CameraIcon className={s.cameraIcon} />,
+        <PictureIcon className={s.pictureIcon}>
+            <input
+                onChange={handleAttachments}
+                multiple={true}
+                type="file"
+                accept="image/png"
+            />
+        </PictureIcon>,
+    ];
 
     return (
         <>
@@ -217,4 +249,4 @@ export const ChatContainerFooter = () => {
             </div>
         </>
     );
-};
+});

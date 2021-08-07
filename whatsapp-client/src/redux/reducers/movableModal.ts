@@ -5,7 +5,6 @@ const initialState = {
 };
 
 export const movableModalReducers = (state = initialState, action: any) => {
-    console.log(action);
     switch (action.type) {
         case movalbleModalTypes.SET_MOVALBLE_MODAL:
             return {

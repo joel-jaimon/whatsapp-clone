@@ -1,3 +1,3 @@
-export const Audio = () => {
+export const Audio = ({}: any) => {
     return <div></div>;
 };
