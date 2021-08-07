@@ -1,7 +1,7 @@
 import s from "../attachmentModal.module.scss";
 import SendIcon from "@material-ui/icons/Send";
 import CloseIcon from "@material-ui/icons/Close";
-import { forwardRef, useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import AddIcon from "@material-ui/icons/Add";
 import {
     addAttachments,

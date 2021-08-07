@@ -95,6 +95,9 @@
         justify-content: center;
         align-items: center;
         position: relative;
+        height: 58px;
+        margin: 3px 1px 3px 1px;
+        width: 58px;
         .close {
             display: none;
             height: 15px;
@@ -128,21 +131,15 @@
         }
     }
     .previewDefault {
-        height: 58px;
-        margin: 3px 1px 3px 1px;
-        width: 58px;
     }
     .previewActive {
         border: 2px solid gray;
-        height: 58px;
-        margin: 3px 1px 3px 1px;
-        width: 58px;
     }
     .addFileButton {
         height: 54px;
         border: 2px solid transparent;
         margin: 3px 1px 3px 1px;
-        width: 57px;
+        width: 58px;
         font-size: 11px;
         color: #68bbe4;
         display: flex;

@@ -1,7 +1,6 @@
 import s from "./attachmentModal.module.scss";
 import CloseIcon from "@material-ui/icons/Close";
 import { Image } from "./components/Image";
-import { Audio } from "./components/Audio";
 import { Video } from "./components/Video";
 import { File } from "./components/File";
 import { PreviewFooter } from "./components/PreviewFooter";
@@ -20,8 +19,6 @@ export const FilePreview = ({ file }: any) => {
     switch (type.split("/")[0]) {
         case "image":
             return <Image file={file} />;
-        case "audio":
-            return <Audio file={file} />;
         case "video":
             return <Video file={file} />;
         default:
@@ -52,7 +49,7 @@ export const AttachmentModal = connect(
             </header>
             <div className={s.previewInFocus}>
                 <FilePreview file={fileInPreview} />
-                {!["image", "audio", "video"].includes(
+                {!["image", "video"].includes(
                     fileInPreview?.type?.split("/")[0]
                 ) ? (
                     <small>{fileInPreview?.name}</small>

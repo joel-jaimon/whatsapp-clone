@@ -85,17 +85,6 @@ export const ChatContainerFooter = connect(
     };
 
     const attachmentsArray = [
-        <VideoCallIcon className={s.videoIcon} />,
-        <AvatarIcon className={s.avatarIcon} />,
-        <DocumentIcon className={s.docIcon}>
-            <input
-                onChange={handleAttachments}
-                type="file"
-                multiple={true}
-                accept=".docx, .doc, .pdf, .zip, .rar"
-            />
-        </DocumentIcon>,
-        <CameraIcon className={s.cameraIcon} />,
         <PictureIcon className={s.pictureIcon}>
             <input
                 onChange={handleAttachments}
@@ -104,6 +93,17 @@ export const ChatContainerFooter = connect(
                 accept="image/png"
             />
         </PictureIcon>,
+        <CameraIcon className={s.cameraIcon} />,
+        <DocumentIcon className={s.docIcon}>
+            <input
+                onChange={handleAttachments}
+                type="file"
+                multiple={true}
+                accept=".docx, .doc, .pdf, .zip, .rar"
+            />
+        </DocumentIcon>,
+        <AvatarIcon className={s.avatarIcon} />,
+        <VideoCallIcon className={s.videoIcon} />,
     ];
 
     return (
