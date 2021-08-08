@@ -40,14 +40,33 @@ export const MessagePreview = connect(
         const sliderRef: any = useRef(null);
         const mainRef: any = useRef(null);
 
-        const scrollTo = (index: number, msgId?: string) => {
+        const scrollTo = (
+            index: number,
+            msgId?: string,
+            spawn: boolean = false
+        ) => {
             const px = index * 64;
             sliderRef.current.scroll({
                 left: px,
-                behavior: "smooth",
+                behavior: spawn ? "auto" : "smooth",
             });
             setGlobalMsgInFocus(msgId);
         };
+
+        const downloadedMedia = () => {
+            return activeChat.messages.filter(({ msgType }: any) => {
+                return msgType === "image" || msgType === "video";
+            });
+        };
+
+        const mediaInFocus = () => {
+            return downloadedMedia()?.filter(
+                ({ id }: any) => id === msgInFocus
+            )[0];
+        };
+
+        const totalAvailableMedia = downloadedMedia();
+        const mediaInPreview = mediaInFocus();
 
         const handleLeft = () => {
             const px = (activeMsg - 1) * 64;
@@ -55,11 +74,13 @@ export const MessagePreview = connect(
                 left: px,
                 behavior: "smooth",
             });
-            setActiveMsg((prev) => (prev === 0 ? 0 : prev - 1));
+            setActiveMsg((prev) => prev - 1);
+            setGlobalMsgInFocus(totalAvailableMedia[activeMsg - 1].id);
         };
 
         const handleRight = () => {
             setActiveMsg((prev) => prev + 1);
+            setGlobalMsgInFocus(totalAvailableMedia[activeMsg + 1].id);
             const px = (activeMsg + 1) * 64;
             sliderRef.current.scroll({
                 left: px,
@@ -79,21 +100,25 @@ export const MessagePreview = connect(
             return;
         };
 
+        const first = totalAvailableMedia[0]?.id === msgInFocus;
+        const last =
+            totalAvailableMedia[totalAvailableMedia?.length - 1]?.id ===
+            msgInFocus;
+
         useEffect(() => {
             mainRef.current.focus();
         }, []);
 
-        const downloadedMedia = () => {
-            return activeChat.messages.filter(({ msgType }: any) => {
-                return msgType === "image" || msgType === "video";
-            });
-        };
-
-        const mediaInFocus = () => {
-            return downloadedMedia()?.filter(
-                ({ id }: any) => id === msgInFocus
-            )[0];
-        };
+        useEffect(() => {
+            // SOME ASYNC TASK => TODO
+            (async () => {
+                const newIndex = totalAvailableMedia.findIndex((e: any) => {
+                    return e.id === msgInFocus;
+                });
+                setActiveMsg(newIndex);
+                scrollTo(newIndex, msgInFocus, true);
+            })();
+        }, []);
 
         return (
             <div
@@ -120,27 +145,41 @@ export const MessagePreview = connect(
                     </div>
                 </div>
                 <div className={s.main}>
-                    <button onClick={handleLeft}>
+                    <button
+                        disabled={first}
+                        style={{
+                            backgroundColor: first ? "#26292b" : "#3b4042",
+                            cursor: first ? "default" : "pointer",
+                        }}
+                        onClick={handleLeft}
+                    >
                         <ChevronLeftIcon />
                     </button>
                     <div className={s.preview}>
-                        {mediaInFocus().msgType === "image" ? (
+                        {mediaInPreview.msgType === "image" ? (
                             <img
-                                src={mediaInFocus()?.msgParams?.url}
+                                src={mediaInPreview?.msgParams?.url}
                                 alt="msg preview"
                             />
                         ) : (
                             <MinimizedVideo
-                                params={mediaInFocus()?.msgParams}
+                                params={mediaInPreview?.msgParams}
                             />
                         )}
                     </div>
-                    <button onClick={handleRight}>
+                    <button
+                        disabled={last}
+                        style={{
+                            backgroundColor: last ? "#26292b" : "#3b4042",
+                            cursor: last ? "default" : "pointer",
+                        }}
+                        onClick={handleRight}
+                    >
                         <ChevronRightIcon />
                     </button>
                 </div>
                 <div ref={sliderRef} className={s.footer}>
-                    {downloadedMedia().map((media: any, i: number) => {
+                    {totalAvailableMedia.map((media: any, i: number) => {
                         return (
                             <div key={media.id} className={s.mediaPreview}>
                                 {media.msgType === "video" ? (
