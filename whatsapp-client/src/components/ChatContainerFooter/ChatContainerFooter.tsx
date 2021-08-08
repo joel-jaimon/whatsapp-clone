@@ -128,6 +128,8 @@ export const ChatContainerFooter = connect(
                 {activity ? (
                     <Activity
                         ref={inputRef}
+                        typing={typing}
+                        setTyping={setTyping}
                         setInput={setInput}
                         onClose={closeActivityContainer}
                         reverseActivityAnimation={reverseActivityAnimation}
