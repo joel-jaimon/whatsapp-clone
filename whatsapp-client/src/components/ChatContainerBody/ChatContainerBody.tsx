@@ -63,7 +63,7 @@ export const ChatContainerBody = connect(
 
     useEffect(() => {
         chatRef.current.scrollTop = chatRef.current.scrollHeight;
-    }, []);
+    }, [messages]);
 
     return (
         <div

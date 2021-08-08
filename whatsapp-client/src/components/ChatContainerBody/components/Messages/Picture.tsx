@@ -26,18 +26,9 @@ export const Picture = connect(
         setGlobalModal,
         setGlobalMsgInFocus,
     }: any) => {
-        const { thumbnail, url, size } = msgParams;
-        const [imageOrientation, setImageOrientation] = useState<any>(null);
+        const { thumbnail, url, size, orientation } = msgParams;
         const [loading, setLoading] = useState<boolean>(false);
         const [downloaded, setDownloaded] = useState<boolean>(false);
-
-        const handleImageType = (e: any) => {
-            if (e.target.naturalHeight > e.target.naturalWidth) {
-                setImageOrientation("potrait");
-            } else {
-                setImageOrientation("landscape");
-            }
-        };
 
         const preview = () => {
             setGlobalModal({
@@ -64,7 +55,7 @@ export const Picture = connect(
                 <div className={s.img}>
                     <div
                         className={
-                            imageOrientation === "potrait"
+                            orientation === "potrait"
                                 ? s.imgPotrait
                                 : s.imgLandscape
                         }
@@ -105,7 +96,6 @@ export const Picture = connect(
                             className={downloaded ? s.releasedImg : s.thumbnail}
                             src={downloaded ? url : thumbnail}
                             alt="file-thumbnail"
-                            onLoad={handleImageType}
                         />
                     </div>
                 </div>
