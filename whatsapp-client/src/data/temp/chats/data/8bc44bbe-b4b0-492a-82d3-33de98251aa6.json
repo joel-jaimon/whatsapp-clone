@@ -26,6 +26,7 @@
         "msgType": "image",
         "timestamp": 1627836760113,
         "msgParams": {
+            "orientation": "landscape",
             "size": "131 kB",
             "thumbnail": "https://firebasestorage.googleapis.com/v0/b/my-portfolio-15c91.appspot.com/o/temp%2F2.jpg?alt=media&token=3fc8d7fa-acd0-4824-8901-284ad71d7174",
             "url": "https://images.unsplash.com/photo-1627573002203-abedce71ddb6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
@@ -76,6 +77,7 @@
         "msgType": "image",
         "timestamp": 1627836763253,
         "msgParams": {
+            "orientation": "potrait",
             "size": "531 kB",
             "thumbnail": "https://firebasestorage.googleapis.com/v0/b/my-portfolio-15c91.appspot.com/o/temp%2F1.jpg?alt=media&token=75149bcd-ef63-4dba-b58f-bb9722c18741",
             "url": "https://images.unsplash.com/photo-1521676259650-675b5bfec1ae?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80"
