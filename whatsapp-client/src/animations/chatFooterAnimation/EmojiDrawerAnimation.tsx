@@ -12,6 +12,7 @@ export const EmojiDrawerAnimation = ({
             tension: 200,
         },
         onRest: onClose,
+        // onChange: (e: any) => console.log(e),
         to: {
             height: reverse ? 0 : 300,
         },
