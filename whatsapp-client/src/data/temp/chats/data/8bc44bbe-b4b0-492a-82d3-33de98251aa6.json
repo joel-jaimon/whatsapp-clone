@@ -87,6 +87,7 @@
         "msgType": "video",
         "timestamp": 1627836764153,
         "msgParams": {
+            "orientation": "landscape",
             "size": "281 kB",
             "duration": "00:15",
             "thumbnail": "https://firebasestorage.googleapis.com/v0/b/my-portfolio-15c91.appspot.com/o/temp%2Fthumbnailvid1-min.png?alt=media&token=ccd32251-9bac-443b-83e8-fa5e1c776956",
@@ -99,6 +100,7 @@
         "msgType": "video",
         "timestamp": 1627836764253,
         "msgParams": {
+            "orientation": "potrait",
             "size": "981 kB",
             "duration": "00:45",
             "thumbnail": "https://firebasestorage.googleapis.com/v0/b/my-portfolio-15c91.appspot.com/o/temp%2Fthumbnailvid2-min.png?alt=media&token=d54a6899-8613-47aa-be39-619a18a78358",

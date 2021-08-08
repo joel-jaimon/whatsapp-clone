@@ -133,6 +133,7 @@
             justify-content: center;
             align-items: center;
             background-color: #191f23;
+
             span {
                 background-color: #00af9c;
                 border-radius: 100%;
@@ -325,7 +326,8 @@
                 margin-right: calc(50% - 31.5px) !important;
             }
         }
-        img {
+        img,
+        video {
             border: 2px solid transparent;
             object-fit: cover;
             cursor: pointer;

@@ -15,7 +15,10 @@ import {
 } from "../../../../constants/movableModal";
 import { connect } from "react-redux";
 import { setMovableModal } from "../../../../redux/actions/movalbleModal";
-import { setGlobalModal } from "../../../../redux/actions/setGlobalModal";
+import {
+    setGlobalModal,
+    setGlobalMsgInFocus,
+} from "../../../../redux/actions/setGlobalModal";
 
 const passStateToProps = ({ movableModal }: any) => ({
     movableModal: movableModal.modal,
@@ -24,6 +27,7 @@ const passStateToProps = ({ movableModal }: any) => ({
 const passDispatchToProps = (dispatch: any) => ({
     setMovableModal: (modal: any) => dispatch(setMovableModal(modal)),
     setGlobalModal: (modal: any) => dispatch(setGlobalModal(modal)),
+    setGlobalMsgInFocus: (id: string) => dispatch(setGlobalMsgInFocus(id)),
 });
 
 export const Video = connect(
@@ -31,36 +35,28 @@ export const Video = connect(
     passDispatchToProps
 )(
     ({
+        id,
         msgPosition,
         msgParams,
         timestamp,
         setGlobalModal,
         setMovableModal,
+        setGlobalMsgInFocus,
     }: any) => {
-        const { thumbnail, url, size, duration } = msgParams;
-
-        const [imageOrientation, setImageOrientation] = useState<any>(null);
+        const { thumbnail, url, size, duration, orientation } = msgParams;
         const [loading, setLoading] = useState<boolean>(false);
         const [downloaded, setDownloaded] = useState<boolean>(false);
 
         const offset =
-            imageOrientation === "potrait" ? potraitOffset : landscapeOffset;
-
-        const handleImageType = (e: any) => {
-            if (e.target.naturalHeight > e.target.naturalWidth) {
-                setImageOrientation("potrait");
-            } else {
-                setImageOrientation("landscape");
-            }
-        };
+            orientation === "potrait" ? potraitOffset : landscapeOffset;
 
         const openMinimizedVideo = () => {
             setMovableModal({
                 type: "minimizedVideo",
                 params: {
-                    src: url,
+                    url: url,
                     mode: "mini",
-                    orientation: imageOrientation,
+                    orientation: orientation,
                     ...offset,
                 },
             });
@@ -69,13 +65,9 @@ export const Video = connect(
         const openVideoPreview = () => {
             setGlobalModal({
                 type: "viewMsgPreview",
-                params: {
-                    src: url,
-                    orientation: imageOrientation,
-                    previewImg: "",
-                    ...offset,
-                },
+                params: {},
             });
+            setGlobalMsgInFocus(id);
         };
 
         const downloadVideo = () => {
@@ -83,7 +75,7 @@ export const Video = connect(
             setTimeout(() => {
                 setDownloaded(true);
                 setLoading(false);
-            }, 1000);
+            }, 500);
         };
 
         const cancelDownload = () => {
@@ -97,7 +89,7 @@ export const Video = connect(
                 <div className={s.video}>
                     <div
                         className={
-                            imageOrientation === "potrait"
+                            orientation === "potrait"
                                 ? s.imgPotrait
                                 : s.imgLandscape
                         }
@@ -173,7 +165,6 @@ export const Video = connect(
                                 }
                                 src={thumbnail}
                                 alt="file-thumbnail"
-                                onLoad={handleImageType}
                             />
                         </div>
                     </div>

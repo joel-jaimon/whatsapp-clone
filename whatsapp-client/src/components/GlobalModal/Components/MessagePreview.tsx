@@ -11,126 +11,167 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import { MinimizedVideo } from "../../MovableModal/Components/MinimizedVideo";
 import { connect } from "react-redux";
-import { setGlobalModal } from "../../../redux/actions/setGlobalModal";
+import {
+    setGlobalModal,
+    setGlobalMsgInFocus,
+} from "../../../redux/actions/setGlobalModal";
 
 const mapStateToProps = ({ globalModal, activeChat }: any) => ({
-    globalModal: globalModal.modal,
+    globalModal,
     activeChat: activeChat.chat,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
     setGlobalModal: (modal: any) => dispatch(setGlobalModal(modal)),
+    setGlobalMsgInFocus: (params: any) => dispatch(setGlobalMsgInFocus(params)),
 });
 
 export const MessagePreview = connect(
     mapStateToProps,
     mapDispatchToProps
-)(({ globalModal, activeChat, setGlobalModal }: any) => {
-    const [activeMsg, setActiveMsg] = useState(0);
-    const sliderRef: any = useRef(null);
-    const mainRef: any = useRef(null);
+)(
+    ({
+        globalModal: { modal, msgInFocus },
+        activeChat,
+        setGlobalModal,
+        setGlobalMsgInFocus,
+    }: any) => {
+        const [activeMsg, setActiveMsg] = useState(0);
+        const sliderRef: any = useRef(null);
+        const mainRef: any = useRef(null);
 
-    const scrollTo = (index: number) => {
-        const px = index * 64;
-        sliderRef.current.scroll({
-            left: px,
-            behavior: "smooth",
-        });
-        setActiveMsg(index);
-    };
+        const scrollTo = (index: number, msgId?: string) => {
+            const px = index * 64;
+            sliderRef.current.scroll({
+                left: px,
+                behavior: "smooth",
+            });
+            setGlobalMsgInFocus(msgId);
+        };
 
-    const handleLeft = () => {
-        const px = (activeMsg - 1) * 64;
-        sliderRef.current.scroll({
-            left: px,
-            behavior: "smooth",
-        });
-        setActiveMsg((prev) => (prev === 0 ? 0 : prev - 1));
-    };
+        const handleLeft = () => {
+            const px = (activeMsg - 1) * 64;
+            sliderRef.current.scroll({
+                left: px,
+                behavior: "smooth",
+            });
+            setActiveMsg((prev) => (prev === 0 ? 0 : prev - 1));
+        };
 
-    const handleRight = () => {
-        setActiveMsg((prev) => prev + 1);
-        const px = (activeMsg + 1) * 64;
-        sliderRef.current.scroll({
-            left: px,
-            behavior: "smooth",
-        });
-    };
+        const handleRight = () => {
+            setActiveMsg((prev) => prev + 1);
+            const px = (activeMsg + 1) * 64;
+            sliderRef.current.scroll({
+                left: px,
+                behavior: "smooth",
+            });
+        };
 
-    const handleKeyPress = (e: any) => {
-        switch (e.keyCode) {
-            case 37:
-                handleLeft();
-                break;
-            case 39:
-                handleRight();
-                break;
-        }
-        return;
-    };
+        const handleKeyPress = (e: any) => {
+            switch (e.keyCode) {
+                case 37:
+                    handleLeft();
+                    break;
+                case 39:
+                    handleRight();
+                    break;
+            }
+            return;
+        };
 
-    useEffect(() => {
-        mainRef.current.focus();
-    }, []);
+        useEffect(() => {
+            mainRef.current.focus();
+        }, []);
 
-    return (
-        <div
-            ref={mainRef}
-            tabIndex={0}
-            onKeyDown={handleKeyPress}
-            className={s.msgFullPreview}
-        >
-            <div className={s.header}>
-                <div className={s.info}>
-                    <img src={activeChat.chatInfo.avatar} alt="avatar" />
-                    <div>
-                        <strong>You @ {activeChat.chatInfo.name}</strong>
-                        <br />
-                        <small>today at 9:55 AM</small>
+        const downloadedMedia = () => {
+            return activeChat.messages.filter(({ msgType }: any) => {
+                return msgType === "image" || msgType === "video";
+            });
+        };
+
+        const mediaInFocus = () => {
+            return downloadedMedia()?.filter(
+                ({ id }: any) => id === msgInFocus
+            )[0];
+        };
+
+        return (
+            <div
+                ref={mainRef}
+                tabIndex={0}
+                onKeyDown={handleKeyPress}
+                className={s.msgFullPreview}
+            >
+                <div className={s.header}>
+                    <div className={s.info}>
+                        <img src={activeChat.chatInfo.avatar} alt="avatar" />
+                        <div>
+                            <strong>You @ {activeChat.chatInfo.name}</strong>
+                            <br />
+                            <small>today at 9:55 AM</small>
+                        </div>
+                    </div>
+                    <div className={s.control}>
+                        <ChatBubbleOutlineOutlinedIcon />
+                        <StarIcon />
+                        <ReplyIcon />
+                        <GetAppIcon />
+                        <CloseIcon onClick={() => setGlobalModal(null)} />
                     </div>
                 </div>
-                <div className={s.control}>
-                    <ChatBubbleOutlineOutlinedIcon />
-                    <StarIcon />
-                    <ReplyIcon />
-                    <GetAppIcon />
-                    <CloseIcon onClick={() => setGlobalModal(null)} />
-                </div>
-            </div>
-            <div className={s.main}>
-                <button onClick={handleLeft}>
-                    <ChevronLeftIcon />
-                </button>
-                <div className={s.preview}>
-                    {globalModal.params.messageType === "image" ? (
-                        <img src={globalModal.params.src} alt="msg preview" />
-                    ) : (
-                        <MinimizedVideo params={globalModal.params} />
-                    )}
-                </div>
-                <button onClick={handleRight}>
-                    <ChevronRightIcon />
-                </button>
-            </div>
-            <div ref={sliderRef} className={s.footer}>
-                {[...Array(50)].map((e: any, i: number) => {
-                    return (
-                        <div>
+                <div className={s.main}>
+                    <button onClick={handleLeft}>
+                        <ChevronLeftIcon />
+                    </button>
+                    <div className={s.preview}>
+                        {mediaInFocus().msgType === "image" ? (
                             <img
-                                onClick={() => scrollTo(i)}
-                                draggable={false}
-                                className={
-                                    i === activeMsg
-                                        ? s.previewActive
-                                        : s.previewDefault
-                                }
-                                src={globalModal.params.src}
-                                alt="smallPreview"
+                                src={mediaInFocus()?.msgParams?.url}
+                                alt="msg preview"
                             />
-                        </div>
-                    );
-                })}
+                        ) : (
+                            <MinimizedVideo
+                                params={mediaInFocus()?.msgParams}
+                            />
+                        )}
+                    </div>
+                    <button onClick={handleRight}>
+                        <ChevronRightIcon />
+                    </button>
+                </div>
+                <div ref={sliderRef} className={s.footer}>
+                    {downloadedMedia().map((media: any, i: number) => {
+                        return (
+                            <div key={media.id} className={s.mediaPreview}>
+                                {media.msgType === "video" ? (
+                                    <video
+                                        draggable={false}
+                                        onClick={() => scrollTo(i, media.id)}
+                                        className={
+                                            media.id === msgInFocus
+                                                ? s.previewActive
+                                                : s.previewDefault
+                                        }
+                                        src={media.msgParams.url}
+                                    />
+                                ) : (
+                                    <img
+                                        onClick={() => scrollTo(i, media.id)}
+                                        draggable={false}
+                                        className={
+                                            media.id === msgInFocus
+                                                ? s.previewActive
+                                                : s.previewDefault
+                                        }
+                                        src={media.msgParams.url}
+                                        alt="smallPreview"
+                                    />
+                                )}
+                            </div>
+                        );
+                    })}
+                </div>
             </div>
-        </div>
-    );
-});
+        );
+    }
+);

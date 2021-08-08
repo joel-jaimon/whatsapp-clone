@@ -116,7 +116,7 @@ export const MinimizedVideo = connect(
             type: "minimizedVideo",
             params: {
                 ...offset,
-                src: "https://player.vimeo.com/external/565791593.sd.mp4?s=fa438f0a90f8c5c40133e50260d3559008660dc2&profile_id=165&oauth2_token_id=57447761",
+                url: params.url,
                 mode: "mini",
                 orientation: params.orientation,
             },
@@ -181,7 +181,7 @@ export const MinimizedVideo = connect(
             </div>
             <video
                 ref={videoRef}
-                src={params.src}
+                src={params.url}
                 onEnded={(e) => setPlay(false)}
                 onDurationChange={(e) => loadDuration(e.target)}
             />
