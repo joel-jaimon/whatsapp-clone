@@ -24,7 +24,6 @@ export const AudioRecorder = connect(
             .then((stream) => {
                 localStorage.setItem("_microphoneAccess", "allowed");
                 setGlobalModal(null);
-                console.log(stream);
             })
             .catch((err) => {
                 setGlobalModal({
@@ -32,7 +31,6 @@ export const AudioRecorder = connect(
                     params: {},
                 });
                 closeOption(true);
-                console.log(err.message);
             });
     }, []);
 

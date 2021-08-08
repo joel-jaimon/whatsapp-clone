@@ -1,7 +1,6 @@
 import { useSpring, animated as a } from "@react-spring/web";
 
 const animateFrom = (height: number, width: number, { x, y }: any) => {
-    console.log({ x, y });
     return `scale(0) translate(${(!x ? -1 : 1) * width}px, ${
         (!y ? -1 : 1) * height
     }px)`;

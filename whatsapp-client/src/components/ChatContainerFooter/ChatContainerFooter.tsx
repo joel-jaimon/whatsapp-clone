@@ -90,7 +90,6 @@ export const ChatContainerFooter = connect(
         const sendMsg = () => {
             // @ts-ignore
             const msg = inputRef.current.innerText.replaceAll("\n", "<br/>");
-            console.log(msg);
         };
 
         const handleAttachments = (e: any) => {

@@ -54,7 +54,6 @@ export const Emojees = forwardRef(({ setInput }: any, ref: any) => {
         };
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach((entry) => {
-                console.log(entry.isIntersecting);
                 if (entry.isIntersecting) {
                     setPresentVisibleCat(entry.target.id);
                 }
