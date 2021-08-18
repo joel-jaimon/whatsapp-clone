@@ -1,0 +1,17 @@
+.smoke {
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(9, 14, 17, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(212, 213, 215);
+    font-size: 12px;
+}
+.fullModal {
+    height: 100vh;
+    overflow: hidden;
+    width: 100%;
+}
