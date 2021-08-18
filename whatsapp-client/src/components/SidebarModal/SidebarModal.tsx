@@ -57,7 +57,7 @@ export const SidebarModal = connect(
                         onClick={() => setReverse(true)}
                     />
                 </span>
-                <p>Profile</p>
+                <p>{sidebarModal.params.headerTitle}</p>
             </div>
             <Modal sidebarModal={sidebarModal} />
         </SidebarModalAnimation>

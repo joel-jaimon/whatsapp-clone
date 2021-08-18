@@ -50,6 +50,9 @@ export const SidebarHead = connect(
                     onClick={() => {
                         setSidebarModal({
                             type: "userSidebar",
+                            params: {
+                                headerTitle: "Profile",
+                            },
                         });
                     }}
                     className={s.avatar}
@@ -71,7 +74,17 @@ export const SidebarHead = connect(
                             ></path>
                         </svg>
                     </span>
-                    <span className="icons">
+                    <span
+                        onClick={() => {
+                            setSidebarModal({
+                                type: "newMsgSidebar",
+                                params: {
+                                    headerTitle: "New Chat",
+                                },
+                            });
+                        }}
+                        className="icons"
+                    >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"

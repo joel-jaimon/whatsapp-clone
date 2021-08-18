@@ -22,7 +22,7 @@ const passDispatchToProps = (dispatch: any) => ({
 export const SidebarChats = connect(
     passStateToProps,
     passDispatchToProps
-)(({ data, setDropMenu, setActiveChat, setChatModal }: any) => {
+)(({ data, setDropMenu, setActiveChat, setChatModal, userMode }: any) => {
     const handleDropMenuClicks = (e: any, type: string) => {
         setDropMenu({
             type,
@@ -47,27 +47,31 @@ export const SidebarChats = connect(
 
     return (
         <div
-            onMouseOver={() => setExpandMore(true)}
-            onMouseLeave={() => setExpandMore(false)}
+            onMouseOver={() => !userMode && setExpandMore(true)}
+            onMouseLeave={() => !userMode && setExpandMore(false)}
             onClickCapture={handleActiveChat}
-            onContextMenu={(e) => {
-                e.preventDefault();
-                setDropMenu({
-                    type: "chatInfo",
-                    position: {
-                        x: e.clientX,
-                        y: e.clientY,
-                    },
-                    params: {},
-                });
-            }}
+            onContextMenu={
+                !userMode
+                    ? (e) => {
+                          e.preventDefault();
+                          setDropMenu({
+                              type: "chatInfo",
+                              position: {
+                                  x: e.clientX,
+                                  y: e.clientY,
+                              },
+                              params: {},
+                          });
+                      }
+                    : () => {}
+            }
             className={s.sidebarChats}
         >
             <Avatar src={data.avatar} alt="sidebar-chat-avatar" />
             <span className={s.chatInfo}>
                 <div>
                     <p>{data.name}</p>
-                    <p className={s.time}>Thursday</p>
+                    {!userMode && <p className={s.time}>Thursday</p>}
                 </div>
                 <div>
                     <MsgPreview {...data} />
