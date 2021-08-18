@@ -2,6 +2,7 @@ import { connect } from "react-redux";
 import s from "./chatContainerHeader.module.scss";
 import { setDropDown } from "../../redux/actions/setDropDown";
 import { setChatContainerModal } from "../../redux/actions/chatContainerModal";
+import { setRoomModal } from "../../redux/actions/roomModal";
 
 const passStateToProps = ({ activeChat, dropDownMenu }: any) => ({
     dropDown: dropDownMenu.dropDown,
@@ -12,6 +13,7 @@ const passDispatchToProps = (dispatch: any) => ({
     setDropDown: (dropMenu: any) => dispatch(setDropDown(dropMenu)),
     setChatContainerModal: (modal: any) =>
         dispatch(setChatContainerModal(modal)),
+    setRoomModal: (roomModal: any) => dispatch(setRoomModal(roomModal)),
 });
 
 export const ChatContainerHead = connect(
@@ -23,6 +25,7 @@ export const ChatContainerHead = connect(
         setChatContainerModal,
         dropDown,
         setDropDown,
+        setRoomModal,
     }: any) => {
         const toggleDropdown = (e: any) => {
             if (dropDown.type === "activeChatInfoToggle") {
@@ -60,6 +63,21 @@ export const ChatContainerHead = connect(
                 </div>
 
                 <div className={s.roomControls}>
+                    <span
+                        onClick={() => {
+                            setRoomModal(true);
+                        }}
+                        className="icons"
+                    >
+                        <svg
+                            fill="#b1b3b5"
+                            focusable="false"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                        >
+                            <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4zM14 13h-3v3H9v-3H6v-2h3V8h2v3h3v2z"></path>
+                        </svg>
+                    </span>
                     <span
                         onClick={() =>
                             setChatContainerModal({

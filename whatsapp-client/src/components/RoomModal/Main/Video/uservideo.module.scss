@@ -1,0 +1,10 @@
+.userVideo {
+    margin: 10px;
+    position: relative;
+    video {
+        object-position: center;
+        height: 350px;
+        width: 500px;
+        object-fit: cover;
+    }
+}

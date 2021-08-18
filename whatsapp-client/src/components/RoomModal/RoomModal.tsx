@@ -9,7 +9,7 @@ const passStateToProps = ({ roomModal }: any) => ({
 });
 
 export const RoomModal = connect(passStateToProps)(({ roomModal }: any) => {
-    return (
+    return roomModal ? (
         <div className={s.smoke}>
             <div className={s.fullModal}>
                 <div className={s.room}>
@@ -21,5 +21,7 @@ export const RoomModal = connect(passStateToProps)(({ roomModal }: any) => {
                 </div>
             </div>
         </div>
+    ) : (
+        <div />
     );
 });
