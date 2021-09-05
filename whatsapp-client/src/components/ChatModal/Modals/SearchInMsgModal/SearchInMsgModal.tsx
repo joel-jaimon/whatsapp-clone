@@ -2,7 +2,7 @@ import s from "../../chatModal.module.scss";
 import { useState } from "react";
 import { connect } from "react-redux";
 import { CircularProgress } from "@material-ui/core";
-import { setChatContainerModal } from "../../../../redux/actions/chatContainerModal";
+import { setChatContainerModal } from "../../../../redux/reducers/chatContainerModal";
 
 const passStateToProps = ({ chatModal }: any) => ({
     chatContainerModal: chatModal.modal,

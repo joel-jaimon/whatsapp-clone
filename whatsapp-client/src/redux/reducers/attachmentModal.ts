@@ -1,37 +1,74 @@
-import { attachmentModalTypes } from "../types/attachmentModal";
+import { createSlice } from "@reduxjs/toolkit";
+// import { attachmentModalTypes } from "../types/attachmentModal";
 
-const initialState = {
+const initialState: any = {
     modalFor: null,
     files: [],
     fileInPreview: 0,
 };
 
-export const attachmentModalReducer = (state = initialState, action: any) => {
-    switch (action.type) {
-        case attachmentModalTypes.SET_ATTACHMENT_MODAL:
-            return {
-                ...state,
-                modalFor: action.payload,
-            };
-        case attachmentModalTypes.ADD_FILE:
-            return {
-                ...state,
-                files: [...state.files, ...action.payload],
-            };
-        case attachmentModalTypes.REMOVE_FILE:
+export const attachmentModalSlice = createSlice({
+    name: "attachmentModalReducer",
+    initialState,
+    reducers: {
+        setAttachmentModal: (state, action) => {
+            state.modalFor = action.payload;
+        },
+
+        addAttachments: (state, action) => {
+            state.files.push(...action.payload);
+        },
+
+        removeAttachment: (state, action) => {
             state.files.splice(action.payload, 1);
-            return {
-                ...state,
-                files: state.files,
-            };
-        case attachmentModalTypes.CHANGE_IN_PREVIEW:
-            return {
-                ...state,
-                fileInPreview: action.payload,
-            };
-        case attachmentModalTypes.RESET:
-            return initialState;
-        default:
-            return state;
-    }
-};
+        },
+
+        changeFileInPreview: (state, action) => {
+            state.fileInPreview = action.payload;
+        },
+
+        resetFileAttachmentModal: (state, action) => {
+            state.modalFor = null;
+            state.files = [];
+            state.fileInPreview = 0;
+        },
+    },
+});
+
+export const {
+    addAttachments,
+    changeFileInPreview,
+    removeAttachment,
+    resetFileAttachmentModal,
+    setAttachmentModal,
+} = attachmentModalSlice.actions;
+
+// export const attachmentModalReducer = (state = initialState, action: any) => {
+//     switch (action.type) {
+//         case attachmentModalTypes.SET_ATTACHMENT_MODAL:
+//             return {
+//                 ...state,
+//                 modalFor: action.payload,
+//             };
+//         case attachmentModalTypes.ADD_FILE:
+//             return {
+//                 ...state,
+//                 files: [...state.files, ...action.payload],
+//             };
+//         case attachmentModalTypes.REMOVE_FILE:
+//             state.files.splice(action.payload, 1);
+//             return {
+//                 ...state,
+//                 files: state.files,
+//             };
+//         case attachmentModalTypes.CHANGE_IN_PREVIEW:
+//             return {
+//                 ...state,
+//                 fileInPreview: action.payload,
+//             };
+//         case attachmentModalTypes.RESET:
+//             return initialState;
+//         default:
+//             return state;
+//     }
+// };

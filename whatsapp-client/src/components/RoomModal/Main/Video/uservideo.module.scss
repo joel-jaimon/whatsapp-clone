@@ -1,10 +1,12 @@
 .userVideo {
     margin: 10px;
-    position: relative;
     video {
-        object-position: center;
-        height: 350px;
-        width: 500px;
+        height: 100%;
+        width: 100%;
+        aspect-ratio: 15/9;
         object-fit: cover;
+        position: relative;
+        position: relative;
+        object-position: center;
     }
 }

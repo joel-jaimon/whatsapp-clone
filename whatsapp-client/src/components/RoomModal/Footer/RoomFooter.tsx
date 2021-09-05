@@ -5,7 +5,7 @@ import VideocamOffIcon from "@material-ui/icons/VideocamOff";
 import VideocamIcon from "@material-ui/icons/Videocam";
 import CallEndIcon from "@material-ui/icons/CallEnd";
 import { useState } from "react";
-import { setRoomModal } from "../../../redux/actions/roomModal";
+import { setRoomModal } from "../../../redux/reducers/roomModal";
 import { connect } from "react-redux";
 
 const passDispatchToProps = (dispatch: any) => ({

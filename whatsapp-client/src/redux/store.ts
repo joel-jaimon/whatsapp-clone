@@ -1,11 +1,10 @@
-import { createStore, applyMiddleware } from "redux";
+import { configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger";
+import { combinedReducers } from "./rootReducer";
 
-// import main reducer
-import rootReducer from "./rootReducer";
+const middleware = [logger];
 
-// all of the middlewares to be used
-const middlewares = [logger];
-
-// main store
-export const store = createStore(rootReducer, applyMiddleware(...middlewares));
+export const store = configureStore({
+    reducer: combinedReducers,
+    middleware,
+});

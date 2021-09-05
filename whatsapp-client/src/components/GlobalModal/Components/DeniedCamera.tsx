@@ -1,6 +1,6 @@
 import s from "../globalModalStyles.module.scss";
 import { connect } from "react-redux";
-import { setGlobalModal } from "../../../redux/actions/setGlobalModal";
+import { setGlobalModal } from "../../../redux/reducers/globalModal";
 
 const passDispatchToProps = (dispatch: any) => ({
     setGlobalModal: (modal: any) => dispatch(setGlobalModal(modal)),

@@ -4,11 +4,11 @@ import ForwardIcon from "@material-ui/icons/Forward";
 import { useState } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import CloseIcon from "@material-ui/icons/Close";
+import { connect } from "react-redux";
 import {
     setGlobalModal,
     setGlobalMsgInFocus,
-} from "../../../../redux/actions/setGlobalModal";
-import { connect } from "react-redux";
+} from "../../../../redux/reducers/globalModal";
 
 const mapDispatchToProps = (dispatch: any) => ({
     setGlobalModal: (modal: any) => dispatch(setGlobalModal(modal)),

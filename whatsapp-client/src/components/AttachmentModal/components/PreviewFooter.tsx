@@ -3,14 +3,13 @@ import SendIcon from "@material-ui/icons/Send";
 import CloseIcon from "@material-ui/icons/Close";
 import { useEffect, useRef } from "react";
 import AddIcon from "@material-ui/icons/Add";
+import { connect } from "react-redux";
+import { FilePreview } from "../AttachmentModal";
 import {
     addAttachments,
     changeFileInPreview,
     removeAttachment,
-    setAttachmentModal,
-} from "../../../redux/actions/attachmentModal";
-import { connect } from "react-redux";
-import { FilePreview } from "../AttachmentModal";
+} from "../../../redux/reducers/attachmentModal";
 
 const passStateToProps = ({ attachmentModal }: any) => ({
     attachmentModal: attachmentModal,

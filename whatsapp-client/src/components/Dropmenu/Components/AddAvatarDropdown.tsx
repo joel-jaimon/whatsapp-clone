@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { DropdownAnimation } from "../../../animations/dropdown/DropdownAnimation";
-import { setDropDown } from "../../../redux/actions/setDropDown";
-import { setGlobalModal } from "../../../redux/actions/setGlobalModal";
+import { setDropDown } from "../../../redux/reducers/dropDown";
+import { setGlobalModal } from "../../../redux/reducers/globalModal";
 import s from "./dropmenu.module.scss";
 
 const passStateToProps = ({ dropDownMenu }: any) => ({

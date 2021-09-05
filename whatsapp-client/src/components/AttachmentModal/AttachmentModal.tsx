@@ -6,12 +6,12 @@ import { File } from "./components/File";
 import { PreviewFooter } from "./components/PreviewFooter";
 import { useState } from "react";
 import { connect } from "react-redux";
+import { VideoPlayer } from "../VideoPlayer/VideoPlayer";
+import { BlendFromBottomAnimation } from "../../animations/BlendFromBottomAnimation";
 import {
     changeFileInPreview,
     resetFileAttachmentModal,
-} from "../../redux/actions/attachmentModal";
-import { VideoPlayer } from "../VideoPlayer/VideoPlayer";
-import { BlendFromBottomAnimation } from "../../animations/BlendFromBottomAnimation";
+} from "../../redux/reducers/attachmentModal";
 
 export const FilePreview = ({ file, iconPreview }: any) => {
     if (!file) {
@@ -41,7 +41,7 @@ const passStateToProps = ({ attachmentModal, activeChat }: any) => ({
 });
 
 const passDispatchToProps = (dispatch: any) => ({
-    resetAttachmentModal: () => dispatch(resetFileAttachmentModal()),
+    resetAttachmentModal: () => dispatch(resetFileAttachmentModal(null)),
     changeFileInPreview: (fileIndex: number) =>
         dispatch(changeFileInPreview(fileIndex)),
 });

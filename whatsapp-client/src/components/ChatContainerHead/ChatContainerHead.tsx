@@ -1,8 +1,8 @@
 import { connect } from "react-redux";
 import s from "./chatContainerHeader.module.scss";
-import { setDropDown } from "../../redux/actions/setDropDown";
-import { setChatContainerModal } from "../../redux/actions/chatContainerModal";
-import { setRoomModal } from "../../redux/actions/roomModal";
+import { setChatContainerModal } from "../../redux/reducers/chatContainerModal";
+import { setRoomModal } from "../../redux/reducers/roomModal";
+import { setDropDown } from "../../redux/reducers/dropDown";
 
 const passStateToProps = ({ activeChat, dropDownMenu }: any) => ({
     dropDown: dropDownMenu.dropDown,

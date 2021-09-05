@@ -5,8 +5,8 @@ import { Text } from "./components/Messages/Text";
 import { Video } from "./components/Messages/Video";
 import { Voice } from "./components/Messages/Voice";
 import { connect } from "react-redux";
-import { setDropDown } from "../../redux/actions/setDropDown";
 import { useEffect, useRef } from "react";
+import { setDropDown } from "../../redux/reducers/dropDown";
 
 const Message = ({ data, owner }: any) => {
     const _classname = owner ? s.RightWrap : s.LeftWrap;

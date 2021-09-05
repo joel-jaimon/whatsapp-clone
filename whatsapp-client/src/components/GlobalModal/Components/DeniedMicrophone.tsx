@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { setGlobalModal } from "../../../redux/actions/setGlobalModal";
+import { setGlobalModal } from "../../../redux/reducers/globalModal";
 import s from "../globalModalStyles.module.scss";
 
 const passDispatchToProps = (dispatch: any) => ({

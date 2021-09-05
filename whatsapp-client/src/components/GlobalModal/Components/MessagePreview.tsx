@@ -14,7 +14,7 @@ import { connect } from "react-redux";
 import {
     setGlobalModal,
     setGlobalMsgInFocus,
-} from "../../../redux/actions/setGlobalModal";
+} from "../../../redux/reducers/globalModal";
 
 const mapStateToProps = ({ globalModal, activeChat }: any) => ({
     globalModal,

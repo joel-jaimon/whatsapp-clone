@@ -4,7 +4,7 @@ import { UserSidebar } from "./Modals/UserSidebar";
 import { NewMsgSidebar } from "./Modals/NewMsgSidebar";
 import { ArchivedSidebar } from "./Modals/ArchivedSidebar";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import { setSidebarModal } from "../../redux/actions/sidebarChatModal";
+import { setSidebarModal } from "../../redux/reducers/sidebarChatModal";
 import { SidebarModalAnimation } from "../../animations/sidebarModal/SidebarModalAnimation";
 import { useState } from "react";
 

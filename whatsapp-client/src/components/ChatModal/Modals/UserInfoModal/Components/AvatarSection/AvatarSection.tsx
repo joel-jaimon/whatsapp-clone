@@ -2,8 +2,8 @@ import { useState } from "react";
 import s from "./avatarSection.module.scss";
 import compress from "react-image-file-resizer";
 import { connect } from "react-redux";
-import { setDropDown } from "../../../../../../redux/actions/setDropDown";
-import { setGlobalModal } from "../../../../../../redux/actions/setGlobalModal";
+import { setDropDown } from "../../../../../../redux/reducers/dropDown";
+import { setGlobalModal } from "../../../../../../redux/reducers/globalModal";
 
 const passStateToProps = ({ dropDownMenu, activeChat }: any) => ({
     dropMenu: dropDownMenu.dropDown,

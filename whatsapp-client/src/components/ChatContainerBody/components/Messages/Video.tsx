@@ -14,18 +14,18 @@ import {
     potraitOffset,
 } from "../../../../constants/movableModal";
 import { connect } from "react-redux";
-import { setMovableModal } from "../../../../redux/actions/movalbleModal";
+import { setMovalbleModal } from "../../../../redux/reducers/movableModal";
 import {
     setGlobalModal,
     setGlobalMsgInFocus,
-} from "../../../../redux/actions/setGlobalModal";
+} from "../../../../redux/reducers/globalModal";
 
 const passStateToProps = ({ movableModal }: any) => ({
     movableModal: movableModal.modal,
 });
 
 const passDispatchToProps = (dispatch: any) => ({
-    setMovableModal: (modal: any) => dispatch(setMovableModal(modal)),
+    setMovableModal: (modal: any) => dispatch(setMovalbleModal(modal)),
     setGlobalModal: (modal: any) => dispatch(setGlobalModal(modal)),
     setGlobalMsgInFocus: (id: string) => dispatch(setGlobalMsgInFocus(id)),
 });

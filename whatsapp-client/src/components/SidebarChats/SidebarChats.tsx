@@ -1,12 +1,12 @@
-import { Avatar } from "@material-ui/core";
-import s from "./chatStyles.module.scss";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { connect } from "react-redux";
-import { setDropDown } from "../../redux/actions/setDropDown";
-import { setActiveChat } from "../../redux/actions/activeChat";
-import { setChatContainerModal } from "../../redux/actions/chatContainerModal";
-import { MsgPreview } from "./Components/MsgPreview";
 import { useState } from "react";
+import { connect } from "react-redux";
+import s from "./chatStyles.module.scss";
+import { Avatar } from "@material-ui/core";
+import { MsgPreview } from "./Components/MsgPreview";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { setDropDown } from "../../redux/reducers/dropDown";
+import { setActiveChat } from "../../redux/reducers/activeChat";
+import { setChatContainerModal } from "../../redux/reducers/chatContainerModal";
 
 const passStateToProps = ({ activeChat }: any) => ({
     activeChat: activeChat.chat,

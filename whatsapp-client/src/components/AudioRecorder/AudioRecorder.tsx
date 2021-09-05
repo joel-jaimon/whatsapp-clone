@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
+import { setGlobalModal } from "../../redux/reducers/globalModal";
 import s from "./audioRecorder.module.scss";
-import { setGlobalModal } from "../../redux/actions/setGlobalModal";
 
 const passDispatchToProps = (dispatch: any) => ({
     setGlobalModal: (modal: any) => dispatch(setGlobalModal(modal)),

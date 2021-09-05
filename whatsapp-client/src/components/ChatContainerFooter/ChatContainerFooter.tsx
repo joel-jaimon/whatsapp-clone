@@ -19,12 +19,13 @@ import {
 import { ShowAttachmentAnimations } from "../../animations/chatFooterAnimation/ShowAttachmentAnimations";
 import { ExpandOptions } from "../../animations/ExpandOptions";
 import { RecorderAnimation } from "../../animations/chatFooterAnimation/RecorderAnimation";
+
+import { connect } from "react-redux";
 import {
     addAttachments,
     resetFileAttachmentModal,
     setAttachmentModal,
-} from "../../redux/actions/attachmentModal";
-import { connect } from "react-redux";
+} from "../../redux/reducers/attachmentModal";
 
 const passStateFromProps = ({ activeChat, attachmentModal }: any) => ({
     activeChat: activeChat.chat,
@@ -34,7 +35,7 @@ const passStateFromProps = ({ activeChat, attachmentModal }: any) => ({
 const passDispatchToProps = (dispatch: any) => ({
     setAttachmentModal: (modal: any) => dispatch(setAttachmentModal(modal)),
     addAttachments: (files: any[]) => dispatch(addAttachments(files)),
-    resetAttachmentModal: () => dispatch(resetFileAttachmentModal()),
+    resetAttachmentModal: () => dispatch(resetFileAttachmentModal(null)),
 });
 
 export const ChatContainerFooter = connect(

@@ -16,8 +16,8 @@ import {
     potraitOffset,
 } from "../../../constants/movableModal";
 import { connect } from "react-redux";
-import { setMovableModal } from "../../../redux/actions/movalbleModal";
-import { setGlobalModal } from "../../../redux/actions/setGlobalModal";
+import { setMovalbleModal } from "../../../redux/reducers/movableModal";
+import { setGlobalModal } from "../../../redux/reducers/globalModal";
 
 const VolumeButton = ({ vol }: { vol: number }) => {
     if (vol < 1) return <VolumeOffIcon />;
@@ -28,7 +28,7 @@ const VolumeButton = ({ vol }: { vol: number }) => {
 };
 
 const passDispatchToProps = (dispatch: any) => ({
-    setMovableModal: (modal: any) => dispatch(setMovableModal(modal)),
+    setMovableModal: (modal: any) => dispatch(setMovalbleModal(modal)),
     setGlobalModal: (modal: any) => dispatch(setGlobalModal(modal)),
 });
 

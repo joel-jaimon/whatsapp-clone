@@ -4,7 +4,7 @@ import { SearchInMsgModal } from "./Modals/SearchInMsgModal/SearchInMsgModal";
 import { UserInfoModal } from "./Modals/UserInfoModal/UserInfoModal";
 import { ChatContainerModalAnimation } from "../../animations/chatContainerModal/ChatContainerModalAnimation";
 import { useState } from "react";
-import { setChatContainerModal } from "../../redux/actions/chatContainerModal";
+import { setChatContainerModal } from "../../redux/reducers/chatContainerModal";
 
 const passStateToProps = ({ chatModal }: any) => ({
     chatContainerModal: chatModal.modal,
