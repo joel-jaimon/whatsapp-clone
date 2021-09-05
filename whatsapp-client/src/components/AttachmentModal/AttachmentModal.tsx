@@ -34,10 +34,10 @@ export const FilePreview = ({ file, iconPreview }: any) => {
     }
 };
 
-const passStateToProps = ({ attachmentModal, activeChat }: any) => ({
+const passStateToProps = ({ attachmentModal, chatState }: any) => ({
     attachmentModalFor: attachmentModal.modalFor,
     fileInPreview: attachmentModal.files[attachmentModal.fileInPreview],
-    activeChat: activeChat.chat,
+    activeChat: chatState.chat[chatState.activeChat],
 });
 
 const passDispatchToProps = (dispatch: any) => ({
@@ -72,7 +72,7 @@ export const AttachmentModal = connect(
             setReverseAttachmentModalAnimation(true);
         };
 
-        return attachmentModalFor === activeChat.chatInfo.id ? (
+        return attachmentModalFor === activeChat?.chatInfo?.id ? (
             <BlendFromBottomAnimation
                 onClose={onClose}
                 reverse={reverseAttachmentModalAnimation}

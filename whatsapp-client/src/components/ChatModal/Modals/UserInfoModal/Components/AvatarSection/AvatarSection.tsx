@@ -5,9 +5,9 @@ import { connect } from "react-redux";
 import { setDropDown } from "../../../../../../redux/reducers/dropDown";
 import { setGlobalModal } from "../../../../../../redux/reducers/globalModal";
 
-const passStateToProps = ({ dropDownMenu, activeChat }: any) => ({
+const passStateToProps = ({ dropDownMenu, chatState }: any) => ({
     dropMenu: dropDownMenu.dropDown,
-    activeChat: activeChat.chat,
+    activeChat: chatState.chat[chatState.activeChat],
 });
 
 const passDispatchToProps = (dispatch: any) => ({

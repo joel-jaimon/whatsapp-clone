@@ -16,9 +16,9 @@ import {
     setGlobalMsgInFocus,
 } from "../../../redux/reducers/globalModal";
 
-const mapStateToProps = ({ globalModal, activeChat }: any) => ({
+const mapStateToProps = ({ globalModal, chatState }: any) => ({
     globalModal,
-    activeChat: activeChat.chat,
+    activeChat: chatState.chat[chatState.activeChat],
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

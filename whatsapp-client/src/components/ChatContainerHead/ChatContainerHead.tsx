@@ -4,9 +4,9 @@ import { setChatContainerModal } from "../../redux/reducers/chatContainerModal";
 import { setRoomModal } from "../../redux/reducers/roomModal";
 import { setDropDown } from "../../redux/reducers/dropDown";
 
-const passStateToProps = ({ activeChat, dropDownMenu }: any) => ({
+const passStateToProps = ({ chatState, dropDownMenu }: any) => ({
     dropDown: dropDownMenu.dropDown,
-    activeChat: activeChat.chat,
+    activeChat: chatState.chat[chatState.activeChat],
 });
 
 const passDispatchToProps = (dispatch: any) => ({
@@ -21,7 +21,7 @@ export const ChatContainerHead = connect(
     passDispatchToProps
 )(
     ({
-        activeChat: { chatInfo },
+        activeChat,
         setChatContainerModal,
         dropDown,
         setDropDown,
@@ -54,10 +54,13 @@ export const ChatContainerHead = connect(
                     className={s.roomA}
                 >
                     <span className={s.avatar}>
-                        <img src={chatInfo.avatar} alt="chat-avatar" />
+                        <img
+                            src={activeChat?.chatInfo.avatar}
+                            alt="chat-avatar"
+                        />
                     </span>
                     <div className={s.roomInfo}>
-                        <p>{chatInfo.name}</p>
+                        <p>{activeChat?.chatInfo.name}</p>
                         <small>Info</small>
                     </div>
                 </div>

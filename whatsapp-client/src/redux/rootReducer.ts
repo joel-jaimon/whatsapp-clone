@@ -3,14 +3,14 @@ import { globalModalSlice } from "./reducers/globalModal";
 import { movableModalSlice } from "./reducers/movableModal";
 import { sidebarChatModalSlice } from "./reducers/sidebarChatModal";
 import { chatContainerModalSlice } from "./reducers/chatContainerModal";
-import chatSlice from "./reducers/activeChat";
+import chatSlice from "./reducers/chat";
 import { authSlice } from "./reducers/auth";
 import { attachmentModalSlice } from "./reducers/attachmentModal";
 import { roomModalSlice } from "./reducers/roomModal";
 
 export const combinedReducers = {
     authState: authSlice.reducer,
-    activeChat: chatSlice.reducer,
+    chatState: chatSlice.reducer,
     roomModal: roomModalSlice.reducer,
     dropDownMenu: dropDownSlice.reducer,
     globalModal: globalModalSlice.reducer,

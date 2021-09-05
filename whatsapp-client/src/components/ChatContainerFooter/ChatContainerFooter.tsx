@@ -27,8 +27,8 @@ import {
     setAttachmentModal,
 } from "../../redux/reducers/attachmentModal";
 
-const passStateFromProps = ({ activeChat, attachmentModal }: any) => ({
-    activeChat: activeChat.chat,
+const passStateFromProps = ({ chatState, attachmentModal }: any) => ({
+    activeChat: chatState.chat[chatState.activeChat],
     attachmentModal,
 });
 
@@ -45,9 +45,7 @@ export const ChatContainerFooter = connect(
     ({
         setAttachmentModal,
         addAttachments,
-        activeChat: {
-            chatInfo: { id },
-        },
+        activeChat,
         attachmentModal,
         resetAttachmentModal,
     }: any) => {
@@ -98,7 +96,7 @@ export const ChatContainerFooter = connect(
                 resetAttachmentModal();
             }
             setReverseAnimationAttachmentMenu(true);
-            setAttachmentModal(id);
+            setAttachmentModal(activeChat?.chatInfo.id);
             addAttachments(e.target?.files);
         };
 

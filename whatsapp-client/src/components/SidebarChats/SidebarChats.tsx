@@ -5,11 +5,11 @@ import { Avatar } from "@material-ui/core";
 import { MsgPreview } from "./Components/MsgPreview";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { setDropDown } from "../../redux/reducers/dropDown";
-import { setActiveChat } from "../../redux/reducers/activeChat";
+import { setActiveChat } from "../../redux/reducers/chat";
 import { setChatContainerModal } from "../../redux/reducers/chatContainerModal";
 
-const passStateToProps = ({ activeChat }: any) => ({
-    activeChat: activeChat.chat,
+const passStateToProps = ({ chatState }: any) => ({
+    activeChat: chatState.chat[chatState.activeChat],
 });
 
 const passDispatchToProps = (dispatch: any) => ({
@@ -37,10 +37,7 @@ export const SidebarChats = connect(
     const handleActiveChat = () => {
         setDropMenu(false);
         setChatModal(null);
-        setActiveChat({
-            chatInfo: data,
-            messages: require(`../../data/temp/chats/data/${data.id}.json`),
-        });
+        setActiveChat(data.id);
     };
 
     const [expandMore, setExpandMore] = useState(false);
