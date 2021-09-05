@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-// import { attachmentModalTypes } from "../types/attachmentModal";
 
 const initialState: any = {
     modalFor: null,
@@ -42,33 +41,3 @@ export const {
     resetFileAttachmentModal,
     setAttachmentModal,
 } = attachmentModalSlice.actions;
-
-// export const attachmentModalReducer = (state = initialState, action: any) => {
-//     switch (action.type) {
-//         case attachmentModalTypes.SET_ATTACHMENT_MODAL:
-//             return {
-//                 ...state,
-//                 modalFor: action.payload,
-//             };
-//         case attachmentModalTypes.ADD_FILE:
-//             return {
-//                 ...state,
-//                 files: [...state.files, ...action.payload],
-//             };
-//         case attachmentModalTypes.REMOVE_FILE:
-//             state.files.splice(action.payload, 1);
-//             return {
-//                 ...state,
-//                 files: state.files,
-//             };
-//         case attachmentModalTypes.CHANGE_IN_PREVIEW:
-//             return {
-//                 ...state,
-//                 fileInPreview: action.payload,
-//             };
-//         case attachmentModalTypes.RESET:
-//             return initialState;
-//         default:
-//             return state;
-//     }
-// };
