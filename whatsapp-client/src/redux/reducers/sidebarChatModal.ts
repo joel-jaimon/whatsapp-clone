@@ -11,12 +11,7 @@ export const sidebarChatModalSlice = createSlice({
     setSidebarModal: (state, action) => {
       state.modal = action.payload;
     },
-
-    allowSidebarModal: (state, action) => {
-      state.modal = action.payload;
-    },
   },
 });
 
-export const { setSidebarModal, allowSidebarModal } =
-  sidebarChatModalSlice.actions;
+export const { setSidebarModal } = sidebarChatModalSlice.actions;

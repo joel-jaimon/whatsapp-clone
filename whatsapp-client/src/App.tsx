@@ -8,7 +8,9 @@ import { Sidebar } from "./components/Sidebar/Sidebar";
 import socket from "./utils/socketConnection/socketConnection";
 
 const App = () => {
-  console.log(socket);
+  socket.on("eval", (data: any) => {
+    console.log(data);
+  });
   return (
     <div>
       <RoomModal />
