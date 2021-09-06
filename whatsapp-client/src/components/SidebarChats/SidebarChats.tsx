@@ -24,6 +24,7 @@ export const SidebarChats = connect(
     passDispatchToProps
 )(({ data, setDropMenu, setActiveChat, setChatModal, userMode }: any) => {
     const handleDropMenuClicks = (e: any, type: string) => {
+        e.stopPropagation();
         setDropMenu({
             type,
             position: {
@@ -46,7 +47,7 @@ export const SidebarChats = connect(
         <div
             onMouseOver={() => !userMode && setExpandMore(true)}
             onMouseLeave={() => !userMode && setExpandMore(false)}
-            onClickCapture={handleActiveChat}
+            onClick={handleActiveChat}
             onContextMenu={
                 !userMode
                     ? (e) => {

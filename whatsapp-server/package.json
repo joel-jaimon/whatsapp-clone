@@ -1,0 +1,22 @@
+{
+    "name": "whatsapp-server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "servers.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "nodemon servers.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.17.1",
+        "farmhash": "^3.2.1",
+        "helmet": "^4.6.0",
+        "socket.io": "^4.2.0",
+        "socket.io-redis": "^6.1.1"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.12"
+    }
+}

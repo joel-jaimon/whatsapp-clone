@@ -4,6 +4,9 @@
 whatsapp-client/node_modules
 whatsapp-client/.pnp
 whatsapp-client/.pnp.js
+whatsapp-server/node_modules
+whatsapp-server/.pnp
+whatsapp-server/.pnp.js
 
 # testing
 whatsapp-client/coverage
@@ -90,3 +93,4 @@ whatsapp-client/.yarn-integrity
 whatsapp-client/.env
 whatsapp-client/.firebaserc
 whatsapp-client/firebase.json
+
