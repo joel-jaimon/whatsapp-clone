@@ -5,21 +5,24 @@ import { GlobalModal } from "./components/GlobalModal/GlobalModal";
 import { MovableModal } from "./components/MovableModal/MovableModal";
 import { RoomModal } from "./components/RoomModal/RoomModal";
 import { Sidebar } from "./components/Sidebar/Sidebar";
+import socket from "./utils/socketConnection/socketConnection";
+
 const App = () => {
-    return (
-        <div>
-            <RoomModal />
-            <MovableModal />
-            <GlobalModal />
-            <DropMenu />
-            <div className={s.app}>
-                <div className={s.appContainer}>
-                    <Sidebar />
-                    <ChatContainer />
-                </div>
-            </div>
+  console.log(socket);
+  return (
+    <div>
+      <RoomModal />
+      <MovableModal />
+      <GlobalModal />
+      <DropMenu />
+      <div className={s.app}>
+        <div className={s.appContainer}>
+          <Sidebar />
+          <ChatContainer />
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default App;
