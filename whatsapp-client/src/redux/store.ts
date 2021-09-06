@@ -1,10 +1,18 @@
 import { configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 import { combinedReducers } from "./rootReducer";
+import createSagaMiddleware from "redux-saga";
+import { delaySidebarModal } from "./sagas/delaySidbaruserModal";
 
-const middleware = [logger];
+const sagaMiddleware = createSagaMiddleware();
 
-export const store = configureStore({
-    reducer: combinedReducers,
-    middleware,
+const middleware = [logger, sagaMiddleware];
+
+const store = configureStore({
+  reducer: combinedReducers,
+  middleware,
 });
+
+sagaMiddleware.run(delaySidebarModal);
+
+export default store;

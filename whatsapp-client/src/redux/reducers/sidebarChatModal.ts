@@ -1,17 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    modal: null,
+  modal: null,
 };
 
 export const sidebarChatModalSlice = createSlice({
-    name: "sidebarChatModalReducer",
-    initialState,
-    reducers: {
-        setSidebarModal: (state, action) => {
-            state.modal = action.payload;
-        },
+  name: "sidebarChatModalReducer",
+  initialState,
+  reducers: {
+    setSidebarModal: (state, action) => {
+      state.modal = action.payload;
     },
+
+    allowSidebarModal: (state, action) => {
+      state.modal = action.payload;
+    },
+  },
 });
 
-export const { setSidebarModal } = sidebarChatModalSlice.actions;
+export const { setSidebarModal, allowSidebarModal } =
+  sidebarChatModalSlice.actions;
