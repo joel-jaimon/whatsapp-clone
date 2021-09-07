@@ -1,0 +1,38 @@
+.login {
+  width: 250px;
+  img {
+    height: 150px;
+  }
+  .loginControls {
+    display: flex;
+    flex-direction: column;
+    button {
+      border: none;
+      outline: none;
+      padding: 10px 15px 10px 15px;
+      border-radius: 3px;
+      cursor: pointer;
+      color: whitesmoke;
+      transition: 0.3s background-color;
+      &:first-of-type {
+        margin-bottom: 5px;
+        background-color: #0a9d48 !important;
+        &:hover {
+          background-color: #0cb653 !important;
+        }
+        &:active {
+          background-color: #0a9d48 !important;
+        }
+      }
+      &:nth-of-type(2) {
+        background-color: rgb(51, 51, 51);
+        &:hover {
+          background-color: rgb(66, 66, 66) !important;
+        }
+        &:active {
+          background-color: rgb(51, 51, 51) !important;
+        }
+      }
+    }
+  }
+}
