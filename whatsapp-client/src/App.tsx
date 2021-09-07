@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { connect } from "react-redux";
 import s from "./App.module.scss";
 import { ChatContainer } from "./components/ChatContainer/ChatContainer";
 import { DropMenu } from "./components/Dropmenu/Dropmenu";
@@ -9,12 +10,15 @@ import { RoomModal } from "./components/RoomModal/RoomModal";
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import socket from "./utils/socketConnection/socketConnection";
 
-const App = () => {
+const passStateToProps = ({ authState }: any) => ({
+  authState,
+});
+
+const App = connect(passStateToProps)(({ authState }: any) => {
   // socket.on("eval", (data: any) => {
   //   console.log(data);
   // });
-  const [auth, setAuth] = useState(false);
-  return auth ? (
+  return authState.auth ? (
     <div>
       <RoomModal />
       <MovableModal />
@@ -32,6 +36,6 @@ const App = () => {
       <Login />
     </div>
   );
-};
+});
 
 export default App;

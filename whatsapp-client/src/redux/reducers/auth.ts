@@ -1,18 +1,29 @@
-import dummyAuth from "../../data/temp/auth.json";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    auth: dummyAuth,
+  auth: null,
+  loading: false,
+  error: null,
 };
 
 export const authSlice = createSlice({
-    name: "authReducer",
-    initialState,
-    reducers: {
-        setAuthState: (state, action) => {
-            state.auth = action.payload;
-        },
+  name: "authReducer",
+  initialState,
+  reducers: {
+    initiateSignin: (state, action) => {
+      state.loading = true;
     },
+    setAuthSuccess: (state, action) => {
+      state.auth = action.payload;
+      state.error = null;
+      state.loading = false;
+    },
+    setAuthFailed: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    },
+  },
 });
 
-export const { setAuthState } = authSlice.actions;
+export const { initiateSignin, setAuthSuccess, setAuthFailed } =
+  authSlice.actions;
