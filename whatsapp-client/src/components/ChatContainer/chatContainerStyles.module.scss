@@ -11,8 +11,10 @@
 }
 
 .chatMain {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
-
 .idleWrapper {
   width: 100%;
   display: flex;
