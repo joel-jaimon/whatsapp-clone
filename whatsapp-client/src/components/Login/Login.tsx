@@ -1,3 +1,4 @@
+import { CircularProgress } from "@material-ui/core";
 import { connect } from "react-redux";
 import { initiateSignin } from "../../redux/reducers/auth";
 import s from "./login.module.scss";
@@ -5,6 +6,7 @@ import s from "./login.module.scss";
 const passStateToProps = ({ authState }: any) => ({
   authLoading: authState.loading,
   authError: authState.error,
+  authState: authState.auth,
 });
 
 const passDispatchToProps = (dispatch: any) => ({
@@ -22,26 +24,32 @@ export const Login = connect(
         alt="app-icon"
       />
       <p>Whatsapp Clone</p>
-      <div className={s.loginControls}>
-        <button
-          onClick={() =>
-            initiateSignin({
-              authType: "google",
-            })
-          }
-        >
-          Sign in with google
-        </button>
-        <button
-          onClick={() =>
-            initiateSignin({
-              authType: "guest",
-            })
-          }
-        >
-          Sign in as guest
-        </button>
-      </div>
+      {authLoading ? (
+        <div className={s.loading}>
+          <CircularProgress size="19px" color="inherit" />
+        </div>
+      ) : (
+        <div className={s.loginControls}>
+          <button
+            onClick={() =>
+              initiateSignin({
+                authType: "google",
+              })
+            }
+          >
+            Sign in with google
+          </button>
+          <button
+            onClick={() =>
+              initiateSignin({
+                authType: "guest",
+              })
+            }
+          >
+            Sign in as guest
+          </button>
+        </div>
+      )}
     </div>
   );
 });
