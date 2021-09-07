@@ -2,7 +2,7 @@ import info from "../../data/temp/chats/chats.json";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState = {
-  activeChat: "8bc44bbe-b4b0-492a-82d3-33de98251aa6",
+  activeChat: null,
   chat: {
     "8bc44bbe-b4b0-492a-82d3-33de98251aa6": {
       chatInfo: info[0],
