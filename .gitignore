@@ -15,6 +15,12 @@ whatsapp-client/coverage
 whatsapp-client/build
 
 # misc
+whatsapp-server/.env
+whatsapp-server/.DS_Store
+whatsapp-server/.env.local
+whatsapp-server/.env.development.local
+whatsapp-server/.env.test.local
+whatsapp-server/.env.production.local
 whatsapp-client/.DS_Store
 whatsapp-client/.env.local
 whatsapp-client/.env.development.local

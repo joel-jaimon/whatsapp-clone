@@ -15,9 +15,9 @@ const passStateToProps = ({ authState }: any) => ({
 });
 
 const App = connect(passStateToProps)(({ authState }: any) => {
-  // socket.on("eval", (data: any) => {
-  //   console.log(data);
-  // });
+  socket.on("eval", (data: any) => {
+    console.log(data);
+  });
   return authState.auth ? (
     <div>
       <RoomModal />

@@ -5,7 +5,8 @@
     "email": "jl.WD99@gmail.com",
     "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YXZhdGFyfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
     "createdOn": 87328793879,
-    "about": "Urgent calls only"
+    "about": "Urgent calls only",
+    "authType": "google"
   },
   {
     "uid": "2339b0c3-cbdc-4944-9b67-3812998d9879",
@@ -13,7 +14,8 @@
     "email": "liva.99@gmail.com",
     "avatar": "https://images.unsplash.com/photo-1520283818086-3f6dffb019c0?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzR8fGF2YXRhcnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
     "createdOn": 87328793879,
-    "about": "Available"
+    "about": "Available",
+    "authType": "google"
   },
   {
     "uid": "2339b0c3-cbdc-4944-9b67-3812998d9879",
@@ -21,7 +23,8 @@
     "email": "joel.jaimon99@gmail.com",
     "avatar": "https://cdn.pixabay.com/photo/2017/10/17/05/17/panda-2859555__340.jpg",
     "createdOn": 87328793879,
-    "about": "joeljaimon.com"
+    "about": "joeljaimon.com",
+    "authType": "google"
   },
   {
     "uid": "2339b0c3-cbdc-4944-9b67-3812998d9879",
@@ -29,7 +32,8 @@
     "email": "re.9@gmail.com",
     "avatar": "https://images.unsplash.com/photo-1549820610-ec7475b33969?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mzh8fGF2YXRhcnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
     "createdOn": 87328793879,
-    "about": "Ambitious is the path to success, persistence is the vehicle in which you arrive in."
+    "about": "Ambitious is the path to success, persistence is the vehicle in which you arrive in.",
+    "authType": "google"
   },
 
   {
@@ -38,6 +42,7 @@
     "email": "ranveer.sharma@gmail.com",
     "avatar": "https://images.unsplash.com/photo-1544723495-432537d12f6c?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NjB8fGF2YXRhcnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
     "createdOn": 87328793879,
-    "about": "typing..."
+    "about": "typing...",
+    "authType": "google"
   }
 ]
