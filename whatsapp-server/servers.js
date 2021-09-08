@@ -3,15 +3,15 @@ const express = require("express");
 const cluster = require("cluster");
 const net = require("net");
 const socketio = require("socket.io");
-// const helmet = require('helmet')
 const socketMain = require("./socketMain");
-// const expressMain = require('./expressMain');
 const port = 8181;
 const num_processes = require("os").cpus().length;
 const io_redis = require("socket.io-redis");
 const farmhash = require("farmhash");
-const { mongoConnect } = require("./utils/database");
 const router = require("./routes");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const { inititalizeMongoDb } = require("./utils/database");
 
 (async () => {
   if (cluster.isPrimary) {
@@ -66,8 +66,16 @@ const router = require("./routes");
   } else {
     // Note we don't use a port here because the master listens on it for us.
     let app = express();
-    // app.use(express.static(__dirname + '/public'));
-    // app.use(helmet());
+
+    app.use(express.urlencoded({ extended: true }));
+    app.use(express.json());
+    app.use(cookieParser());
+    app.use(
+      cors({
+        origin: "http://localhost:3000",
+        credentials: true,
+      })
+    );
 
     // Don't expose our internal server to the outside world.
     app.use("/", router);
@@ -89,10 +97,12 @@ const router = require("./routes");
 
     // Here you might use Socket.IO middleware for authorization etc.
     // on connection, send the socket over to our module with socket stuff
-    const mongoClient = await mongoConnect();
+
+    // initialize mongodb
+    await inititalizeMongoDb();
 
     io.on("connection", (socket) => {
-      socketMain(io, socket, mongoClient);
+      socketMain(io, socket);
       console.log(`connected to worker: ${cluster.worker.id}`);
     });
     // Listen to messages sent from the master. Ignore everything else.

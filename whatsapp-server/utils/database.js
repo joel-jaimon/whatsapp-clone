@@ -2,11 +2,16 @@ const mongodb = require("mongodb");
 const MongoClient = mongodb.MongoClient;
 const mongoURI = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@whatsapp-clone-mongodb.bgdrv.mongodb.net/whatsapp-clone?retryWrites=true&w=majority`;
 
-const mongoConnect = async () => {
+let db;
+
+const inititalizeMongoDb = async () => {
   try {
     const client = await MongoClient.connect(mongoURI);
-    return client;
+    db = client;
+    return db;
   } catch {}
 };
 
-exports.mongoConnect = mongoConnect;
+const mongoDB = () => db;
+
+module.exports = { mongoDB, inititalizeMongoDb };

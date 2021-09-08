@@ -1,5 +1,7 @@
-const handleNewGoogleUser = async (data, db) => {
-  await db.collection("googleAuthUsers").insertOne(data);
+const { mongoDB } = require("../../utils/database");
+
+const handleNewGoogleUser = async (data) => {
+  await mongoDB().db().collection("googleAuthUsers").insertOne(data);
 };
 
 module.exports = { handleNewGoogleUser };
