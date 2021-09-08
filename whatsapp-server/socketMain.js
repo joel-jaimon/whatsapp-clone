@@ -1,5 +1,4 @@
-const { handleNewGoogleUser } = require("./mongoActions/googleUser");
-const { handleNewGuestUser } = require("./mongoActions/guestUser");
+const { handleNewGoogleUser } = require("./controllers/mongo/googleUser");
 
 function iterateFunc(doc) {
   console.log(JSON.stringify(doc, null, 4));
