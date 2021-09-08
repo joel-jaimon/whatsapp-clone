@@ -11,6 +11,7 @@ const num_processes = require("os").cpus().length;
 const io_redis = require("socket.io-redis");
 const farmhash = require("farmhash");
 const { mongoConnect } = require("./utils/database");
+const router = require("./routes");
 
 (async () => {
   if (cluster.isPrimary) {
@@ -69,7 +70,7 @@ const { mongoConnect } = require("./utils/database");
     // app.use(helmet());
 
     // Don't expose our internal server to the outside world.
-
+    app.use("/", router);
     const server = app.listen(0, "localhost");
     console.log("Worker listening...");
 

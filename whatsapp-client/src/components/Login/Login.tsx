@@ -1,7 +1,8 @@
 import { CircularProgress } from "@material-ui/core";
 import { connect } from "react-redux";
-import { initiateSignin } from "../../redux/reducers/auth";
+import { initiateSignin, setAuthFailed } from "../../redux/reducers/auth";
 import s from "./login.module.scss";
+import { GoogleLogin } from "react-google-login";
 
 const passStateToProps = ({ authState }: any) => ({
   authLoading: authState.loading,
@@ -11,12 +12,24 @@ const passStateToProps = ({ authState }: any) => ({
 
 const passDispatchToProps = (dispatch: any) => ({
   initiateSignin: (payload: any) => dispatch(initiateSignin(payload)),
+  setAuthFailed: (payload: any) => dispatch(setAuthFailed(payload)),
 });
 
 export const Login = connect(
   passStateToProps,
   passDispatchToProps
-)(({ initiateSignin, authLoading, authError }: any) => {
+)(({ initiateSignin, authLoading, authError, setAuthFailed }: any) => {
+  const handleGoogleResponse = (response: any) => {
+    if (response.error) {
+      setAuthFailed(response.error);
+    } else {
+      initiateSignin({
+        idToken: response.tokenId,
+        authType: "google",
+      });
+    }
+  };
+
   return (
     <div className={s.login}>
       <img
@@ -30,15 +43,17 @@ export const Login = connect(
         </div>
       ) : (
         <div className={s.loginControls}>
-          <button
-            onClick={() =>
-              initiateSignin({
-                authType: "google",
-              })
-            }
-          >
-            Sign in with google
-          </button>
+          <GoogleLogin
+            onSuccess={handleGoogleResponse}
+            onFailure={handleGoogleResponse}
+            clientId={process.env.REACT_APP_GAUTH_CLIENT_ID as string}
+            render={(props: any) => (
+              <button onClick={props.onClick} disabled={props.disabled}>
+                Sign in with google
+              </button>
+            )}
+          />
+
           <button
             onClick={() =>
               initiateSignin({
