@@ -57,30 +57,6 @@
     }
   }
 }
-.infoSub {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 3px;
-  margin-top: 20px;
-  input {
-    width: 100%;
-  }
-
-  .editNameButton {
-    display: flex;
-    color: gray;
-    align-items: center;
-    small {
-      margin-right: 3px;
-    }
-    svg {
-      height: 17px;
-      cursor: pointer;
-      margin-left: 2px;
-    }
-  }
-}
 
 .infoSub {
   display: flex;
@@ -196,4 +172,15 @@
       margin-left: -3px;
     }
   }
+}
+
+.logoutBtn {
+  border: none;
+  height: 35px;
+  outline: none;
+  cursor: pointer;
+  margin-top: 100%;
+  color: whitesmoke;
+  background-color: #009688;
+  transform: translateY(calc(-100% - 10px));
 }

@@ -23,9 +23,14 @@ export const authSlice = createSlice({
       state.loading = false;
     },
 
-    initiateLogout: (state, action) => {},
+    logout: (state) => {
+      state.auth = null;
+      state.loading = false;
+      state.error = null;
+      window.location.reload();
+    },
   },
 });
 
-export const { initiateSignin, setAuthSuccess, setAuthFailed } =
+export const { initiateSignin, setAuthSuccess, setAuthFailed, logout } =
   authSlice.actions;
