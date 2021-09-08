@@ -2,17 +2,31 @@ import dummyAuth from "../../data/temp/auth.json";
 import guestAvatars from "../../data/guestAvatars.json";
 import { takeLatest, call, put } from "@redux-saga/core/effects";
 import { initiateSignin, setAuthSuccess } from "../reducers/auth";
-import { mockAPI } from "../../utils/mockAPI";
 import { v4 as uuidv4 } from "uuid";
 import socket from "../../utils/socketConnection/socketConnection";
 
-const googleSignin = async () => {
-  return await mockAPI(true, 2000, dummyAuth);
+const googleSignin = async (payload: any) => {
+  const data = await fetch(
+    `${process.env.REACT_APP_SERVER_URL}/g-auth/authenticate`,
+    {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        tokenId: payload.idToken,
+      }),
+    }
+  );
+  const response = await data.json();
+  return response;
 };
 
 function* googleSignIn(payload?: any) {
   //@ts-ignore
-  const userData = yield call(googleSignin);
+  const userData = yield call(googleSignin, payload);
   yield put(setAuthSuccess({ ...payload, ...userData }));
 }
 

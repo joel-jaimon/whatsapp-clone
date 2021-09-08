@@ -20,6 +20,7 @@ export const Login = connect(
   passDispatchToProps
 )(({ initiateSignin, authLoading, authError, setAuthFailed }: any) => {
   const handleGoogleResponse = (response: any) => {
+    console.log(response);
     if (response.error) {
       setAuthFailed(response.error);
     } else {
