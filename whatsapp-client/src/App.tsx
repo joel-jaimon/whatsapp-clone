@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { connect } from "react-redux";
 import s from "./App.module.scss";
 import { ChatContainer } from "./components/ChatContainer/ChatContainer";
@@ -8,16 +7,12 @@ import { Login } from "./components/Login/Login";
 import { MovableModal } from "./components/MovableModal/MovableModal";
 import { RoomModal } from "./components/RoomModal/RoomModal";
 import { Sidebar } from "./components/Sidebar/Sidebar";
-import socket from "./utils/socketConnection/socketConnection";
 
 const passStateToProps = ({ authState }: any) => ({
   authState,
 });
 
 const App = connect(passStateToProps)(({ authState }: any) => {
-  socket.on("eval", (data: any) => {
-    console.log(data);
-  });
   return authState.auth ? (
     <div>
       <RoomModal />

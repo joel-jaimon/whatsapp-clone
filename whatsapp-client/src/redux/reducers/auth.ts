@@ -22,6 +22,8 @@ export const authSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
+
+    initiateLogout: (state, action) => {},
   },
 });
 

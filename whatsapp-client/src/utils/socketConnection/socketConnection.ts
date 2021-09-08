@@ -1,8 +1,12 @@
 import * as io from "socket.io-client";
 
-//@ts-ignore
-let socket = io("http://localhost:8181", {
-  withCredentials: true,
-});
+let socket: any = null;
+
+if (!socket) {
+  //@ts-ignore
+  socket = io("http://localhost:8181", {
+    withCredentials: true,
+  });
+}
 
 export default socket;
