@@ -1,9 +1,16 @@
-import dummyAuth from "../../data/temp/auth.json";
 import guestAvatars from "../../data/guestAvatars.json";
-import { takeLatest, call, put } from "@redux-saga/core/effects";
-import { initiateSignin, setAuthSuccess } from "../reducers/auth";
+import { takeLatest, call, put, take } from "@redux-saga/core/effects";
+import { initiateSignin, logout, setAuthSuccess } from "../reducers/auth";
 import { v4 as uuidv4 } from "uuid";
-import socket from "../../utils/socketConnection/socketConnection";
+import {
+  createSocketChannel,
+  getActiveSocket,
+  // createSocketChannel,
+  // getActiveSocket,
+  initializeSocket,
+} from "../sockets/socketConnection";
+import { setAccessToken } from "../../utils/accessToken";
+import store from "../store";
 
 const googleSignin = async (payload: any) => {
   const data = await fetch(
@@ -27,11 +34,19 @@ const googleSignin = async (payload: any) => {
 function* googleSignIn(payload?: any) {
   //@ts-ignore
   const userData = yield call(googleSignin, payload);
-  yield put(setAuthSuccess({ ...payload, ...userData }));
+  yield setAccessToken(userData.accessToken);
+  yield call(initializeSocket);
+
+  //@ts-ignore
+  const socket = yield getActiveSocket();
+  //@ts-ignore
+  socket.on("signInSuccess", (a) => {
+    store.dispatch(setAuthSuccess({ ...a, ...userData }));
+  });
 }
 
-const handleSignIn = async (data: any) => {
-  return await socket.emit("guestSignIn", data);
+const handleGuestSignIn = async () => {
+  return await initializeSocket();
 };
 
 function* guestSignIn(payload?: any) {
@@ -43,12 +58,15 @@ function* guestSignIn(payload?: any) {
     avatar: guestAvatars[Math.floor(Math.random() * guestAvatars.length)],
     about: "Hey I am a guest user.",
   };
-  yield call(handleSignIn, guestUserData);
+  yield call(handleGuestSignIn);
   yield put(setAuthSuccess(guestUserData));
 }
 
 export function* initiateSignInSaga() {
   yield takeLatest(initiateSignin.type, function* (action: any) {
+    // //@ts-ignore
+    // //@ts-ignore
+
     if (action.payload.authType === "guest") {
       yield guestSignIn(action.payload);
     } else {
