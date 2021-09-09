@@ -1,10 +1,62 @@
 const { OAuth2Client } = require("google-auth-library");
-const jwt = require("jsonwebtoken");
 const { mongoDB } = require("../../utils/database");
 const { uuid } = require("uuidv4");
+const {
+  createAccessToken,
+  createRefreshToken,
+} = require("../../utils/handleTokens");
+const verify = require("jsonwebtoken/verify");
+const { ObjectId } = require("bson");
+
+const refreshTokenExp = 7 * 24 * 60 * 60 * 1000;
+const accessTokenExp = 30 * 1000;
 
 const client = new OAuth2Client(process.env.GAUTH_CLIENT_ID);
 
+// Refresh token endpoint
+exports.sendRefreshToken = async (req, res) => {
+  const db = await mongoDB().db();
+  const token = req.cookies.wc_RTN;
+
+  if (!token) {
+    return res.status(401).send({
+      error: "Not Authorized!",
+    });
+  }
+
+  let payload = null;
+  try {
+    payload = verify(token, process.env.JWT_REFRESH_SECRET);
+  } catch (err) {
+    return res.status(401).send({
+      error: "Not Authorized!",
+    });
+  }
+
+  const { _id } = await db
+    .collection("googleAuthUsers")
+    .findOne({ _id: ObjectId(payload._id) });
+
+  if (!_id) {
+    return res.status(401).send({
+      error: "Not Authorized!",
+    });
+  }
+
+  const newAccessToken = createAccessToken(payload._id, accessTokenExp);
+  const newRefreshToken = createRefreshToken(payload._id, refreshTokenExp);
+
+  res.cookie("wc_RTN", newRefreshToken, {
+    maxAge: refreshTokenExp,
+    httpOnly: true,
+  });
+
+  return res.send({
+    accessToken: newAccessToken,
+  });
+};
+
+// Create / SigIn new user endpoint
 exports.googlelogin = async (req, res) => {
   try {
     const db = await mongoDB().db();
@@ -24,36 +76,16 @@ exports.googlelogin = async (req, res) => {
     const { name, picture, email } = payload;
     const { _id } = await db.collection("googleAuthUsers").findOne({ email });
 
-    const refreshTokenExp = 7 * 24 * 60 * 60 * 1000;
-    const accessTokenExp = 30 * 1000;
-
     if (_id) {
-      const refreshToken = jwt.sign(
-        {
-          _id,
-        },
-        process.env.JWT_REFRESH_SECRET,
-        {
-          expiresIn: refreshTokenExp,
-        }
-      );
-
-      const accessToken = jwt.sign(
-        {
-          _id,
-        },
-        process.env.JWT_ACCESS_SECRET,
-        {
-          expiresIn: accessTokenExp,
-        }
-      );
+      const refreshToken = createRefreshToken(_id, refreshTokenExp);
+      const accessToken = createAccessToken(_id, accessTokenExp);
 
       res.cookie("wc_RTN", refreshToken, {
         maxAge: refreshTokenExp,
         httpOnly: true,
       });
 
-      res.json({
+      return res.json({
         accessToken: accessToken,
       });
     } else {
@@ -67,32 +99,15 @@ exports.googlelogin = async (req, res) => {
         uid: userUid,
       });
 
-      const refreshToken = jwt.sign(
-        {
-          _id,
-        },
-        process.env.JWT_REFRESH_SECRET,
-        {
-          expiresIn: refreshTokenExp,
-        }
-      );
-
-      const accessToken = jwt.sign(
-        {
-          _id,
-        },
-        process.env.JWT_ACCESS_SECRET,
-        {
-          expiresIn: accessTokenExp,
-        }
-      );
+      const refreshToken = createRefreshToken(_id, refreshTokenExp);
+      const accessToken = createAccessToken(_id, accessTokenExp);
 
       res.cookie("wc_RTN", refreshToken, {
         maxAge: refreshTokenExp,
         httpOnly: true,
       });
 
-      res.json({
+      return res.json({
         accessToken: accessToken,
       });
     }
