@@ -1,5 +1,5 @@
 var express = require("express");
-const { googlelogin } = require("./controllers/auth/auth");
+const { googlelogin, sendRefreshToken } = require("./controllers/auth/auth");
 var router = express.Router();
 
 router.get("/", (req, res) => {
@@ -7,6 +7,8 @@ router.get("/", (req, res) => {
     active: true,
   });
 });
+
+router.get("/refresh-token", sendRefreshToken);
 
 router.post("/g-auth/authenticate", googlelogin);
 

@@ -12,6 +12,7 @@ const router = require("./routes");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const { inititalizeMongoDb } = require("./utils/database");
+const { isAuthREST } = require("./utils/isAuth");
 
 (async () => {
   if (cluster.isPrimary) {
@@ -77,6 +78,7 @@ const { inititalizeMongoDb } = require("./utils/database");
       })
     );
 
+    // app.use(isAuthREST);
     // Don't expose our internal server to the outside world.
     app.use("/", router);
     const server = app.listen(0, "localhost");
