@@ -1,11 +1,29 @@
-function iterateFunc(doc) {
-  console.log(JSON.stringify(doc, null, 4));
-}
+const { ObjectID } = require("bson");
+const { verify } = require("jsonwebtoken");
+const { mongoDB } = require("./utils/database");
 
-function errorFunc(error) {
-  console.log(error);
-}
+const socketMain = async (io, socket) => {
+  try {
+    const jwtToken = socket.handshake.auth.accessToken;
+    const { _id, exp } = verify(jwtToken, process.env.JWT_ACCESS_SECRET);
+    const db = await mongoDB().db();
+    const userPayload = await db
+      .collection("googleAuthUsers")
+      .findOne({ _id: ObjectID(_id) });
 
-const socketMain = async (io, socket) => {};
+    socket.emit("signInSuccess", {
+      uid: userPayload.uid,
+      displayName: userPayload.displayName,
+      email: userPayload.email,
+      avatar: userPayload.avatar,
+      createdOn: userPayload.createdOn,
+      about: userPayload.about,
+    });
+
+    console.log("Once");
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 module.exports = socketMain;
