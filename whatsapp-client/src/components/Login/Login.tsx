@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { initiateSignin, setAuthFailed } from "../../redux/reducers/auth";
 import s from "./login.module.scss";
 import { GoogleLogin } from "react-google-login";
+import whatsappLogo from "./WhatsApp.svg.webp";
 
 const passStateToProps = ({ authState }: any) => ({
   authLoading: authState.loading,
@@ -32,10 +33,7 @@ export const Login = connect(
 
   return (
     <div className={s.login}>
-      <img
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/800px-WhatsApp.svg.png"
-        alt="app-icon"
-      />
+      <img src={whatsappLogo} alt="app-icon" />
       <p>Whatsapp Clone</p>
       {authLoading ? (
         <div className={s.loading}>

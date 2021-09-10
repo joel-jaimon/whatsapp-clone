@@ -4,7 +4,6 @@ const {
   sendRefreshToken,
   logout,
 } = require("./controllers/auth/auth");
-const { isAuthREST } = require("./utils/isAuth");
 var router = express.Router();
 
 router.get("/", (req, res) => {

@@ -1,16 +1,11 @@
-import { configureStore, applyMiddleware } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 import { combinedReducers } from "./rootReducer";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "./sagas/rootSaga";
 import { refreshToken } from "../utils/refreshToken";
 import { getAccessToken } from "../utils/accessToken";
-import {
-  logout,
-  setAuthFailed,
-  setAuthSuccess,
-  setSocketConnectionSuccess,
-} from "./reducers/auth";
+import { setAuthFailed, setSocketConnectionSuccess } from "./reducers/auth";
 import { getActiveSocket, initializeSocket } from "./sockets/socketConnection";
 import { createSocketMiddleware } from "./middlewares/socketMiddleware";
 
