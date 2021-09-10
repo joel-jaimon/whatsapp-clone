@@ -1,4 +1,3 @@
-import { getAccessToken } from "../../utils/accessToken";
 import { logout, setAuthSuccess } from "../reducers/auth";
 import { getActiveSocket } from "../sockets/socketConnection";
 
@@ -11,9 +10,7 @@ export const createSocketMiddleware = () => {
   };
 
   return (store: any) => (next: any) => (action: any) => {
-    console.log("Store", store);
-    console.log("Next", next);
-    console.log("Action", action);
+    console.log("Socket Middleware: ", action);
 
     // Socket Verified
     getActiveSocket()?.on("signInSuccess", (payload: any) =>

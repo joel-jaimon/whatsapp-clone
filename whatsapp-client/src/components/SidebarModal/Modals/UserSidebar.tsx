@@ -181,10 +181,10 @@ export const UserSidebar = connect(
             </div>
           ) : null}
         </div>
-        <button onClick={() => initiateLogout()} className={s.logoutBtn}>
-          Logout
-        </button>
       </div>
+      <button onClick={() => initiateLogout()} className={s.logoutBtn}>
+        Logout
+      </button>
     </div>
   );
 });

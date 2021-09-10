@@ -179,8 +179,10 @@
   height: 35px;
   outline: none;
   cursor: pointer;
-  margin-top: 100%;
+  position: absolute;
+  bottom: 20px;
+  left: 5%;
   color: whitesmoke;
+  width: 90%;
   background-color: #009688;
-  transform: translateY(calc(-100% - 10px));
 }

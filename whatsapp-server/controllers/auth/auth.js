@@ -1,6 +1,6 @@
 const { OAuth2Client } = require("google-auth-library");
 const { mongoDB } = require("../../utils/database");
-const { uuid } = require("uuidv4");
+const { v4: uuidv4 } = require("uuid");
 const {
   createAccessToken,
   createRefreshToken,
@@ -74,11 +74,11 @@ exports.googlelogin = async (req, res) => {
     }
 
     const { name, picture, email } = payload;
-    const { _id } = await db.collection("googleAuthUsers").findOne({ email });
+    const rs = await db.collection("googleAuthUsers").findOne({ email });
 
-    if (_id) {
-      const refreshToken = createRefreshToken(_id, refreshTokenExp);
-      const accessToken = createAccessToken(_id, accessTokenExp);
+    if (rs?._id) {
+      const refreshToken = createRefreshToken(rs._id, refreshTokenExp);
+      const accessToken = createAccessToken(rs._id, accessTokenExp);
 
       res.cookie("wc_RTN", refreshToken, {
         maxAge: refreshTokenExp,
@@ -89,15 +89,15 @@ exports.googlelogin = async (req, res) => {
         accessToken: accessToken,
       });
     } else {
-      console.log("gvhbjnkm,");
-      const userUid = uuid();
+      const userUid = uuidv4();
       const { _id } = await db.collection("googleAuthUsers").insertOne({
-        about: "Trying this clone...",
-        authType: "google",
-        avatar: picture,
-        displayName: name,
-        email: email,
         uid: userUid,
+        displayName: name,
+        authType: "google",
+        email: email,
+        avatar: picture,
+        about: "Trying this clone...",
+        createdOn: new Date().toUTCString(),
       });
 
       const refreshToken = createRefreshToken(_id, refreshTokenExp);
