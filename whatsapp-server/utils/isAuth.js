@@ -22,11 +22,9 @@ const isAuthREST = (req, res, next) => {
 
 const isAuthSocket = (socket, next) => {
   const { accessToken } = socket.handshake.auth;
-  console.log("In AUTH SOCKET");
   verify(accessToken, process.env.JWT_ACCESS_SECRET, (err, payload) => {
     if (err) {
       socket.disconnect(true);
-      console.log("Socket Disconnected!");
       return next(new Error("Not Authorized!"));
     }
     return next();

@@ -1,16 +1,22 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, applyMiddleware } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 import { combinedReducers } from "./rootReducer";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "./sagas/rootSaga";
 import { refreshToken } from "../utils/refreshToken";
 import { getAccessToken } from "../utils/accessToken";
-import { logout, setAuthFailed, setAuthSuccess } from "./reducers/auth";
+import {
+  logout,
+  setAuthFailed,
+  setAuthSuccess,
+  setSocketConnectionSuccess,
+} from "./reducers/auth";
 import { getActiveSocket, initializeSocket } from "./sockets/socketConnection";
+import { createSocketMiddleware } from "./middlewares/socketMiddleware";
 
 const sagaMiddleware = createSagaMiddleware();
-
-const middleware = [logger, sagaMiddleware];
+const socketMiddleware = createSocketMiddleware();
+const middleware = [logger, socketMiddleware, sagaMiddleware] as const;
 
 const store = configureStore({
   reducer: combinedReducers,
@@ -24,16 +30,14 @@ const store = configureStore({
 
   if (!accessToken) {
     store.dispatch(setAuthFailed(null));
+    return;
   } else {
     await initializeSocket();
-
-    getActiveSocket().on("signInSuccess", (payload: any) => {
-      store.dispatch(setAuthSuccess(payload));
-    });
-
-    getActiveSocket().on("disconnect", (payload: any) => {
-      store.dispatch(logout());
-    });
+    const socket = getActiveSocket();
+    if (socket) {
+      store.dispatch(setSocketConnectionSuccess());
+    }
+    return;
   }
 })();
 

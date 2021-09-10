@@ -1,17 +1,17 @@
 import guestAvatars from "../../data/guestAvatars.json";
-import { takeLatest, call, put, take } from "@redux-saga/core/effects";
-import { initiateSignin, logout, setAuthSuccess } from "../reducers/auth";
-import { v4 as uuidv4 } from "uuid";
+import { takeLatest, call, put } from "@redux-saga/core/effects";
 import {
-  createSocketChannel,
-  getActiveSocket,
-  // createSocketChannel,
-  // getActiveSocket,
-  initializeSocket,
-} from "../sockets/socketConnection";
-import { setAccessToken } from "../../utils/accessToken";
-import store from "../store";
+  initiateLogout,
+  initiateSignin,
+  logout,
+  setAuthSuccess,
+  setSocketConnectionSuccess,
+} from "../reducers/auth";
+import { v4 as uuidv4 } from "uuid";
+import { getActiveSocket, initializeSocket } from "../sockets/socketConnection";
+import { getAccessToken, setAccessToken } from "../../utils/accessToken";
 
+// Google SignIn -------------------------------------------
 const googleSignin = async (payload: any) => {
   const data = await fetch(
     `${process.env.REACT_APP_SERVER_URL}/g-auth/authenticate`,
@@ -36,15 +36,14 @@ function* googleSignIn(payload?: any) {
   const userData = yield call(googleSignin, payload);
   yield setAccessToken(userData.accessToken);
   yield call(initializeSocket);
-
   //@ts-ignore
-  const socket = yield getActiveSocket();
-  //@ts-ignore
-  socket.on("signInSuccess", (a) => {
-    store.dispatch(setAuthSuccess({ ...a, ...userData }));
-  });
+  const socket = getActiveSocket();
+  if (socket) {
+    yield put(setSocketConnectionSuccess());
+  }
 }
 
+// Guest SignIn ---------------------------------------------------
 const handleGuestSignIn = async () => {
   return await initializeSocket();
 };
@@ -62,15 +61,37 @@ function* guestSignIn(payload?: any) {
   yield put(setAuthSuccess(guestUserData));
 }
 
+// Signin Saga
 export function* initiateSignInSaga() {
   yield takeLatest(initiateSignin.type, function* (action: any) {
-    // //@ts-ignore
-    // //@ts-ignore
-
     if (action.payload.authType === "guest") {
       yield guestSignIn(action.payload);
     } else {
       yield googleSignIn(action.payload);
+    }
+  });
+}
+
+// Logout Saga
+const logoutUser = async () => {
+  const data = await fetch(`${process.env.REACT_APP_SERVER_URL}/logout`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      authorization: `Bearer ${getAccessToken()}`,
+    },
+  });
+  const response = await data.status;
+  console.log(response);
+  return response;
+};
+
+export function* initLogout() {
+  yield takeLatest(initiateLogout.type, function* () {
+    //@ts-ignore
+    const status = yield call(logoutUser);
+    if (status === 200) {
+      yield put(logout());
     }
   });
 }

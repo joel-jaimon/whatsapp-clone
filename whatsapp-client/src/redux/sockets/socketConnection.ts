@@ -13,7 +13,8 @@ let socket: any = null;
 
 export const initializeSocket = () => {
   socket = io(process.env.REACT_APP_SERVER_URL as string, {
-    withCredentials: true,
+    // Set cred to false as no need to send cookies
+    withCredentials: false,
     auth: (cb) => {
       cb({
         accessToken: getAccessToken(),
@@ -29,7 +30,7 @@ export const initializeSocket = () => {
 
 export const disconnectSocket = () => {
   socket = io(process.env.REACT_APP_SERVER_URL as string, {
-    withCredentials: true,
+    withCredentials: false,
     auth: (cb) => {
       cb({
         accessToken: getAccessToken(),
@@ -45,7 +46,7 @@ export const disconnectSocket = () => {
 
 export const reconnectSocket = () => {
   socket = io(process.env.REACT_APP_SERVER_URL as string, {
-    withCredentials: true,
+    withCredentials: false,
     auth: (cb) => {
       cb({
         accessToken: getAccessToken(),

@@ -4,6 +4,7 @@ const initialState = {
   auth: null,
   loading: true,
   error: null,
+  socketStatus: false,
 };
 
 export const authSlice = createSlice({
@@ -12,6 +13,9 @@ export const authSlice = createSlice({
   reducers: {
     initiateSignin: (state, action) => {
       state.loading = true;
+    },
+    setSocketConnectionSuccess: (state) => {
+      state.socketStatus = true;
     },
     setAuthSuccess: (state, action) => {
       state.auth = action.payload;
@@ -22,16 +26,27 @@ export const authSlice = createSlice({
       state.auth = null;
       state.error = action.payload;
       state.loading = false;
+      state.socketStatus = false;
+    },
+
+    initiateLogout: (state) => {
+      state.auth = null;
+      state.loading = true;
+      //@ts-ignore
+      state.error = "Logging Out...";
     },
 
     logout: (state) => {
-      state.auth = null;
-      state.loading = true;
-      state.error = null;
       window.location.reload();
     },
   },
 });
 
-export const { initiateSignin, setAuthSuccess, setAuthFailed, logout } =
-  authSlice.actions;
+export const {
+  initiateSignin,
+  setAuthSuccess,
+  setAuthFailed,
+  logout,
+  setSocketConnectionSuccess,
+  initiateLogout,
+} = authSlice.actions;

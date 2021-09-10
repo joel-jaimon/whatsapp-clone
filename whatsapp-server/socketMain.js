@@ -12,8 +12,6 @@ const socketMain = async (io, socket) => {
       .collection("googleAuthUsers")
       .findOne({ _id: ObjectID(_id) });
 
-    console.log("MAIN SOCKET ACTIVE");
-
     socket.emit("signInSuccess", {
       uid: userPayload.uid,
       displayName: userPayload.displayName,
@@ -28,8 +26,6 @@ const socketMain = async (io, socket) => {
       socket.emit("E");
       count++;
     }, 1000);
-
-    console.log("Once");
   } catch (err) {
     console.log("MAIN SOCKET ERR", err);
   }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { connect } from "react-redux";
-import { logout } from "../../../redux/reducers/auth";
+import { initiateLogout } from "../../../redux/reducers/auth";
 import s from "../sidebarModal.module.scss";
 
 const passStateToProps = ({ authState }: any) => ({
@@ -8,13 +8,13 @@ const passStateToProps = ({ authState }: any) => ({
 });
 
 const passDispatchToProps = (dispatch: any) => ({
-  logout: () => dispatch(logout()),
+  initiateLogout: () => dispatch(initiateLogout()),
 });
 
 export const UserSidebar = connect(
   passStateToProps,
   passDispatchToProps
-)(({ logout, authState }: any) => {
+)(({ initiateLogout, authState }: any) => {
   const [editName, setEditName] = useState(false);
   const [newName, setNewName] = useState(authState.displayName);
   const [editBioBool, setEditBio] = useState(false);
@@ -181,7 +181,7 @@ export const UserSidebar = connect(
             </div>
           ) : null}
         </div>
-        <button onClick={() => logout()} className={s.logoutBtn}>
+        <button onClick={() => initiateLogout()} className={s.logoutBtn}>
           Logout
         </button>
       </div>
