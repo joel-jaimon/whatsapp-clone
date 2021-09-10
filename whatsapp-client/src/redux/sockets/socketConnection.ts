@@ -5,6 +5,12 @@ import { errorHandler, signInSuccess } from "./handlers/socketHandlers";
 
 let socket: any = null;
 
+// Initialize socket with accessToken.
+// Once the socket is active(i.e connected) the client is marked authorized.
+// No refresh of accessToken needed in this case (Only refresh when reconnecting,
+// or trying to make an API call
+// ).
+
 export const initializeSocket = () => {
   socket = io(process.env.REACT_APP_SERVER_URL as string, {
     withCredentials: true,

@@ -26,7 +26,7 @@ export const authSlice = createSlice({
 
     logout: (state) => {
       state.auth = null;
-      state.loading = false;
+      state.loading = true;
       state.error = null;
       window.location.reload();
     },

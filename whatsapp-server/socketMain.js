@@ -5,11 +5,14 @@ const { mongoDB } = require("./utils/database");
 const socketMain = async (io, socket) => {
   try {
     const jwtToken = socket.handshake.auth.accessToken;
-    const { _id, exp } = verify(jwtToken, process.env.JWT_ACCESS_SECRET);
+    const { _id } = verify(jwtToken, process.env.JWT_ACCESS_SECRET);
+
     const db = await mongoDB().db();
     const userPayload = await db
       .collection("googleAuthUsers")
       .findOne({ _id: ObjectID(_id) });
+
+    console.log("MAIN SOCKET ACTIVE");
 
     socket.emit("signInSuccess", {
       uid: userPayload.uid,
@@ -21,11 +24,14 @@ const socketMain = async (io, socket) => {
     });
 
     let count = 0;
-    setInterval(() => socket.emit("E", count), 3000);
+    setInterval(() => {
+      socket.emit("E");
+      count++;
+    }, 1000);
 
     console.log("Once");
   } catch (err) {
-    console.log(err);
+    console.log("MAIN SOCKET ERR", err);
   }
 };
 

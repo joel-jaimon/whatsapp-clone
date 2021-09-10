@@ -5,7 +5,7 @@ import createSagaMiddleware from "redux-saga";
 import rootSaga from "./sagas/rootSaga";
 import { refreshToken } from "../utils/refreshToken";
 import { getAccessToken } from "../utils/accessToken";
-import { setAuthFailed, setAuthSuccess } from "./reducers/auth";
+import { logout, setAuthFailed, setAuthSuccess } from "./reducers/auth";
 import { getActiveSocket, initializeSocket } from "./sockets/socketConnection";
 
 const sagaMiddleware = createSagaMiddleware();
@@ -26,9 +26,13 @@ const store = configureStore({
     store.dispatch(setAuthFailed(null));
   } else {
     await initializeSocket();
-    const socket = getActiveSocket();
-    await socket.on("signInSuccess", (payload: any) => {
+
+    getActiveSocket().on("signInSuccess", (payload: any) => {
       store.dispatch(setAuthSuccess(payload));
+    });
+
+    getActiveSocket().on("disconnect", (payload: any) => {
+      store.dispatch(logout());
     });
   }
 })();

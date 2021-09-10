@@ -21,21 +21,16 @@ const isAuthREST = (req, res, next) => {
 };
 
 const isAuthSocket = (socket, next) => {
-  const jwtToken = socket.handshake.auth.accessToken;
-  const { _id, exp } = verify(jwtToken, process.env.JWT_ACCESS_SECRET);
-
-  console.log(exp);
-
-  if (!exp) {
+  const { accessToken } = socket.handshake.auth;
+  console.log("In AUTH SOCKET");
+  verify(accessToken, process.env.JWT_ACCESS_SECRET, (err, payload) => {
+    if (err) {
+      socket.disconnect(true);
+      console.log("Socket Disconnected!");
+      return next(new Error("Not Authorized!"));
+    }
     return next();
-  }
-
-  const expiresIn = (exp - Date.now() / 1000) * 1000;
-  const timeout = timer.setTimeout(() => socket.disconnect(true), expiresIn);
-
-  socket.on("disconnect", () => timer.clearTimeout(timeout));
-
-  return next();
+  });
 };
 
 module.exports = { isAuthREST, isAuthSocket };
