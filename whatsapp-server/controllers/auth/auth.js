@@ -89,6 +89,7 @@ exports.googlelogin = async (req, res) => {
         accessToken: accessToken,
       });
     } else {
+      console.log("gvhbjnkm,");
       const userUid = uuid();
       const { _id } = await db.collection("googleAuthUsers").insertOne({
         about: "Trying this clone...",
@@ -115,4 +116,11 @@ exports.googlelogin = async (req, res) => {
     console.log(err);
     return res.status(400).json({ error: "Something went wrong!" });
   }
+};
+
+exports.logout = async (req, res) => {
+  res.clearCookie("wc_RTN");
+  res.status(200).json({
+    hi: "Thanks for testing...!",
+  });
 };
