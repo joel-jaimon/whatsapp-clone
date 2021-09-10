@@ -12,7 +12,7 @@ const router = require("./routes");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const { inititalizeMongoDb } = require("./utils/database");
-const { isAuthREST } = require("./utils/isAuth");
+const { isAuthREST, isAuthSocket } = require("./utils/isAuth");
 
 (async () => {
   if (cluster.isPrimary) {
@@ -102,6 +102,8 @@ const { isAuthREST } = require("./utils/isAuth");
 
     // initialize mongodb
     await inititalizeMongoDb();
+
+    io.use(isAuthSocket);
 
     io.on("connection", (socket) => {
       socketMain(io, socket);

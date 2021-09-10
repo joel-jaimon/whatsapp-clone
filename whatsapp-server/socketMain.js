@@ -20,6 +20,9 @@ const socketMain = async (io, socket) => {
       about: userPayload.about,
     });
 
+    let count = 0;
+    setInterval(() => socket.emit("E", count), 3000);
+
     console.log("Once");
   } catch (err) {
     console.log(err);
