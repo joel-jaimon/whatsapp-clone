@@ -1,5 +1,5 @@
 const { verify } = require("jsonwebtoken");
-const timer = require("long-timeout");
+const { removeActiveUserBySocketId } = require("./activeUsers");
 
 const isAuthREST = (req, res, next) => {
   const authorization = context.req.headers["authorization"];
@@ -24,6 +24,7 @@ const isAuthSocket = (socket, next) => {
   const { accessToken } = socket.handshake.auth;
   verify(accessToken, process.env.JWT_ACCESS_SECRET, (err, payload) => {
     if (err) {
+      removeActiveUserBySocketId(socket.id);
       socket.disconnect(true);
       return next(new Error("Not Authorized!"));
     }

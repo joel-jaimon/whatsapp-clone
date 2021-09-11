@@ -106,7 +106,6 @@ const { isAuthREST, isAuthSocket } = require("./utils/isAuth");
     io.use(isAuthSocket);
 
     io.on("connection", (socket, next) => {
-      console.log(socket.handshake);
       socketMain(io, socket);
       console.log(`connected to worker: ${cluster.worker.id}`);
     });
