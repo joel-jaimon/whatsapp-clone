@@ -1,7 +1,18 @@
 import info from "../../data/temp/chats/chats.json";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState = {
+interface User {
+  objectId?: string;
+  uid?: string;
+  status: string;
+  displayName: string;
+  email: string;
+  about: string;
+  avatar: string;
+}
+
+const initialState: any = {
+  totalUsers: {},
   activeChat: null,
   chat: {
     "8bc44bbe-b4b0-492a-82d3-33de98251aa6": {
@@ -23,11 +34,39 @@ export const chatSlice = createSlice({
   name: "chatReducer",
   initialState,
   reducers: {
+    setTotalUsers: (state, action: PayloadAction<any>) => {
+      action.payload.forEach((user: any) => {
+        state.totalUsers[user._id] = {
+          objectId: user._id,
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+          avatar: user.avatar,
+          createdOn: user.createdOn,
+          about: user.about,
+        };
+      });
+    },
+    updateTotalUsers: (state, action: PayloadAction<any>) => {
+      state.totalUsers[action.payload.objectId] = action.payload;
+    },
+    updateActiveUser: (state, action: PayloadAction<any>) => {
+      state.totalUsers[action.payload].status = true;
+    },
+    updateInactiveUser: (state, action: PayloadAction<any>) => {
+      state.totalUsers[action.payload].status = false;
+    },
     setActiveChat: (state, action: PayloadAction<any>) => {
       state.activeChat = action.payload;
     },
   },
 });
 
-export const { setActiveChat } = chatSlice.actions;
+export const {
+  setActiveChat,
+  setTotalUsers,
+  updateActiveUser,
+  updateInactiveUser,
+  updateTotalUsers,
+} = chatSlice.actions;
 export default chatSlice;
