@@ -1,16 +1,6 @@
 import info from "../../data/temp/chats/chats.json";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface User {
-  objectId?: string;
-  uid?: string;
-  status: string;
-  displayName: string;
-  email: string;
-  about: string;
-  avatar: string;
-}
-
 const initialState: any = {
   totalUsers: {},
   activeChat: null,
