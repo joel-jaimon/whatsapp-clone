@@ -21,22 +21,23 @@ const socketMain = async (io, socket) => {
 
     const users = await db.collection("googleAuthUsers").find().toArray();
 
-    const activeUsers = getActiveUsers();
-    const activeUserIndex = activeUsers.findIndex((e) => e.objectId === _id);
-
     // // Handle User Active Session
-    if (activeUserIndex === -1) {
+    if (!getActiveUserByObjectId(_id)) {
+      console.log("New session!");
       // New Session
       addToActiveUsers({
         socketId: socket.id,
         objectId: _id,
       });
     } else {
+      console.log("Prev Disconnected, New session!");
       // Old session removed
       const prevSocketId = getActiveUserByObjectId(_id)?.socketId;
-      if (io.sockets.sockets[prevSocketId]) {
+      console.log(prevSocketId, io.sockets.sockets.get(prevSocketId));
+      if (io.sockets.sockets.get(prevSocketId)) {
         console.log(prevSocketId + "disconnected");
-        io.sockets.sockets[prevSocketId].disconnect();
+        io.sockets.sockets.get(prevSocketId).emit("multipleSession");
+        io.sockets.sockets.get(prevSocketId).disconnect(true);
       }
       removeActiveUserByObjectId(_id);
       // New session added
@@ -87,7 +88,6 @@ const socketMain = async (io, socket) => {
     socket.on("disconnect", () => {
       socket.broadcast.emit("offline", _id);
       removeActiveUserByObjectId(_id);
-      console.log(activeUsers);
       console.log(socket.id, "Disconnected");
     });
   } catch (err) {

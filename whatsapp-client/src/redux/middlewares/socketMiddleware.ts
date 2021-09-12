@@ -1,10 +1,11 @@
-import { logout, setAuthSuccess } from "../reducers/auth";
+import { logout, setAuthSuccess, socketDisconnected } from "../reducers/auth";
 import {
   setTotalAuthUsers,
   updateActiveAuthUser,
   updateInactiveAuthUser,
   updateTotalAuthUsers,
 } from "../reducers/chat";
+import { setGlobalModal } from "../reducers/globalModal";
 import { getActiveSocket } from "../sockets/socketConnection";
 
 export const createSocketMiddleware = () => {
@@ -35,8 +36,18 @@ export const createSocketMiddleware = () => {
       });
 
       // Socket Disconnected
+      getActiveSocket()?.on("multipleSession", (payload: any) => {
+        store.dispatch(
+          setGlobalModal({
+            type: "multipleSession",
+            params: {},
+          })
+        );
+      });
+
+      // Socket Disconnected
       getActiveSocket()?.on("disconnect", (payload: any) => {
-        store.dispatch(logout());
+        store.dispatch(socketDisconnected());
       });
     });
 

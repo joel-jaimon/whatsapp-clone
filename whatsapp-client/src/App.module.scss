@@ -1,23 +1,56 @@
 .app {
-    text-align: center;
-    background-color: #090e11;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    width: 100%;
-    position: relative;
+  text-align: center;
+  background-color: #090e11;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  width: 100%;
+  position: relative;
 }
 
 .appContainer {
-    display: flex;
-    height: 98vh;
-    width: 70%;
-    @media screen and (max-width: 1200px) {
-        height: 100vh;
-        width: 100%;
+  display: flex;
+  height: 98vh;
+  width: 70%;
+  @media screen and (max-width: 1200px) {
+    height: 100vh;
+    width: 100%;
+  }
+  max-width: 1396px !important;
+}
+
+.smoke {
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(9, 14, 17, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(212, 213, 215);
+  font-size: 12px;
+  .modal {
+    background: #3b4042;
+    min-width: 280px;
+    p {
+      margin: 0px 0px 40px 0px;
     }
-    max-width: 1396px !important;
+  }
+  .disconnectedModal {
+    padding: 15px;
+    max-width: 400px;
+    h3 {
+      margin: 0px 0px 10px 0px;
+      font-size: 17px;
+      font-weight: 400;
+    }
+    p {
+      font-weight: 400;
+      color: whitesmoke;
+    }
+  }
 }

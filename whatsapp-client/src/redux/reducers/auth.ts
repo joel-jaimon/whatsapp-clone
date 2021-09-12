@@ -36,6 +36,10 @@ export const authSlice = createSlice({
       state.error = "Logging Out...";
     },
 
+    socketDisconnected: (state) => {
+      state.socketStatus = false;
+    },
+
     logout: (state) => {
       window.location.reload();
     },
@@ -49,4 +53,5 @@ export const {
   logout,
   setSocketConnectionSuccess,
   initiateLogout,
+  socketDisconnected,
 } = authSlice.actions;
