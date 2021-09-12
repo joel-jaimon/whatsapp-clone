@@ -97,7 +97,7 @@ exports.googlelogin = async (req, res) => {
         email: email,
         avatar: picture,
         about: "Trying this clone...",
-        createdOn: new Date().toUTCString(),
+        createdOn: Date.now(),
       });
 
       const refreshToken = createRefreshToken(_id, refreshTokenExp);

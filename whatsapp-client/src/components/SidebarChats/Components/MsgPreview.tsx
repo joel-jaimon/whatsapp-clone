@@ -5,19 +5,18 @@ import { Video } from "./Video";
 import { Voice } from "./Voice";
 
 export const MsgPreview = (props: any) => {
-    const chats = require(`../../../data/temp/chats/data/${props.id}.json`)[0];
-    switch (chats.msgType) {
-        case "text":
-            return <Text {...chats} />;
-        case "document":
-            return <Doc {...chats} />;
-        case "image":
-            return <Picture {...chats} />;
-        case "voice":
-            return <Voice {...chats} />;
-        case "video":
-            return <Video {...chats} />;
-        default:
-            return <div />;
-    }
+  switch (props.msgType) {
+    case "text":
+      return <Text {...props} />;
+    case "document":
+      return <Doc {...props} />;
+    case "image":
+      return <Picture {...props} />;
+    case "voice":
+      return <Voice {...props} />;
+    case "video":
+      return <Video {...props} />;
+    default:
+      return <div />;
+  }
 };

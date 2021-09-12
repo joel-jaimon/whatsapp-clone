@@ -36,9 +36,14 @@ export const NewMsgSidebar = connect(passStateToProps)(
               return (
                 <div className={s.availableUsers} key={data[0]}>
                   <div className={s.avatar}>
-                    {data[1]?.status ? (
-                      <div className={s.activeIndicater}></div>
-                    ) : null}
+                    <div
+                      className={`
+                        ${s.activeStatus} ${
+                        data[1]?.status
+                          ? s.activeIndicater
+                          : s.inactiveIndicater
+                      }`}
+                    ></div>
                     <Avatar src={data[1].avatar} alt="sidebar-chat-avatar" />
                   </div>
                   <span>

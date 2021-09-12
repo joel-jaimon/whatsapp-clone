@@ -190,12 +190,18 @@
 .avatar {
   position: relative;
 }
-.activeIndicater {
+.activeStatus {
   right: 0px;
   z-index: 1;
   bottom: 0px;
   padding: 5px;
   border-radius: 5px;
   position: absolute;
+}
+.inactiveIndicater {
+  background-color: #003a34;
+}
+
+.activeIndicater {
   background-color: #00c0ad;
 }

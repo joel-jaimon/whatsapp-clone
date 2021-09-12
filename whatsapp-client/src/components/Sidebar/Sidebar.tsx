@@ -16,8 +16,8 @@ export const Sidebar = connect(passStateToProps)(({ chatState }: any) => {
       <SidebarHead />
       <SidebarSearch />
       <div className={s.chatsContainer}>
-        {Object.entries(chatState.chat).map(([id, { chatInfo }]: any) => {
-          return <SidebarChats key={id} data={chatInfo} />;
+        {Object.entries(chatState.chat).map(([id, data]: any) => {
+          return <SidebarChats key={id} data={data} />;
         })}
       </div>
     </div>

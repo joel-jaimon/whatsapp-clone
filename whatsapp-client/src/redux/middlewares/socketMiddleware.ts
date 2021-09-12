@@ -1,5 +1,6 @@
 import { logout, setAuthSuccess, socketDisconnected } from "../reducers/auth";
 import {
+  getInitialChats,
   setTotalAuthUsers,
   updateActiveAuthUser,
   updateInactiveAuthUser,
@@ -13,6 +14,7 @@ export const createSocketMiddleware = () => {
     // Socket Verified
     getActiveSocket()?.on("signInSuccess", (payload: any) => {
       store.dispatch(setAuthSuccess(payload));
+      store.dispatch(getInitialChats());
       getActiveSocket()?.emit("getTotalUsers");
 
       // Total Users

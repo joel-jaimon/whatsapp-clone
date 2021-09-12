@@ -1,7 +1,6 @@
 const { ObjectID } = require("bson");
 const { verify } = require("jsonwebtoken");
 const {
-  getActiveUsers,
   addToActiveUsers,
   getActiveUserByObjectId,
   removeActiveUserByObjectId,
@@ -49,12 +48,14 @@ const socketMain = async (io, socket) => {
 
     // Signin success state
     socket.emit("signInSuccess", {
+      objectId: _id,
       uid: userPayload.uid,
       displayName: userPayload.displayName,
       email: userPayload.email,
       avatar: userPayload.avatar,
       createdOn: userPayload.createdOn,
       about: userPayload.about,
+      lastSeen: userPayload.lastSeen,
     });
 
     // Send users existing in DB back to sender
@@ -79,14 +80,25 @@ const socketMain = async (io, socket) => {
       avatar: userPayload.avatar,
       createdOn: userPayload.createdOn,
       about: userPayload.about,
+      lastSeen: userPayload.lastSeen,
     });
 
     // Handle online status
     socket.broadcast.emit("online", _id);
 
     // Handle disconnect event
-    socket.on("disconnect", () => {
-      socket.broadcast.emit("offline", _id);
+    socket.on("disconnect", async () => {
+      const lastSeen = Date.now();
+      await db.collection("googleAuthUsers").updateOne(
+        { _id: ObjectID(_id) },
+        {
+          $set: { lastSeen },
+        }
+      );
+      socket.broadcast.emit("offline", {
+        _id,
+        lastSeen,
+      });
       removeActiveUserByObjectId(_id);
       console.log(socket.id, "Disconnected");
     });

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { connect } from "react-redux";
 import s from "./chatStyles.module.scss";
 import { Avatar } from "@material-ui/core";
@@ -8,8 +8,10 @@ import { setDropDown } from "../../redux/reducers/dropDown";
 import { setActiveChat } from "../../redux/reducers/chat";
 import { setChatContainerModal } from "../../redux/reducers/chatContainerModal";
 
-const passStateToProps = ({ chatState }: any) => ({
+const passStateToProps = ({ chatState, authState }: any) => ({
   activeChat: chatState.chat[chatState.activeChat],
+  allUsers: chatState.authUsers,
+  myObjId: authState.auth.objectId,
 });
 
 const passDispatchToProps = (dispatch: any) => ({
@@ -21,64 +23,102 @@ const passDispatchToProps = (dispatch: any) => ({
 export const SidebarChats = connect(
   passStateToProps,
   passDispatchToProps
-)(({ data, setDropMenu, setActiveChat, setChatModal, userMode }: any) => {
-  const handleDropMenuClicks = (e: any, type: string) => {
-    e.stopPropagation();
-    setDropMenu({
-      type,
-      position: {
-        x: e.clientX,
-        y: e.clientY,
-      },
-      params: {},
-    });
-  };
+)(
+  ({
+    data,
+    setDropMenu,
+    setActiveChat,
+    setChatModal,
+    allUsers,
+    myObjId,
+  }: any) => {
+    const handleDropMenuClicks = (e: any, type: string) => {
+      e.stopPropagation();
+      setDropMenu({
+        type,
+        position: {
+          x: e.clientX,
+          y: e.clientY,
+        },
+        params: {},
+      });
+    };
 
-  const handleActiveChat = () => {
-    setDropMenu(false);
-    setChatModal(null);
-    setActiveChat(data.id);
-  };
+    const handleActiveChat = () => {
+      setDropMenu(false);
+      setChatModal(null);
+      setActiveChat(data.chatInfo._id);
+    };
 
-  const [expandMore, setExpandMore] = useState(false);
+    const [expandMore, setExpandMore] = useState(false);
 
-  return (
-    <div
-      onMouseOver={() => setExpandMore(true)}
-      onMouseLeave={() => setExpandMore(false)}
-      onClick={handleActiveChat}
-      onContextMenu={(e: any) => {
-        e.preventDefault();
-        setDropMenu({
-          type: "chatInfo",
-          position: {
-            x: e.clientX,
-            y: e.clientY,
-          },
-          params: {},
-        });
-      }}
-      className={s.sidebarChats}
-    >
-      <Avatar src={data.avatar} alt="sidebar-chat-avatar" />
-      <span className={s.chatInfo}>
-        <div>
-          <p>{data.name}</p>
-          {<p className={s.time}>Thursday</p>}
-        </div>
-        <div>
-          <MsgPreview {...data} />
-          {expandMore ? (
-            <ExpandMoreIcon
-              onClick={(e) => handleDropMenuClicks(e, "chatInfo")}
-              style={{
-                height: 20,
-                color: "rgb(130, 134, 137)",
-              }}
-            />
+    const otherFriend =
+      data.chatInfo.type === "chat"
+        ? data.chatInfo.participants.find((e: string) => e !== myObjId)
+        : null;
+
+    return (
+      <div
+        onMouseOver={() => setExpandMore(true)}
+        onMouseLeave={() => setExpandMore(false)}
+        onClick={handleActiveChat}
+        onContextMenu={(e: any) => {
+          e.preventDefault();
+          setDropMenu({
+            type: "chatInfo",
+            position: {
+              x: e.clientX,
+              y: e.clientY,
+            },
+            params: {},
+          });
+        }}
+        className={s.sidebarChats}
+      >
+        <div className={s.avatar}>
+          {otherFriend ? (
+            <div
+              className={`
+                        ${s.activeStatus} ${
+                allUsers[otherFriend].status
+                  ? s.activeIndicater
+                  : s.inactiveIndicater
+              }`}
+            ></div>
           ) : null}
+          <Avatar
+            src={
+              otherFriend
+                ? allUsers[otherFriend]?.avatar
+                : data.chatInfo?.avatar
+            }
+            alt="sidebar-chat-avatar"
+          />
         </div>
-      </span>
-    </div>
-  );
-});
+
+        <span className={s.chatInfo}>
+          <div>
+            <p>
+              {otherFriend
+                ? allUsers[otherFriend]?.displayName
+                : data.chatInfo?.name}
+            </p>
+            {<p className={s.time}>Thursday</p>}
+          </div>
+          <div>
+            <MsgPreview {...data.messages[data.messages.length - 1]} />
+            {expandMore ? (
+              <ExpandMoreIcon
+                onClick={(e) => handleDropMenuClicks(e, "chatInfo")}
+                style={{
+                  height: 20,
+                  color: "rgb(130, 134, 137)",
+                }}
+              />
+            ) : null}
+          </div>
+        </span>
+      </div>
+    );
+  }
+);
