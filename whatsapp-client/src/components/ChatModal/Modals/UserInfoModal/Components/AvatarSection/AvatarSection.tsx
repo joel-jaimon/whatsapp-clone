@@ -29,7 +29,9 @@ export const AvatarSection = connect(
     activeChat: { chatInfo },
   }: any) => {
     const [editName, setEditName] = useState(false);
-    const [newName, setNewName] = useState(chatInfo.name);
+    const [newName, setNewName] = useState(
+      chatInfo.name ?? allUsers[otherFriend]?.displayName
+    );
     const [avatar, setAvatar] = useState<any>(chatInfo.avatar);
     const [hoverForNewAvatar, setHoverForNewAvatar] = useState(false);
 
@@ -184,7 +186,7 @@ export const AvatarSection = connect(
                       d="M9 17.2l-4-4-1.4 1.3L9 19.9 20.4 8.5 19 7.1 9 17.2z"
                     ></path>
                   </svg>
-                ) : (
+                ) : otherFriend ? null : (
                   <svg
                     onClick={() => setEditName(true)}
                     xmlns="http://www.w3.org/2000/svg"
@@ -200,7 +202,7 @@ export const AvatarSection = connect(
                 )}
               </div>
             </div>
-            <small>Created 1/4/2021 at 12:04 AM</small>
+            {otherFriend ? null : <small>Created 1/4/2021 at 12:04 AM</small>}
           </div>
         </div>
       </div>

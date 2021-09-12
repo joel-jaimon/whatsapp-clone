@@ -21,7 +21,7 @@ const passDispatchToProps = (dispatch: any) => ({
 export const UserInfoModal = connect(
   passStateToProps,
   passDispatchToProps
-)(({ activeChat, setReverseAnimation, myObjId }: any) => {
+)(({ activeChat, setReverseAnimation, myObjId, allUsers }: any) => {
   const otherFriend =
     activeChat.chatInfo.type === "chat"
       ? activeChat.chatInfo.participants.find((e: string) => e !== myObjId)
@@ -45,7 +45,10 @@ export const UserInfoModal = connect(
       </div>
       <div className={s.infoModalBody}>
         <AvatarSection name="Notes" otherFriend={otherFriend} />
-        <DescSection />
+        <DescSection
+          userInfo={allUsers[otherFriend]}
+          desc={activeChat?.chatInfo?.desc}
+        />
         <MediaSection />
         {otherFriend ? null : <GeneralSettingsSection />}
         <ParticipantSection />
