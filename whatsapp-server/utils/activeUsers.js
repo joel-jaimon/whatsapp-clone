@@ -8,11 +8,11 @@ const addToActiveUsers = (user) => {
 const getActiveUsers = () => activeUsers;
 
 const getActiveUserBySocketId = (socketId) => {
-  return activeUsers.find((e) => e.socketId === socketId);
+  return activeUsers.find((e) => e.socketId == socketId);
 };
 
 const getActiveUserByObjectId = (objectId) => {
-  return activeUsers.find((e) => e.objectId === objectId);
+  return activeUsers.find((e) => e.objectId == objectId);
 };
 
 const removeActiveUserBySocketId = (socketId) => {

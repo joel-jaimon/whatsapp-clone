@@ -43,6 +43,7 @@ const socketMain = async (io, socket) => {
         objectId: _id,
       });
     }
+
     // Signin success
     socket.emit("signInSuccess", {
       uid: userPayload.uid,
@@ -54,7 +55,15 @@ const socketMain = async (io, socket) => {
     });
 
     socket.on("getTotalUsers", () => {
-      socket.emit("setInitialTotalUsers", users);
+      const filterUsers = users
+        .filter((me) => me._id != _id)
+        .map((user) => {
+          return {
+            ...user,
+            status: getActiveUserByObjectId(user._id.toString()) ? true : false,
+          };
+        });
+      socket.emit("setInitialTotalUsers", filterUsers);
     });
 
     socket.broadcast.emit("updateTotalUsers", {
@@ -73,6 +82,8 @@ const socketMain = async (io, socket) => {
     // Handle disconnect event
     socket.on("disconnect", () => {
       socket.broadcast.emit("offline", _id);
+      removeActiveUserByObjectId(_id);
+      console.log(activeUsers);
       console.log(socket.id, "Disconnected");
     });
   } catch (err) {

@@ -24,7 +24,6 @@ const isAuthSocket = (socket, next) => {
   const { accessToken } = socket.handshake.auth;
   verify(accessToken, process.env.JWT_ACCESS_SECRET, (err, payload) => {
     if (err) {
-      removeActiveUserBySocketId(socket.id);
       socket.disconnect(true);
       return next(new Error("Not Authorized!"));
     }

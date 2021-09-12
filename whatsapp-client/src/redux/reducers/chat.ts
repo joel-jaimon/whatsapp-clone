@@ -34,6 +34,7 @@ export const chatSlice = createSlice({
           avatar: user.avatar,
           createdOn: user.createdOn,
           about: user.about,
+          status: user.status,
         };
       });
     },

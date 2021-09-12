@@ -1,6 +1,5 @@
 import { Avatar } from "@material-ui/core";
 import { SidebarSearch } from "../../SidebarSearch/SidebarSearch";
-import sampleUsers from "../../../data/temp/tempUsers.json";
 import s from "../sidebarModal.module.scss";
 import { connect } from "react-redux";
 
@@ -35,7 +34,12 @@ export const NewMsgSidebar = connect(passStateToProps)(
             {Object.entries(totalUsers).map((data: any) => {
               return (
                 <div className={s.availableUsers} key={data[0]}>
-                  <Avatar src={data[1].avatar} alt="sidebar-chat-avatar" />
+                  <div className={s.avatar}>
+                    {data[1]?.status ? (
+                      <div className={s.activeIndicater}></div>
+                    ) : null}
+                    <Avatar src={data[1].avatar} alt="sidebar-chat-avatar" />
+                  </div>
                   <span>
                     <p>{data[1].displayName}</p>
                     <small>{data[1].about}</small>

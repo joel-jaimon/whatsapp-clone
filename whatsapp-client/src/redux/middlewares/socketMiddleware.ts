@@ -15,31 +15,31 @@ export const createSocketMiddleware = () => {
     getActiveSocket()?.on("signInSuccess", (payload: any) => {
       store.dispatch(setAuthSuccess(payload));
       getActiveSocket()?.emit("getTotalUsers");
-    });
 
-    // Socket Disconnected
-    getActiveSocket()?.on("disconnect", (payload: any) =>
-      store.dispatch(logout())
-    );
+      // Total Users
+      getActiveSocket()?.on("updateTotalUsers", (payload: string) => {
+        store.dispatch(updateTotalUsers(payload));
+      });
 
-    // Total Users
-    getActiveSocket()?.on("updateTotalUsers", (payload: string) => {
-      store.dispatch(updateTotalUsers(payload));
-    });
+      // Update Users
+      getActiveSocket()?.on("setInitialTotalUsers", (payload: string) => {
+        store.dispatch(setTotalUsers(payload));
+      });
 
-    // Update Users
-    getActiveSocket()?.on("setInitialTotalUsers", (payload: string) => {
-      store.dispatch(setTotalUsers(payload));
-    });
+      // Handle User's active status
+      getActiveSocket()?.on("online", (payload: string) => {
+        store.dispatch(updateActiveUser(payload));
+      });
 
-    // Handle User's active status
-    getActiveSocket()?.on("online", (payload: string) => {
-      store.dispatch(updateActiveUser(payload));
-    });
+      // Handle User's inactive status
+      getActiveSocket()?.on("offline", (payload: string) => {
+        store.dispatch(updateInactiveUser(payload));
+      });
 
-    // Handle User's inactive status
-    getActiveSocket()?.on("offline", (payload: string) => {
-      store.dispatch(updateInactiveUser(payload));
+      // Socket Disconnected
+      getActiveSocket()?.on("disconnect", (payload: any) => {
+        store.dispatch(logout());
+      });
     });
 
     return next(action);
