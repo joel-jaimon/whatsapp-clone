@@ -4,11 +4,12 @@ import s from "../sidebarModal.module.scss";
 import { connect } from "react-redux";
 
 const passStateToProps = ({ chatState }: any) => ({
-  totalUsers: chatState.totalUsers,
+  authUsers: chatState.authUsers,
+  guestUsers: chatState.guestUsers,
 });
 
 export const NewMsgSidebar = connect(passStateToProps)(
-  ({ totalUsers }: any) => {
+  ({ guestUsers, authUsers }: any) => {
     return (
       <div className={s.sidebarModalBody}>
         <SidebarSearch />
@@ -29,9 +30,9 @@ export const NewMsgSidebar = connect(passStateToProps)(
               <p>New group</p>
             </div>
           </div>
-          <p className={s.text}>ALL CONTACTS</p>
+          <p className={s.text}>AUTH CONTACTS</p>
           <div className={s.chatsContainer}>
-            {Object.entries(totalUsers).map((data: any) => {
+            {Object.entries(authUsers).map((data: any) => {
               return (
                 <div className={s.availableUsers} key={data[0]}>
                   <div className={s.avatar}>
@@ -48,6 +49,25 @@ export const NewMsgSidebar = connect(passStateToProps)(
               );
             })}
           </div>
+          {/* <p className={s.text}>GUEST CONTACTS</p>
+          <div className={s.chatsContainer}>
+            {Object.entries(guestUsers).map((data: any) => {
+              return (
+                <div className={s.availableUsers} key={data[0]}>
+                  <div className={s.avatar}>
+                    {data[1]?.status ? (
+                      <div className={s.activeIndicater}></div>
+                    ) : null}
+                    <Avatar src={data[1].avatar} alt="sidebar-chat-avatar" />
+                  </div>
+                  <span>
+                    <p>{data[1].displayName}</p>
+                    <small>{data[1].about}</small>
+                  </span>
+                </div>
+              );
+            })}
+          </div> */}
         </div>
       </div>
     );

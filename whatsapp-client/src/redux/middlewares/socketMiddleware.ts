@@ -1,16 +1,14 @@
 import { logout, setAuthSuccess } from "../reducers/auth";
 import {
-  setTotalUsers,
-  updateActiveUser,
-  updateInactiveUser,
-  updateTotalUsers,
+  setTotalAuthUsers,
+  updateActiveAuthUser,
+  updateInactiveAuthUser,
+  updateTotalAuthUsers,
 } from "../reducers/chat";
 import { getActiveSocket } from "../sockets/socketConnection";
 
 export const createSocketMiddleware = () => {
   return (store: any) => (next: any) => (action: any) => {
-    console.log("Socket Middleware: ", action);
-
     // Socket Verified
     getActiveSocket()?.on("signInSuccess", (payload: any) => {
       store.dispatch(setAuthSuccess(payload));
@@ -18,22 +16,22 @@ export const createSocketMiddleware = () => {
 
       // Total Users
       getActiveSocket()?.on("updateTotalUsers", (payload: string) => {
-        store.dispatch(updateTotalUsers(payload));
+        store.dispatch(updateTotalAuthUsers(payload));
       });
 
       // Update Users
       getActiveSocket()?.on("setInitialTotalUsers", (payload: string) => {
-        store.dispatch(setTotalUsers(payload));
+        store.dispatch(setTotalAuthUsers(payload));
       });
 
       // Handle User's active status
       getActiveSocket()?.on("online", (payload: string) => {
-        store.dispatch(updateActiveUser(payload));
+        store.dispatch(updateActiveAuthUser(payload));
       });
 
       // Handle User's inactive status
       getActiveSocket()?.on("offline", (payload: string) => {
-        store.dispatch(updateInactiveUser(payload));
+        store.dispatch(updateInactiveAuthUser(payload));
       });
 
       // Socket Disconnected

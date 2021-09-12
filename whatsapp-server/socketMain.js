@@ -26,25 +26,27 @@ const socketMain = async (io, socket) => {
 
     // // Handle User Active Session
     if (activeUserIndex === -1) {
-      console.log(socket.id, activeUsers, activeUserIndex);
+      // New Session
       addToActiveUsers({
         socketId: socket.id,
         objectId: _id,
       });
     } else {
+      // Old session removed
       const prevSocketId = getActiveUserByObjectId(_id)?.socketId;
       if (io.sockets.sockets[prevSocketId]) {
         console.log(prevSocketId + "disconnected");
         io.sockets.sockets[prevSocketId].disconnect();
       }
       removeActiveUserByObjectId(_id);
+      // New session added
       addToActiveUsers({
         socketId: socket.id,
         objectId: _id,
       });
     }
 
-    // Signin success
+    // Signin success state
     socket.emit("signInSuccess", {
       uid: userPayload.uid,
       displayName: userPayload.displayName,
@@ -54,6 +56,7 @@ const socketMain = async (io, socket) => {
       about: userPayload.about,
     });
 
+    // Send users existing in DB back to sender
     socket.on("getTotalUsers", () => {
       const filterUsers = users
         .filter((me) => me._id != _id)
@@ -66,6 +69,7 @@ const socketMain = async (io, socket) => {
       socket.emit("setInitialTotalUsers", filterUsers);
     });
 
+    // Update logged user state to others
     socket.broadcast.emit("updateTotalUsers", {
       objectId: userPayload._id,
       uid: userPayload.uid,
