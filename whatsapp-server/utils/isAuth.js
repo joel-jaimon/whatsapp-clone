@@ -2,7 +2,7 @@ const { verify } = require("jsonwebtoken");
 const { removeActiveUserBySocketId } = require("./activeUsers");
 
 const isAuthREST = (req, res, next) => {
-  const authorization = context.req.headers["authorization"];
+  const authorization = req.headers["authorization"];
 
   if (!authorization) {
     throw new Error("Not authorized!");
@@ -14,7 +14,7 @@ const isAuthREST = (req, res, next) => {
     req.payload = payload;
   } catch (err) {
     console.log(err);
-    throw new Error("Not authorized!");
+    res.send(404).end();
   } finally {
     return next();
   }
