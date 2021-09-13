@@ -36,7 +36,12 @@ const App = connect(passStateToProps)(({ authState }: any) => {
       </div>
     </div>
   ) : (
-    <div className={s.app}>
+    <div
+      style={{
+        textAlign: "center",
+      }}
+      className={s.app}
+    >
       <Login />
     </div>
   );

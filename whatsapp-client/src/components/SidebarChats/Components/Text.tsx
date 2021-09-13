@@ -1,8 +1,10 @@
-export const Text = () => {
-    return (
-        <small>
-            Ipsom: Askjdh askjd aks dkjas kd aksjdasdasddas hkasjdhkas dkjas
-            kdjha skdj hkasjd kasj kdjash kdj hkasjhd k askdj aks jd
-        </small>
-    );
+export const Text = ({ otherUser, msgParams, type }: any) => {
+  return type === "group" ? (
+    <small>
+      <strong>{otherUser?.split(" ").slice(0, 2).join(" ") ?? "You"}</strong>
+      :&nbsp;{msgParams.text}
+    </small>
+  ) : (
+    <small>{msgParams.text}</small>
+  );
 };

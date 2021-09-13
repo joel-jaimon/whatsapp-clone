@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { connect } from "react-redux";
 import s from "./chatStyles.module.scss";
 import { Avatar } from "@material-ui/core";
@@ -106,7 +106,10 @@ export const SidebarChats = connect(
             {<p className={s.time}>Thursday</p>}
           </div>
           <div>
-            <MsgPreview {...data.messages[data.messages.length - 1]} />
+            <MsgPreview
+              {...data.messages[data.messages.length - 1]}
+              otherUser={allUsers[otherFriend]?.displayName}
+            />
             {expandMore ? (
               <ExpandMoreIcon
                 onClick={(e) => handleDropMenuClicks(e, "chatInfo")}
