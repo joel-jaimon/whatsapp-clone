@@ -1,6 +1,7 @@
 const { ObjectID } = require("bson");
 const { mongoDB } = require("../../utils/database");
 
+// Get total chats and groups in database
 exports.getGroupsChats = async (req, res) => {
   try {
     const db = await mongoDB().db();
@@ -31,6 +32,7 @@ exports.getGroupsChats = async (req, res) => {
   }
 };
 
+// get messages corresponding to a chat or group
 exports.getMessages = async (req, res) => {
   try {
     const { refId } = req.params;
@@ -38,7 +40,7 @@ exports.getMessages = async (req, res) => {
     const messages = await db
       .collection("messages")
       .find({ refId: ObjectID(refId) })
-      .sort({ timestamp: -1 })
+      .sort({ timestamp: 1 })
       .toArray();
 
     return res.status(201).json({

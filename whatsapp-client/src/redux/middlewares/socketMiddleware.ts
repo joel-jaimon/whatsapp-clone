@@ -1,6 +1,7 @@
 import { logout, setAuthSuccess, socketDisconnected } from "../reducers/auth";
 import {
   getInitialChats,
+  sendMsgSuccessful,
   setTotalAuthUsers,
   updateActiveAuthUser,
   updateInactiveAuthUser,
@@ -35,6 +36,11 @@ export const createSocketMiddleware = () => {
       // Handle User's inactive status
       getActiveSocket()?.on("offline", (payload: string) => {
         store.dispatch(updateInactiveAuthUser(payload));
+      });
+
+      // Message was successfully sent
+      getActiveSocket().on("messageSentSuccessfully", (payload: any) => {
+        store.dispatch(sendMsgSuccessful(payload));
       });
 
       // Socket Disconnected

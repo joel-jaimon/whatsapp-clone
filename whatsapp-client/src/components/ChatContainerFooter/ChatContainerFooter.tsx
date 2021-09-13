@@ -19,6 +19,7 @@ import {
 import { ShowAttachmentAnimations } from "../../animations/chatFooterAnimation/ShowAttachmentAnimations";
 import { ExpandOptions } from "../../animations/ExpandOptions";
 import { RecorderAnimation } from "../../animations/chatFooterAnimation/RecorderAnimation";
+import { v4 as uuidv4 } from "uuid";
 
 import { connect } from "react-redux";
 import {
@@ -26,16 +27,23 @@ import {
   resetFileAttachmentModal,
   setAttachmentModal,
 } from "../../redux/reducers/attachmentModal";
+import { sendMsgStart } from "../../redux/reducers/chat";
 
-const passStateFromProps = ({ chatState, attachmentModal }: any) => ({
+const passStateFromProps = ({
+  chatState,
+  attachmentModal,
+  authState,
+}: any) => ({
   activeChat: chatState.chat[chatState.activeChat],
   attachmentModal,
+  authUser: authState.auth,
 });
 
 const passDispatchToProps = (dispatch: any) => ({
   setAttachmentModal: (modal: any) => dispatch(setAttachmentModal(modal)),
   addAttachments: (files: any[]) => dispatch(addAttachments(files)),
   resetAttachmentModal: () => dispatch(resetFileAttachmentModal(null)),
+  sendMessage: (payload: any) => dispatch(sendMsgStart(payload)),
 });
 
 export const ChatContainerFooter = connect(
@@ -48,6 +56,8 @@ export const ChatContainerFooter = connect(
     activeChat,
     attachmentModal,
     resetAttachmentModal,
+    authUser,
+    sendMessage,
   }: any) => {
     const [height, setHeight] = useState(0);
     const [activity, setActivity] = useState<boolean | string>(false);
@@ -86,6 +96,17 @@ export const ChatContainerFooter = connect(
     const sendMsg = () => {
       // @ts-ignore
       const msg = inputRef.current.innerText.replaceAll("\n", "<br/>");
+      sendMessage({
+        tempId: uuidv4(),
+        type: activeChat.chatInfo.type,
+        msgType: "text",
+        sentBy: authUser.objectId,
+        msgParams: {
+          text: msg,
+        },
+        refId: activeChat.chatInfo._id,
+        timestamp: Date.now(),
+      });
     };
 
     const handleAttachments = (e: any) => {

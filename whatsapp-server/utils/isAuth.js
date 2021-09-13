@@ -1,6 +1,7 @@
 const { verify } = require("jsonwebtoken");
 const { removeActiveUserBySocketId } = require("./activeUsers");
 
+// Express REST routes middleware
 const isAuthREST = (req, res, next) => {
   const authorization = req.headers["authorization"];
 
@@ -20,6 +21,7 @@ const isAuthREST = (req, res, next) => {
   }
 };
 
+// Socket.io middleware
 const isAuthSocket = (socket, next) => {
   const { accessToken } = socket.handshake.auth;
   verify(accessToken, process.env.JWT_ACCESS_SECRET, (err, payload) => {

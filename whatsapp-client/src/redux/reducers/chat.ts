@@ -53,6 +53,30 @@ export const chatSlice = createSlice({
       state.activeChat = action.payload;
     },
 
+    sendMsgStart: (state, action: PayloadAction<any>) => {
+      state.chat[action.payload.refId].messages.push({
+        ...action.payload,
+        stillSending: true,
+      });
+    },
+
+    sendMsgSuccessful: (state, action: PayloadAction<any>) => {
+      const refArrIndex = state.chat[action.payload.refId].messages.findIndex(
+        (e: any) => {
+          return e.tempId === action.payload.tempId;
+        }
+      );
+      state.chat[action.payload.refId].messages[refArrIndex]._id =
+        action.payload._id;
+      state.chat[action.payload.refId].messages[refArrIndex].stillSending =
+        false;
+      delete state.chat[action.payload.refId].messages[refArrIndex].tempId;
+    },
+
+    sendMsgNotSuccessful: (state, action: PayloadAction<any>) => {
+      state.activeChat = action.payload;
+    },
+
     // // Handle guest users
     // setTotalGuestUsers: (state, action: PayloadAction<any>) => {
     //   action.payload.forEach((user: any) => {
@@ -88,5 +112,8 @@ export const {
   updateTotalAuthUsers,
   getInitialChats,
   onChatsLoadComplete,
+  sendMsgSuccessful,
+  sendMsgNotSuccessful,
+  sendMsgStart,
 } = chatSlice.actions;
 export default chatSlice;

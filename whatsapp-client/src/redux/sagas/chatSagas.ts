@@ -1,6 +1,11 @@
 import { takeLatest, call, put } from "@redux-saga/core/effects";
 import { getAccessToken } from "../../utils/accessToken";
-import { getInitialChats, onChatsLoadComplete } from "../reducers/chat";
+import {
+  getInitialChats,
+  onChatsLoadComplete,
+  sendMsgStart,
+} from "../reducers/chat";
+import { getActiveSocket } from "../sockets/socketConnection";
 
 // Logout Saga
 const getInitialChatData = async () => {
@@ -48,5 +53,20 @@ export function* initChatLoad() {
       return result;
     }, {});
     yield put(onChatsLoadComplete(chatsObj));
+  });
+}
+
+// Send Msg
+export function* initSendMsgStart() {
+  yield takeLatest(sendMsgStart.type, function* (action: any) {
+    //@ts-ignore
+    const socket = yield call(getActiveSocket);
+    switch (action.payload.msgType) {
+      case "text":
+        socket.emit("iTextMessage", action.payload);
+        break;
+      default:
+        break;
+    }
   });
 }
