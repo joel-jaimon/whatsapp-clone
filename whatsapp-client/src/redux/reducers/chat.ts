@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import colors from "../../data/colors.json";
 
 const initialState: any = {
   authUsers: {},
@@ -34,11 +35,15 @@ export const chatSlice = createSlice({
           about: user.about,
           status: user.status,
           lastSeen: user.lastSeen,
+          color: colors[Math.floor(Math.random() * colors.length - 1)],
         };
       });
     },
     updateTotalAuthUsers: (state, action: PayloadAction<any>) => {
-      state.authUsers[action.payload.objectId] = action.payload;
+      state.authUsers[action.payload.objectId] = {
+        ...action.payload,
+        color: colors[Math.floor(Math.random() * colors.length - 1)],
+      };
     },
     updateActiveAuthUser: (state, action: PayloadAction<any>) => {
       state.authUsers[action.payload].status = true;
