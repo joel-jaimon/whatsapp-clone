@@ -114,18 +114,27 @@ const socketMain = async (io, socket) => {
             throw Error(err);
           }
 
-          for (let i = 0; i < participants.length - 1; i++) {
-            if (participants[i].str != sentBy) {
-              console.log(participants[i]);
+          for (let i = 0; i < participants.length; i++) {
+            if (participants[i].toString() != sentBy.toString()) {
+              const activeFriends = getActiveUserByObjectId(participants[i]);
+              if (activeFriends.socketId) {
+                io.to(activeFriends.socketId).emit("recieveMessage", {
+                  _id: data._id,
+                  type,
+                  msgType,
+                  msgParams,
+                  refId: ObjectId(refId),
+                  timestamp,
+                  sentBy: ObjectId(sentBy),
+                });
+              }
             }
           }
-
-          console.log(_id);
 
           socket.emit("messageSentSuccessfully", {
             tempId: tempId,
             refId,
-            _id,
+            _id: data._id,
           });
         }
       );

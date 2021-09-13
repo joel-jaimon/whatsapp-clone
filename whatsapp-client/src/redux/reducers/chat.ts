@@ -73,6 +73,12 @@ export const chatSlice = createSlice({
       delete state.chat[action.payload.refId].messages[refArrIndex].tempId;
     },
 
+    recieveMessage: (state, action: PayloadAction<any>) => {
+      state.chat[action.payload.refId].messages.push({
+        ...action.payload,
+      });
+    },
+
     sendMsgNotSuccessful: (state, action: PayloadAction<any>) => {
       state.activeChat = action.payload;
     },
@@ -115,5 +121,6 @@ export const {
   sendMsgSuccessful,
   sendMsgNotSuccessful,
   sendMsgStart,
+  recieveMessage,
 } = chatSlice.actions;
 export default chatSlice;

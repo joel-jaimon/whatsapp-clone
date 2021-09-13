@@ -1,6 +1,7 @@
 import { logout, setAuthSuccess, socketDisconnected } from "../reducers/auth";
 import {
   getInitialChats,
+  recieveMessage,
   sendMsgSuccessful,
   setTotalAuthUsers,
   updateActiveAuthUser,
@@ -13,8 +14,8 @@ import { getActiveSocket } from "../sockets/socketConnection";
 export const createSocketMiddleware = () => {
   return (store: any) => (next: any) => (action: any) => {
     // Socket Verified
-    getActiveSocket()?.on("signInSuccess", (payload: any) => {
-      store.dispatch(setAuthSuccess(payload));
+    getActiveSocket()?.on("signInSuccess", (mainPayload: any) => {
+      store.dispatch(setAuthSuccess(mainPayload));
       store.dispatch(getInitialChats());
       getActiveSocket()?.emit("getTotalUsers");
 
@@ -41,6 +42,10 @@ export const createSocketMiddleware = () => {
       // Message was successfully sent
       getActiveSocket().on("messageSentSuccessfully", (payload: any) => {
         store.dispatch(sendMsgSuccessful(payload));
+      });
+
+      getActiveSocket().on("recieveMessage", (payload: any) => {
+        store.dispatch(recieveMessage(payload));
       });
 
       // Socket Disconnected
