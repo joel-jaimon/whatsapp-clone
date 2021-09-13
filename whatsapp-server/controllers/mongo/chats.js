@@ -2,7 +2,7 @@ const { ObjectID } = require("bson");
 const { mongoDB } = require("../../utils/database");
 
 // Get total chats and groups in database
-exports.getGroupsChats = async (req, res) => {
+const getGroupsChats = async (req, res) => {
   try {
     const db = await mongoDB().db();
     const chats = await db
@@ -33,7 +33,7 @@ exports.getGroupsChats = async (req, res) => {
 };
 
 // get messages corresponding to a chat or group
-exports.getMessages = async (req, res) => {
+const getMessages = async (req, res) => {
   try {
     const { refId } = req.params;
     const db = await mongoDB().db();
@@ -50,4 +50,9 @@ exports.getMessages = async (req, res) => {
     console.log(err);
     res.send(404).end();
   }
+};
+
+module.exports = {
+  getGroupsChats,
+  getMessages,
 };

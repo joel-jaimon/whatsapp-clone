@@ -14,7 +14,7 @@ const accessTokenExp = 30 * 1000;
 const client = new OAuth2Client(process.env.GAUTH_CLIENT_ID);
 
 // Refresh token endpoint
-exports.sendRefreshToken = async (req, res) => {
+const sendRefreshToken = async (req, res) => {
   const db = await mongoDB().db();
   const token = req.cookies.wc_RTN;
 
@@ -57,7 +57,7 @@ exports.sendRefreshToken = async (req, res) => {
 };
 
 // Create / SigIn new user endpoint
-exports.googlelogin = async (req, res) => {
+const googlelogin = async (req, res) => {
   try {
     const db = await mongoDB().db();
 
@@ -118,9 +118,15 @@ exports.googlelogin = async (req, res) => {
   }
 };
 
-exports.logout = async (req, res) => {
+const logout = async (req, res) => {
   res.clearCookie("wc_RTN");
   res.status(200).json({
     hi: "Thanks for testing...!",
   });
+};
+
+module.exports = {
+  logout,
+  googlelogin,
+  sendRefreshToken,
 };
