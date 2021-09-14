@@ -11,7 +11,7 @@ import {
   removeAttachment,
   uploadAttachments,
 } from "../../../redux/reducers/attachmentModal";
-import { v4 as uuidv4 } from "uuid";
+import { parseAttachmentFiles } from "../../../utils/parseAttachementFiles";
 
 const passStateToProps = ({ attachmentModal, chatState, authState }: any) => ({
   attachmentModal: attachmentModal,
@@ -84,22 +84,9 @@ export const PreviewFooter = connect(
       changeFileInPreview(index);
     };
 
-    const handleFileAddition = (e: any) => {
+    const handleFileAddition = async (e: any) => {
       if (e.target.files) {
-        const files = Array.from(e.target.files).reduce(
-          (result: any, item: any, index: number) => {
-            result.push([
-              item,
-              {
-                extraParam: {
-                  tempId: uuidv4(),
-                },
-              },
-            ]);
-            return result;
-          },
-          []
-        );
+        const files = await parseAttachmentFiles(e.target.files);
         addFile(files);
       }
     };

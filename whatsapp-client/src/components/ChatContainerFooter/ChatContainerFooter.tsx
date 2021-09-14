@@ -28,6 +28,7 @@ import {
   setAttachmentModal,
 } from "../../redux/reducers/attachmentModal";
 import { sendMsgStart } from "../../redux/reducers/chat";
+import { parseAttachmentFiles } from "../../utils/parseAttachementFiles";
 
 const passStateFromProps = ({
   chatState,
@@ -109,26 +110,13 @@ export const ChatContainerFooter = connect(
       });
     };
 
-    const handleAttachments = (e: any) => {
+    const handleAttachments = async (e: any) => {
       if (attachmentModal.files[0]) {
         resetAttachmentModal();
       }
       setReverseAnimationAttachmentMenu(true);
       setAttachmentModal(activeChat?.chatInfo.id);
-      const files = Array.from(e.target.files).reduce(
-        (result: any, item: any, index: number) => {
-          result.push([
-            item,
-            {
-              extraParam: {
-                tempId: uuidv4(),
-              },
-            },
-          ]);
-          return result;
-        },
-        []
-      );
+      const files = await parseAttachmentFiles(e.target.files);
       addAttachments(files);
     };
 
@@ -151,7 +139,14 @@ export const ChatContainerFooter = connect(
         />
       </DocumentIcon>,
       <AvatarIcon className={s.avatarIcon} />,
-      <VideoCallIcon className={s.videoIcon} />,
+      <VideoCallIcon className={s.videoIcon}>
+        <input
+          onChange={handleAttachments}
+          type="file"
+          multiple={true}
+          accept="video/mp4"
+        />
+      </VideoCallIcon>,
     ];
 
     return (
