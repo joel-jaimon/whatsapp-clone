@@ -14,7 +14,7 @@ const _audioInfo = (item: File) => {
           url: audio.src,
           duration: Math.floor(audio.duration),
         },
-        clientparams: {
+        clientParams: {
           loading: true,
           tempId: uuidv4(),
         },
@@ -55,7 +55,7 @@ const _videoInfo = (item: File) => {
                   : "landscape",
               size: bytesToSize(item.size),
             },
-            clientparams: {
+            clientParams: {
               loading: true,
               tempId: uuidv4(),
             },
@@ -83,7 +83,7 @@ const _imgInfo = (item: File, thumbnail: string) => {
             img.naturalHeight / img.naturalWidth >= 1 ? "potrait" : "landscape",
           size: bytesToSize(item.size),
         },
-        clientparams: {
+        clientParams: {
           loading: true,
           tempId: uuidv4(),
         },
@@ -139,10 +139,14 @@ export const parseAttachmentFiles = async (files: File[]) => {
             {
               extraParam: {
                 loading: true,
+                fileName: item.name,
                 fileSize: bytesToSize(item.size),
                 url: null,
               },
-              tempId: uuidv4(),
+              clientParams: {
+                loading: true,
+                tempId: uuidv4(),
+              },
             },
           ];
       }

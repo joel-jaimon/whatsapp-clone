@@ -1,7 +1,7 @@
-import { takeLatest, call, put } from "@redux-saga/core/effects";
-import { createFileParams } from "../../utils/createFileParams";
+import { takeLatest, put, call } from "@redux-saga/core/effects";
 import { uploadAttachments } from "../reducers/attachmentModal";
 import { sendFileInit } from "../reducers/chat";
+import store from "../store";
 
 const allowedTypes = ["image", "video", "audio"];
 
@@ -34,26 +34,37 @@ export const uploadFile = async (filesArr: any[]) => {
   );
 };
 
+const sendInitialMessages = (data: any) => {
+  data.files.forEach((filedata: any) => {
+    const fileType = filedata[0].type.split("/")[0];
+    const msgType = ["image", "video"].includes(fileType)
+      ? fileType
+      : fileType === "audio"
+      ? "voice"
+      : "document";
+    console.log({
+      ...data.msgInfo,
+      msgType,
+      msgParams: filedata[1].extraParam,
+      clientParams: filedata[1].clientParams,
+    });
+    store.dispatch(
+      sendFileInit({
+        ...data.msgInfo,
+        msgType,
+        msgParams: filedata[1].extraParam,
+        clientParams: filedata[1].clientParams,
+      })
+    );
+  });
+};
+
 export function* initFileUpload() {
   yield takeLatest(uploadAttachments.type, function* (action: any) {
-    action.payload.files.forEach(function* (file: File) {
-      const fileType = file.type.split("/")[0];
-      const msgType = ["image", "video"].includes(fileType)
-        ? fileType
-        : fileType === "audio"
-        ? "voice"
-        : "document";
-      yield put(
-        sendFileInit({
-          ...action.payload.msgInfo,
-          msgType,
-          msgParams: createFileParams(file, msgType),
-        })
-      );
-    });
+    yield call(sendInitialMessages, action.payload);
+    yield console.log("Voila");
     //@ts-ignore
-    const res = yield call(uploadFile, action.payload.files);
-    console.log(res);
-    yield console.log(action.payload);
+    // const res = yield call(uploadFile, action.payload.files);
+    // console.log(res);
   });
 }
