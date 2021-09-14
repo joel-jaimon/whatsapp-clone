@@ -1,5 +1,7 @@
 import { takeLatest, call, put } from "@redux-saga/core/effects";
+import { createFileParams } from "../../utils/createFileParams";
 import { uploadAttachments } from "../reducers/attachmentModal";
+import { sendFileInit } from "../reducers/chat";
 
 const allowedTypes = ["image", "video", "audio"];
 
@@ -17,7 +19,7 @@ export const uploadFile = async (filesArr: any[]) => {
             ? fileType === "audio"
               ? "voice"
               : fileType
-            : "file"
+            : "document"
         }`,
         {
           method: "POST",
@@ -27,7 +29,6 @@ export const uploadFile = async (filesArr: any[]) => {
         }
       );
       const response = await data.json();
-      console.log(response);
       return response;
     })
   );
@@ -35,6 +36,21 @@ export const uploadFile = async (filesArr: any[]) => {
 
 export function* initFileUpload() {
   yield takeLatest(uploadAttachments.type, function* (action: any) {
+    action.payload.files.forEach(function* (file: File) {
+      const fileType = file.type.split("/")[0];
+      const msgType = ["image", "video"].includes(fileType)
+        ? fileType
+        : fileType === "audio"
+        ? "voice"
+        : "document";
+      yield put(
+        sendFileInit({
+          ...action.payload.msgInfo,
+          msgType,
+          msgParams: createFileParams(file, msgType),
+        })
+      );
+    });
     //@ts-ignore
     const res = yield call(uploadFile, action.payload.files);
     console.log(res);

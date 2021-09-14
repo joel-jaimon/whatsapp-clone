@@ -78,6 +78,15 @@ export const chatSlice = createSlice({
       delete state.chat[action.payload.refId].messages[refArrIndex].tempId;
     },
 
+    sendFileInit: (state, action: PayloadAction<any>) => {
+      state.chat[action.payload.refId].messages.push({
+        ...action.payload,
+        stillSending: true,
+      });
+    },
+
+    sendFileSuccessful: (state, action: PayloadAction<any>) => {},
+
     recieveMessage: (state, action: PayloadAction<any>) => {
       state.chat[action.payload.refId].messages.push({
         ...action.payload,
@@ -127,5 +136,6 @@ export const {
   sendMsgNotSuccessful,
   sendMsgStart,
   recieveMessage,
+  sendFileInit,
 } = chatSlice.actions;
 export default chatSlice;
