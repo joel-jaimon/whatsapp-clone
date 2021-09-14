@@ -26,23 +26,32 @@ const _audioInfo = (item: File) => {
 // get video's info
 const _videoInfo = (item: File) => {
   return new Promise((resolve) => {
-    const video: HTMLVideoElement = document.createElement("video");
-    video.src = URL.createObjectURL(item);
-
-    // for thumbnail image
+    //create a canva element
     const canvas: HTMLCanvasElement = document.createElement("canvas");
 
-    // create a ss of image at given duration
-    canvas
-      .getContext("2d")!
-      .drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-
+    //
+    const video: HTMLVideoElement = document.createElement("video");
+    video.autoplay = true;
+    video.muted = true;
+    video.src = URL.createObjectURL(item);
     // convert image to blob -> then to file -> then to compressor
-    canvas.toBlob((blob) => {
-      //@ts-ignore
-      const thumnailFile = new File([blob], "image.png");
-      compressImageToMax(thumnailFile).then((thumbnail: string) => {
-        video.onloadedmetadata = () => {
+    video.onloadeddata = () => {
+      let context = canvas.getContext("2d");
+
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+
+      context!.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+      console.log("URL: ", canvas.toDataURL("image/png"));
+
+      canvas.toBlob((blob) => {
+        //@ts-ignore
+        const thumnailFile = new File([blob], "image.png", {
+          type: "image/png",
+        });
+
+        compressImageToMax(thumnailFile).then((thumbnail: string) => {
+          // finally resolve our promise
           return resolve({
             extraParam: {
               duration: Math.floor(video.duration),
@@ -60,9 +69,9 @@ const _videoInfo = (item: File) => {
               tempId: uuidv4(),
             },
           });
-        };
+        });
       });
-    });
+    };
   });
 };
 
