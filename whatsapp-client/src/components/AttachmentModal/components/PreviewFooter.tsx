@@ -11,6 +11,7 @@ import {
   removeAttachment,
   uploadAttachments,
 } from "../../../redux/reducers/attachmentModal";
+import { v4 as uuidv4 } from "uuid";
 
 const passStateToProps = ({ attachmentModal, chatState, authState }: any) => ({
   attachmentModal: attachmentModal,
@@ -84,7 +85,23 @@ export const PreviewFooter = connect(
     };
 
     const handleFileAddition = (e: any) => {
-      if (e.target.files) addFile(e.target.files);
+      if (e.target.files) {
+        const files = Array.from(e.target.files).reduce(
+          (result: any, item: any, index: number) => {
+            result.push([
+              item,
+              {
+                extraParam: {
+                  tempId: uuidv4(),
+                },
+              },
+            ]);
+            return result;
+          },
+          []
+        );
+        addFile(files);
+      }
     };
 
     const handleFileRemoval = (index: number) => {
@@ -137,7 +154,7 @@ export const PreviewFooter = connect(
                 />
                 <div className={s.overlay} onClick={() => scrollTo(i)} />
 
-                <FilePreview file={e} iconPreview={true} />
+                <FilePreview file={e[0]} iconPreview={true} />
               </div>
             );
           })}

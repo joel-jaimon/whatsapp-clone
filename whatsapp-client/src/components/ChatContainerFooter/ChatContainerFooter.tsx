@@ -115,7 +115,21 @@ export const ChatContainerFooter = connect(
       }
       setReverseAnimationAttachmentMenu(true);
       setAttachmentModal(activeChat?.chatInfo.id);
-      addAttachments(e.target?.files);
+      const files = Array.from(e.target.files).reduce(
+        (result: any, item: any, index: number) => {
+          result.push([
+            item,
+            {
+              extraParam: {
+                tempId: uuidv4(),
+              },
+            },
+          ]);
+          return result;
+        },
+        []
+      );
+      addAttachments(files);
     };
 
     const attachmentsArray = [
