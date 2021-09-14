@@ -5,13 +5,13 @@ const { s3 } = require("../controllers/s3/s3");
 
 const bucketName = process.env.AWS_S3_BUCKET_NAME;
 
-const uploadFile = async (file) => {
+const uploadFile = async (file, fileType) => {
   const fileStream = fs.createReadStream(file.path);
 
   const uploadParams = {
     Bucket: bucketName,
     Body: fileStream,
-    Key: file.filename,
+    Key: `${fileType}/${file.filename}`,
   };
 
   const putCommand = new PutObjectCommand(uploadParams);
@@ -27,8 +27,8 @@ const getFileStream = async (fileKey) => {
   };
 
   const getCommand = new GetObjectCommand(downloadParams);
-
-  return await (await s3.send(getCommand)).createReadStream();
+  const { Body } = await s3.send(getCommand);
+  return Body;
 };
 
 module.exports = { getFileStream, uploadFile };

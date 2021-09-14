@@ -7,7 +7,11 @@ const {
 const { getMessages, getGroupsChats } = require("./controllers/mongo/chats");
 const { isAuthREST } = require("./utils/isAuth");
 const multer = require("multer");
-const { handleFileUpload } = require("./controllers/s3/handlers");
+const {
+  handleFileUpload,
+  handleGetResource,
+  handleGetResourceFromServer,
+} = require("./controllers/s3/handlers");
 var router = express.Router();
 
 const uploadLocation = multer({ dest: "uploads/" });
@@ -30,8 +34,12 @@ router.get("/chats", isAuthREST, getGroupsChats);
 
 router.post(
   "/file-upload/:fileType",
-  uploadLocation.single("upload-this-file"),
+  uploadLocation.single("whatsapp-clone-message-file"),
   handleFileUpload
 );
+
+router.get("/resources/:fileType/:key", handleGetResource);
+
+// router.get("/resources/server/get/:key", handleGetResourceFromServer);
 
 module.exports = router;

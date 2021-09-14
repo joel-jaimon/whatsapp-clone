@@ -65,10 +65,9 @@ export const ChatContainerBody = connect(
         const _classname = owner ? s.RightWrap : s.LeftWrap;
         const _side = owner ? "right" : "left";
         return (
-          <div className={_classname}>
+          <div key={chatData._id} className={_classname}>
             <Message
               _side={_side}
-              key={chatData._id}
               data={chatData}
               extraParam={{
                 owner,

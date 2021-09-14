@@ -11,11 +11,7 @@ import { createSocketMiddleware } from "./middlewares/socketMiddleware";
 
 const sagaMiddleware = createSagaMiddleware();
 const socketMiddleware = createSocketMiddleware();
-const middleware = [
-  // logger,
-  socketMiddleware,
-  sagaMiddleware,
-] as const;
+const middleware = [logger, socketMiddleware, sagaMiddleware] as const;
 
 const store = configureStore({
   reducer: combinedReducers,
