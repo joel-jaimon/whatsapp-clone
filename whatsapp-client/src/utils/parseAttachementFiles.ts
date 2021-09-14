@@ -38,30 +38,30 @@ const _videoInfo = (item: File) => {
       .drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
 
     // convert image to blob -> then to file -> then to compressor
-    canvas.toBlob(async (blob) => {
+    canvas.toBlob((blob) => {
       //@ts-ignore
       const thumnailFile = new File([blob], "image.png");
-      const thumbnail = await compressImageToMax(thumnailFile);
-
-      video.onloadedmetadata = () => {
-        return resolve({
-          extraParam: {
-            duration: Math.floor(video.duration),
-            url: video.src,
-            thumbnail,
-            orientation:
-              // get natural orientation for preview usage
-              video.videoHeight / video.videoWidth >= 1
-                ? "potrait"
-                : "landscape",
-            size: bytesToSize(item.size),
-          },
-          clientparams: {
-            loading: true,
-            tempId: uuidv4(),
-          },
-        });
-      };
+      compressImageToMax(thumnailFile).then((thumbnail: string) => {
+        video.onloadedmetadata = () => {
+          return resolve({
+            extraParam: {
+              duration: Math.floor(video.duration),
+              url: video.src,
+              thumbnail,
+              orientation:
+                // get natural orientation for preview usage
+                video.videoHeight / video.videoWidth >= 1
+                  ? "potrait"
+                  : "landscape",
+              size: bytesToSize(item.size),
+            },
+            clientparams: {
+              loading: true,
+              tempId: uuidv4(),
+            },
+          });
+        };
+      });
     });
   });
 };

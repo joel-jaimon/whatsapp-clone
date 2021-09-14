@@ -146,7 +146,12 @@ export const PreviewFooter = connect(
             );
           })}
           <div className={s.addFileButton}>
-            <input multiple={true} onChange={handleFileAddition} type="file" />
+            <input
+              accept=".docx, .doc, .pdf, .zip, .rar, .mp4, .mp3, .png"
+              multiple={false}
+              onChange={handleFileAddition}
+              type="file"
+            />
             <p>
               <AddIcon />
             </p>

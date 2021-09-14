@@ -134,7 +134,7 @@ export const ChatContainerFooter = connect(
         <input
           onChange={handleAttachments}
           type="file"
-          multiple={true}
+          multiple={false}
           accept=".docx, .doc, .pdf, .zip, .rar"
         />
       </DocumentIcon>,
@@ -143,7 +143,7 @@ export const ChatContainerFooter = connect(
         <input
           onChange={handleAttachments}
           type="file"
-          multiple={true}
+          multiple={false}
           accept="video/mp4"
         />
       </VideoCallIcon>,
