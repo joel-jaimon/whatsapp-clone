@@ -277,6 +277,21 @@
   padding: 2px;
   cursor: pointer;
   border-radius: 5px;
+  ._A {
+    display: flex;
+    position: absolute;
+    z-index: 0;
+    align-items: center;
+    bottom: 1px;
+    right: 1px;
+    small {
+      font-size: 9px;
+    }
+    svg {
+      height: 15px;
+    }
+  }
+
   .imgPotrait {
     height: 250px;
     width: 180px;
