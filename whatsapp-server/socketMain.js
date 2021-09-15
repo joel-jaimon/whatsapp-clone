@@ -52,7 +52,6 @@ const socketMain = async (io, socket) => {
     // Signin success state
     socket.emit("signInSuccess", {
       objectId: _id,
-      uid: userPayload.uid,
       displayName: userPayload.displayName,
       email: userPayload.email,
       avatar: userPayload.avatar,
@@ -81,7 +80,6 @@ const socketMain = async (io, socket) => {
     // Update logged user state to others
     socket.broadcast.emit("updateTotalUsers", {
       objectId: userPayload._id,
-      uid: userPayload.uid,
       displayName: userPayload.displayName,
       email: userPayload.email,
       avatar: userPayload.avatar,

@@ -5,6 +5,9 @@ const {
   createAccessToken,
   createRefreshToken,
 } = require("../../utils/handleTokens");
+
+const axios = require("axios");
+
 const verify = require("jsonwebtoken/verify");
 const { ObjectId } = require("bson");
 
@@ -89,13 +92,18 @@ const googlelogin = async (req, res) => {
         accessToken: accessToken,
       });
     } else {
+      const image = await axios.get(picture, { responseType: "arraybuffer" });
+      const raw = Buffer.from(image.data).toString("base64");
+      const base64Image =
+        "data:" + image.headers["content-type"] + ";base64," + raw;
+
       const userUid = uuidv4();
       const { _id } = await db.collection("googleAuthUsers").insertOne({
         uid: userUid,
         displayName: name,
         authType: "google",
         email: email,
-        avatar: picture,
+        avatar: base64Image,
         about: "Trying this clone...",
         createdOn: Date.now(),
       });

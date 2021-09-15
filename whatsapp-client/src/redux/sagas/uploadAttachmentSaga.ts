@@ -1,5 +1,8 @@
 import { takeLatest, put, call } from "@redux-saga/core/effects";
-import { uploadAttachments } from "../reducers/attachmentModal";
+import {
+  resetFileAttachmentModal,
+  uploadAttachments,
+} from "../reducers/attachmentModal";
 import { sendFileInit, updateSentFileUrl } from "../reducers/chat";
 import { getActiveSocket } from "../sockets/socketConnection";
 import store from "../store";
@@ -73,8 +76,8 @@ const sendInitialMessages = (data: any) => {
 
 export function* initFileUpload() {
   yield takeLatest(uploadAttachments.type, function* (action: any) {
+    yield put(resetFileAttachmentModal(null));
     yield call(sendInitialMessages, action.payload);
-    yield console.log("Voila");
     //@ts-ignore
     yield call(uploadFile, action.payload.files, action.payload.msgInfo);
   });

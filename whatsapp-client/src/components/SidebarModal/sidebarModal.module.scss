@@ -24,6 +24,8 @@
     height: 100%;
     width: 100%;
     .userImage {
+      display: flex;
+      justify-content: center;
       img {
         height: 170px;
         width: 170px;

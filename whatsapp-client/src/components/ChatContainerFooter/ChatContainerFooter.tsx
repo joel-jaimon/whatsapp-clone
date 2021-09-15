@@ -108,6 +108,8 @@ export const ChatContainerFooter = connect(
         refId: activeChat.chatInfo._id,
         timestamp: Date.now(),
       });
+      // @ts-ignore
+      inputRef.current.innerText = "";
     };
 
     const handleAttachments = async (e: any) => {
