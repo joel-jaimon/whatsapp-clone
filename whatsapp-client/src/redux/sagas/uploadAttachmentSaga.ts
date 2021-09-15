@@ -1,26 +1,26 @@
 import { takeLatest, put, call } from "@redux-saga/core/effects";
 import { uploadAttachments } from "../reducers/attachmentModal";
-import { sendFileInit } from "../reducers/chat";
+import { sendFileInit, updateSentFileUrl } from "../reducers/chat";
+import { getActiveSocket } from "../sockets/socketConnection";
 import store from "../store";
 
 const allowedTypes = ["image", "video", "audio"];
 
-export const uploadFile = async (filesArr: any[]) => {
+export const uploadFile = async (attachmentArr: any[], msginfo: any) => {
   return await Promise.all(
-    filesArr.map(async (_data: any) => {
+    attachmentArr.map(async (_data: any) => {
       const formData = new FormData();
-      formData.append("whatsapp-clone-message-file", _data);
+      formData.append("whatsapp-clone-message-file", _data[0]);
 
-      const fileType = _data.type.split("/")[0];
-      console.log(_data);
+      const fileType = _data[0].type.split("/")[0];
+      const msgType = ["image", "video"].includes(fileType)
+        ? fileType
+        : fileType === "audio"
+        ? "voice"
+        : "document";
+
       const data = await fetch(
-        `${process.env.REACT_APP_SERVER_URL}/file-upload/${
-          allowedTypes.includes(fileType)
-            ? fileType === "audio"
-              ? "voice"
-              : fileType
-            : "document"
-        }`,
+        `${process.env.REACT_APP_SERVER_URL}/file-upload/${msgType}`,
         {
           method: "POST",
           credentials: "include",
@@ -28,8 +28,24 @@ export const uploadFile = async (filesArr: any[]) => {
           body: formData,
         }
       );
-      const response = await data.json();
-      return response;
+      const { path } = await data.json();
+      store.dispatch(
+        updateSentFileUrl({
+          refId: msginfo.refId,
+          updatedUrl: `${process.env.REACT_APP_SERVER_URL}/${path}`,
+          tempId: _data[1].clientParams.tempId,
+        })
+      );
+
+      getActiveSocket().emit("iTextMessage", {
+        tempId: _data[1].clientParams.tempId,
+        ...msginfo,
+        msgType,
+        msgParams: {
+          ..._data[1].extraParam,
+          url: `${process.env.REACT_APP_SERVER_URL}/${path}`,
+        },
+      });
     })
   );
 };
@@ -42,18 +58,14 @@ const sendInitialMessages = (data: any) => {
       : fileType === "audio"
       ? "voice"
       : "document";
-    console.log({
-      ...data.msgInfo,
-      msgType,
-      msgParams: filedata[1].extraParam,
-      clientParams: filedata[1].clientParams,
-    });
+
     store.dispatch(
       sendFileInit({
+        tempId: filedata[1].clientParams.tempId,
         ...data.msgInfo,
+        timestamp: Date.now(),
         msgType,
         msgParams: filedata[1].extraParam,
-        clientParams: filedata[1].clientParams,
       })
     );
   });
@@ -64,7 +76,6 @@ export function* initFileUpload() {
     yield call(sendInitialMessages, action.payload);
     yield console.log("Voila");
     //@ts-ignore
-    // const res = yield call(uploadFile, action.payload.files);
-    // console.log(res);
+    yield call(uploadFile, action.payload.files, action.payload.msgInfo);
   });
 }

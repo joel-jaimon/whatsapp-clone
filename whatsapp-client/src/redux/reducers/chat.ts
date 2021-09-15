@@ -13,6 +13,7 @@ export const chatSlice = createSlice({
   name: "chatReducer",
   initialState,
   reducers: {
+    // attached to initChatLoad saga
     getInitialChats: (state) => {
       state.loading = true;
     },
@@ -22,7 +23,6 @@ export const chatSlice = createSlice({
       state.chat = action.payload;
     },
 
-    // Handle auth users
     setTotalAuthUsers: (state, action: PayloadAction<any>) => {
       action.payload.forEach((user: any) => {
         state.authUsers[user._id] = {
@@ -58,6 +58,7 @@ export const chatSlice = createSlice({
       state.activeChat = action.payload;
     },
 
+    // attached to initSendMsgStart saga
     sendMsgStart: (state, action: PayloadAction<any>) => {
       state.chat[action.payload.refId].messages.push({
         ...action.payload,
@@ -85,7 +86,16 @@ export const chatSlice = createSlice({
       });
     },
 
-    sendFileSuccessful: (state, action: PayloadAction<any>) => {},
+    updateSentFileUrl: (state, action: PayloadAction<any>) => {
+      const refArrIndex = state.chat[action.payload.refId].messages.findIndex(
+        (e: any) => {
+          return e.tempId === action.payload.tempId;
+        }
+      );
+
+      state.chat[action.payload.refId].messages[refArrIndex].msgParams.url =
+        action.payload.updatedUrl;
+    },
 
     recieveMessage: (state, action: PayloadAction<any>) => {
       state.chat[action.payload.refId].messages.push({
@@ -137,5 +147,6 @@ export const {
   sendMsgStart,
   recieveMessage,
   sendFileInit,
+  updateSentFileUrl,
 } = chatSlice.actions;
 export default chatSlice;

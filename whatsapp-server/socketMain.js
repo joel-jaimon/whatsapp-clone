@@ -117,7 +117,7 @@ const socketMain = async (io, socket) => {
           for (let i = 0; i < participants.length; i++) {
             if (participants[i].toString() != sentBy.toString()) {
               const activeFriends = getActiveUserByObjectId(participants[i]);
-              if (activeFriends.socketId) {
+              if (activeFriends?.socketId) {
                 io.to(activeFriends.socketId).emit("recieveMessage", {
                   _id: data._id,
                   type,
