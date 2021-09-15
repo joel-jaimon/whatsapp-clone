@@ -1,4 +1,3 @@
-// uploads a file to s3
 const { PutObjectCommand, GetObjectCommand } = require("@aws-sdk/client-s3");
 const fs = require("fs");
 const { s3 } = require("../controllers/s3/s3");
@@ -28,6 +27,7 @@ const getFileStream = async (fileKey) => {
 
   const getCommand = new GetObjectCommand(downloadParams);
   const { Body } = await s3.send(getCommand);
+  console.log(Body.headers);
   return Body;
 };
 
