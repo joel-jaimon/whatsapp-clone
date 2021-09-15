@@ -6,21 +6,18 @@ import MicIcon from "@material-ui/icons/Mic";
 import { formatTime } from "../../../../utils/formatTime";
 import { getDuration } from "../../../../utils/parseDuration";
 
-export const Voice = ({ msgPosition, timestamp }: any) => {
-  const [duration, setDuration] = useState<any>(null);
+export const Voice = ({
+  msgPosition,
+  timestamp,
+  msgParams,
+  extraParam,
+}: any) => {
   const [audioState, setAudioState] = useState(false);
   const [currentTime, setCurrentTime] = useState<any>(0);
 
   const audioRef: any = useRef(null);
   const animationRef: any = useRef(null);
   const progressbarRef: any = useRef(null);
-
-  const loadDuration = ({ duration }: any) => {
-    if (duration) {
-      setDuration(Math.floor(duration));
-      progressbarRef.current.max = Math.floor(duration);
-    }
-  };
 
   const handleAudioState = () => {
     if (audioState) {
@@ -48,24 +45,23 @@ export const Voice = ({ msgPosition, timestamp }: any) => {
   const changePlayerCurrentTime = () => {
     progressbarRef.current.style.setProperty(
       "--seek-before-width",
-      `${(progressbarRef.current.value / duration) * 100}%`
+      `${(progressbarRef.current.value / msgParams.duration) * 100}%`
     );
     setCurrentTime(progressbarRef.current.value);
+  };
+
+  const handleEnd = () => {
+    setAudioState(false);
+    cancelAnimationFrame(animationRef.current);
   };
 
   return (
     <span className={msgPosition === "right" ? s.voiceRight : s.voiceLeft}>
       <div className={s.voice}>
         <div className={s.userImg}>
-          <img src="https://i.pravatar.cc/150?img=19" alt="user-info" />
+          <img src={extraParam.byAvatar} alt="user-info" />
           <MicIcon />
-          <audio
-            ref={audioRef}
-            onDurationChange={(e) => loadDuration(e.target)}
-            src={
-              "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-            }
-          />
+          <audio ref={audioRef} src={msgParams.url} onEnded={handleEnd} />
         </div>
 
         <div className={s.audioInfo}>
@@ -78,10 +74,12 @@ export const Voice = ({ msgPosition, timestamp }: any) => {
               defaultValue="0"
               ref={progressbarRef}
               type="range"
+              max={msgParams.duration}
+              min={0}
               className={s.progressBar}
             />
             <div className={s.audioTrack}>
-              <small>{duration ? getDuration(duration) : null}</small>
+              <small>{getDuration(msgParams.duration)}</small>
               <small>{currentTime ? getDuration(currentTime) : null}</small>
               <small>{formatTime(timestamp)}</small>
             </div>
