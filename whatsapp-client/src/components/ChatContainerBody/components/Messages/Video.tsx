@@ -20,6 +20,7 @@ import {
   setGlobalMsgInFocus,
 } from "../../../../redux/reducers/globalModal";
 import { getDuration } from "../../../../utils/parseDuration";
+import { SeenStats } from "../../../SeenStats/SeenStats";
 
 const passStateToProps = ({ movableModal }: any) => ({
   movableModal: movableModal.modal,
@@ -134,7 +135,7 @@ export const Video = connect(
                   </div>
                   <div className={s._A}>
                     <small>{formatTime(timestamp)}</small>
-                    <CheckIcon />
+                    <SeenStats type={2} />
                   </div>
                 </div>
               </div>

@@ -5,6 +5,7 @@ import PauseIcon from "@material-ui/icons/Pause";
 import MicIcon from "@material-ui/icons/Mic";
 import { formatTime } from "../../../../utils/formatTime";
 import { getDuration } from "../../../../utils/parseDuration";
+import { SeenStats } from "../../../SeenStats/SeenStats";
 
 export const Voice = ({
   msgPosition,
@@ -81,7 +82,10 @@ export const Voice = ({
             <div className={s.audioTrack}>
               <small>{getDuration(msgParams.duration)}</small>
               <small>{currentTime ? getDuration(currentTime) : null}</small>
-              <small>{formatTime(timestamp)}</small>
+              <div className={s._A}>
+                <small>{formatTime(timestamp)}</small>
+                <SeenStats type={2} />
+              </div>
             </div>
           </div>
         </div>

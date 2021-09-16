@@ -2,6 +2,7 @@ import s from "./messages.module.scss";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { useState } from "react";
 import { formatTime } from "../../../../utils/formatTime";
+import { SeenStats } from "../../../SeenStats/SeenStats";
 
 export const File = ({
   msgPosition,
@@ -64,9 +65,9 @@ export const File = ({
             <small>{fileName.split(".")[1].toUpperCase()}</small>
             <small>{fileSize}</small>
           </div>
-          <div>
+          <div className={s._A}>
             <small>{formatTime(timestamp)}</small>
-            <small></small>
+            <SeenStats type={2} />
           </div>
         </div>
       </div>

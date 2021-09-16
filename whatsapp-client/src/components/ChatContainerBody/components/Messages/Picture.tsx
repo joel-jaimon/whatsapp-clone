@@ -11,6 +11,7 @@ import {
   setGlobalMsgInFocus,
 } from "../../../../redux/reducers/globalModal";
 import { formatTime } from "../../../../utils/formatTime";
+import { SeenStats } from "../../../SeenStats/SeenStats";
 
 const mapDispatchToProps = (dispatch: any) => ({
   setGlobalModal: (modal: any) => dispatch(setGlobalModal(modal)),
@@ -125,7 +126,7 @@ export const Picture = connect(
             />
             <div className={s._A}>
               <small>{formatTime(timestamp)}</small>
-              <CheckIcon />
+              <SeenStats type={2} />
             </div>
           </div>
         </div>

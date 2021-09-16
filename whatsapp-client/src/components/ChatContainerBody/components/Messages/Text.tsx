@@ -1,4 +1,5 @@
 import { formatTime } from "../../../../utils/formatTime";
+import { SeenStats } from "../../../SeenStats/SeenStats";
 import s from "./messages.module.scss";
 
 export const Text = ({
@@ -28,9 +29,9 @@ export const Text = ({
           }}
         />
         <div className={s.msgTiming}>
-          <div>
+          <div className={s._A}>
             <small>{formatTime(timestamp)}</small>
-            <small></small>
+            <SeenStats type={2} />
           </div>
         </div>
       </div>

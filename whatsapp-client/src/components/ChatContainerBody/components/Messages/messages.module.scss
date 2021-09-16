@@ -16,6 +16,16 @@
     font-size: 9px;
     color: rgb(211, 211, 211);
   }
+  ._A {
+    display: flex;
+    margin-right: -5px;
+    small {
+      font-size: 9px;
+    }
+    svg {
+      height: 15px;
+    }
+  }
 }
 .msgTiming {
   //   padding: 5px;
@@ -90,7 +100,16 @@
   padding: 2px 2px 2px 10px;
   border-radius: 5px;
   width: 225px;
-
+  ._A {
+    display: flex;
+    margin-right: -8px;
+    small {
+      font-size: 9px;
+    }
+    svg {
+      height: 15px;
+    }
+  }
   .userImg {
     display: flex;
     align-items: center;
@@ -234,6 +253,17 @@
   padding: 2px;
   width: 240.5px;
   border-radius: 5px;
+
+  ._A {
+    display: flex;
+    margin-right: -5px;
+    small {
+      font-size: 9px;
+    }
+    svg {
+      height: 15px;
+    }
+  }
   .fileControl {
     padding: 10px 15px 10px 15px;
     border-radius: 5px;
@@ -283,7 +313,7 @@
     z-index: 0;
     align-items: center;
     bottom: 1px;
-    right: 1px;
+    right: -1px;
     small {
       font-size: 9px;
     }
