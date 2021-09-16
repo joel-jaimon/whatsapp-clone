@@ -50,7 +50,10 @@ export const ChatContainerHead = connect(
 
     const otherFriend =
       activeChat.chatInfo.type === "chat"
-        ? activeChat.chatInfo.participants.find((e: string) => e !== myObjId)
+        ? activeChat.chatInfo.participants.find((e: any) => {
+            console.log(e);
+            return e.objectId !== myObjId;
+          })
         : null;
 
     return (
@@ -67,7 +70,7 @@ export const ChatContainerHead = connect(
             <img
               src={
                 otherFriend
-                  ? allUsers[otherFriend]?.avatar
+                  ? allUsers[otherFriend.objectId]?.avatar
                   : activeChat?.chatInfo.avatar
               }
               alt="chat-avatar"
@@ -76,16 +79,16 @@ export const ChatContainerHead = connect(
           <div className={s.roomInfo}>
             <p>
               {otherFriend
-                ? allUsers[otherFriend]?.displayName
+                ? allUsers[otherFriend.objectId]?.displayName
                 : activeChat?.chatInfo.name}
             </p>
             <small>
               {otherFriend
-                ? allUsers[otherFriend]?.status
+                ? allUsers[otherFriend.objectId]?.status
                   ? "Online"
-                  : `${formatTime(allUsers[otherFriend]?.lastSeen)}, ${new Date(
-                      allUsers[otherFriend]?.lastSeen
-                    )
+                  : `${formatTime(
+                      allUsers[otherFriend.objectId]?.lastSeen
+                    )}, ${new Date(allUsers[otherFriend.objectId]?.lastSeen)
                       .toString()
                       .slice(0, 16)}`
                 : "Info"}

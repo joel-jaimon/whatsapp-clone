@@ -9,7 +9,9 @@ const getGroupsChats = async (req, res) => {
       .collection("chats")
       .find({
         participants: {
-          $eq: ObjectID(req.payload._id),
+          $elemMatch: {
+            objectId: ObjectID(req.payload._id),
+          },
         },
       })
       .toArray();
@@ -17,7 +19,9 @@ const getGroupsChats = async (req, res) => {
       .collection("groups")
       .find({
         participants: {
-          $eq: ObjectID(req.payload._id),
+          $elemMatch: {
+            objectId: ObjectID(req.payload._id),
+          },
         },
       })
       .toArray();

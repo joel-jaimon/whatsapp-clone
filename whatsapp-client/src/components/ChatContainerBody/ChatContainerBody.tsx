@@ -64,6 +64,24 @@ export const ChatContainerBody = connect(
         const owner = chatData.sentBy === authState.objectId;
         const _classname = owner ? s.RightWrap : s.LeftWrap;
         const _side = owner ? "right" : "left";
+
+        const getSeenStatus = () => {
+          let seen = 2;
+          activeChat.chatInfo.participants.forEach((e: any) => {
+            if (e.objectId !== authState.objectId) {
+              seen = Math.min(
+                seen,
+                e.lastViewed > chatData.timestamp
+                  ? 2
+                  : chatData.timestamp > authUsers[e.objectId].lastSeen
+                  ? 0
+                  : 1
+              );
+            }
+          });
+          return seen;
+        };
+
         return (
           <div key={chatData._id} className={_classname}>
             <Message
@@ -81,6 +99,7 @@ export const ChatContainerBody = connect(
                   i > 0
                     ? activeChat?.messages[i - 1].sentBy === chatData.sentBy
                     : false,
+                seenStatus: getSeenStatus(),
               }}
             />
           </div>

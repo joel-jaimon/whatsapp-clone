@@ -49,8 +49,10 @@ export const chatSlice = createSlice({
       state.authUsers[action.payload].status = true;
     },
     updateInactiveAuthUser: (state, action: PayloadAction<any>) => {
-      state.authUsers[action.payload._id].status = false;
-      state.authUsers[action.payload._id].lastSeen = action.payload.lastSeen;
+      try {
+        state.authUsers[action.payload._id].status = false;
+        state.authUsers[action.payload._id].lastSeen = action.payload.lastSeen;
+      } catch {}
     },
 
     // handle active chat

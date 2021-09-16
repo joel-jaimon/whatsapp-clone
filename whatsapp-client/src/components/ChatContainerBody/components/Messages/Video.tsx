@@ -42,6 +42,7 @@ export const Video = connect(
     msgParams,
     timestamp,
     setGlobalModal,
+    extraParam,
     setMovableModal,
     setGlobalMsgInFocus,
   }: any) => {
@@ -133,10 +134,14 @@ export const Video = connect(
                     <VideocamIcon />
                     <small>{getDuration(duration)}</small>
                   </div>
-                  <div className={s._A}>
+                  {extraParam.owner ? (
+                    <div className={s._A}>
+                      <small>{formatTime(timestamp)}</small>
+                      <SeenStats type={extraParam.seenStatus} />{" "}
+                    </div>
+                  ) : (
                     <small>{formatTime(timestamp)}</small>
-                    <SeenStats type={2} />
-                  </div>
+                  )}
                 </div>
               </div>
               <img

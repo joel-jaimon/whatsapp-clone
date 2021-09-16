@@ -24,8 +24,12 @@ export const UserInfoModal = connect(
 )(({ activeChat, setReverseAnimation, myObjId, allUsers }: any) => {
   const otherFriend =
     activeChat.chatInfo.type === "chat"
-      ? activeChat.chatInfo.participants.find((e: string) => e !== myObjId)
+      ? activeChat.chatInfo.participants.find((e: any) => {
+          console.log(e);
+          return e.objectId !== myObjId;
+        })
       : null;
+
   return (
     <div className={s.userInfoModal}>
       <div className={s.modalHead}>
@@ -44,9 +48,9 @@ export const UserInfoModal = connect(
         <p>{otherFriend ? "User Info" : "Group info"}</p>
       </div>
       <div className={s.infoModalBody}>
-        <AvatarSection name="Notes" otherFriend={otherFriend} />
+        <AvatarSection name="Notes" otherFriend={otherFriend?.objectId} />
         <DescSection
-          userInfo={allUsers[otherFriend]}
+          userInfo={allUsers[otherFriend?.objectId]}
           desc={activeChat?.chatInfo?.desc}
         />
         <MediaSection />

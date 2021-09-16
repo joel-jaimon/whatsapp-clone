@@ -54,7 +54,7 @@ export const SidebarChats = connect(
 
     const otherFriend =
       data.chatInfo.type === "chat"
-        ? data.chatInfo.participants.find((e: string) => e !== myObjId)
+        ? data.chatInfo.participants.find((e: any) => e.objectId !== myObjId)
         : null;
 
     return (
@@ -80,7 +80,7 @@ export const SidebarChats = connect(
             <div
               className={`
                         ${s.activeStatus} ${
-                allUsers[otherFriend].status
+                allUsers[otherFriend.objectId].status
                   ? s.activeIndicater
                   : s.inactiveIndicater
               }`}
@@ -89,7 +89,7 @@ export const SidebarChats = connect(
           <Avatar
             src={
               otherFriend
-                ? allUsers[otherFriend]?.avatar
+                ? allUsers[otherFriend.objectId]?.avatar
                 : data.chatInfo?.avatar
             }
             alt="sidebar-chat-avatar"
@@ -100,7 +100,7 @@ export const SidebarChats = connect(
           <div>
             <p>
               {otherFriend
-                ? allUsers[otherFriend]?.displayName
+                ? allUsers[otherFriend.objectId]?.displayName
                 : data.chatInfo?.name}
             </p>
             {<p className={s.time}>Thursday</p>}
@@ -108,7 +108,7 @@ export const SidebarChats = connect(
           <div>
             <MsgPreview
               {...data.messages[data.messages.length - 1]}
-              otherUser={allUsers[otherFriend]?.displayName}
+              otherUser={allUsers[otherFriend?.objectId]?.displayName}
             />
             {expandMore ? (
               <ExpandMoreIcon

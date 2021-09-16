@@ -82,10 +82,15 @@ export const Voice = ({
             <div className={s.audioTrack}>
               <small>{getDuration(msgParams.duration)}</small>
               <small>{currentTime ? getDuration(currentTime) : null}</small>
-              <div className={s._A}>
+
+              {extraParam.owner ? (
+                <div className={s._A}>
+                  <small>{formatTime(timestamp)}</small>
+                  <SeenStats type={extraParam.seenStatus} />{" "}
+                </div>
+              ) : (
                 <small>{formatTime(timestamp)}</small>
-                <SeenStats type={2} />
-              </div>
+              )}
             </div>
           </div>
         </div>

@@ -65,10 +65,14 @@ export const File = ({
             <small>{fileName.split(".")[1].toUpperCase()}</small>
             <small>{fileSize}</small>
           </div>
-          <div className={s._A}>
+          {extraParam.owner ? (
+            <div className={s._A}>
+              <small>{formatTime(timestamp)}</small>
+              <SeenStats type={extraParam.seenStatus} />{" "}
+            </div>
+          ) : (
             <small>{formatTime(timestamp)}</small>
-            <SeenStats type={2} />
-          </div>
+          )}
         </div>
       </div>
     </span>

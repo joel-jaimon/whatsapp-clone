@@ -29,10 +29,14 @@ export const Text = ({
           }}
         />
         <div className={s.msgTiming}>
-          <div className={s._A}>
+          {extraParam.owner ? (
+            <div className={s._A}>
+              <small>{formatTime(timestamp)}</small>
+              <SeenStats type={extraParam.seenStatus} />{" "}
+            </div>
+          ) : (
             <small>{formatTime(timestamp)}</small>
-            <SeenStats type={2} />
-          </div>
+          )}
         </div>
       </div>
     </span>

@@ -30,6 +30,7 @@ export const Picture = connect(
     setGlobalMsgInFocus,
     stillSending,
     timestamp,
+    extraParam,
   }: any) => {
     const { thumbnail, url, size, orientation } = msgParams;
     const [loading, setLoading] = useState<boolean>(true);
@@ -125,8 +126,12 @@ export const Picture = connect(
               alt="file-thumbnail"
             />
             <div className={s._A}>
-              <small>{formatTime(timestamp)}</small>
-              <SeenStats type={2} />
+              <small style={{ marginRight: extraParam.owner ? 0 : 5 }}>
+                {formatTime(timestamp)}
+              </small>
+              {extraParam.owner ? (
+                <SeenStats type={extraParam.seenStatus} />
+              ) : null}
             </div>
           </div>
         </div>
