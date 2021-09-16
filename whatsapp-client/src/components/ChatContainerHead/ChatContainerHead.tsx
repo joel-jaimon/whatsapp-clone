@@ -86,7 +86,7 @@ export const ChatContainerHead = connect(
               {otherFriend
                 ? allUsers[otherFriend.objectId]?.status
                   ? "Online"
-                  : `${formatTime(
+                  : `Last seen at ${formatTime(
                       allUsers[otherFriend.objectId]?.lastSeen
                     )}, ${new Date(allUsers[otherFriend.objectId]?.lastSeen)
                       .toString()

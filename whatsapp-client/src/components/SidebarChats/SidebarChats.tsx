@@ -9,7 +9,7 @@ import { setActiveChat } from "../../redux/reducers/chat";
 import { setChatContainerModal } from "../../redux/reducers/chatContainerModal";
 
 const passStateToProps = ({ chatState, authState }: any) => ({
-  activeChat: chatState.chat[chatState.activeChat],
+  activeChat: chatState.chat[chatState?.activeChat],
   allUsers: chatState.authUsers,
   myObjId: authState.auth.objectId,
 });
@@ -31,6 +31,7 @@ export const SidebarChats = connect(
     setChatModal,
     allUsers,
     myObjId,
+    activeChat,
   }: any) => {
     const handleDropMenuClicks = (e: any, type: string) => {
       e.stopPropagation();
@@ -47,7 +48,14 @@ export const SidebarChats = connect(
     const handleActiveChat = () => {
       setDropMenu(false);
       setChatModal(null);
-      setActiveChat(data.chatInfo._id);
+
+      setActiveChat({
+        prevActiveChat: {
+          prevActiveChatId: activeChat?.chatInfo._id,
+          prevActiveChatType: activeChat?.chatInfo.type,
+        },
+        switchTo: data.chatInfo._id,
+      });
     };
 
     const [expandMore, setExpandMore] = useState(false);

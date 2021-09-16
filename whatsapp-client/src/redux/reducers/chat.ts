@@ -57,7 +57,7 @@ export const chatSlice = createSlice({
 
     // handle active chat
     setActiveChat: (state, action: PayloadAction<any>) => {
-      state.activeChat = action.payload;
+      state.activeChat = action.payload.switchTo;
     },
 
     // attached to initSendMsgStart saga
@@ -109,30 +109,23 @@ export const chatSlice = createSlice({
       state.activeChat = action.payload;
     },
 
-    // // Handle guest users
-    // setTotalGuestUsers: (state, action: PayloadAction<any>) => {
-    //   action.payload.forEach((user: any) => {
-    //     state.authUsers[user._id] = {
-    //       objectId: user._id,
-    //       uid: user.uid,
-    //       displayName: user.displayName,
-    //       email: user.email,
-    //       avatar: user.avatar,
-    //       createdOn: user.createdOn,
-    //       about: user.about,
-    //       status: user.status,
-    //     };
-    //   });
-    // },
-    // updateTotalGuestUsers: (state, action: PayloadAction<any>) => {
-    //   state.authUsers[action.payload.objectId] = action.payload;
-    // },
-    // updateActiveGuestUser: (state, action: PayloadAction<any>) => {
-    //   state.authUsers[action.payload].status = true;
-    // },
-    // updateInactiveGuestUser: (state, action: PayloadAction<any>) => {
-    //   state.authUsers[action.payload].status = false;
-    // },
+    updateLastViewedChatsTimestampOfOtherUser: (
+      state,
+      action: PayloadAction<any>
+    ) => {
+      // const {
+      //   prevActiveChat: { prevActiveChatId, lastViewed },
+      //   userObjectId,
+      // } = action.payload;
+      // state.chat[prevActiveChatId].chatInfo.participants.find(
+      //   (user: any) => user.objectId === userObjectId
+      // ).lastViewed = lastViewed;
+    },
+
+    updateOtherUsersActiveChat: (state, action: PayloadAction<any>) => {
+      // state.authUsers[action.payload.userObjectId].currentlyOn =
+      //   action.payload.currentlyOn;
+    },
   },
 });
 
@@ -150,5 +143,7 @@ export const {
   recieveMessage,
   sendFileInit,
   updateSentFileUrl,
+  updateLastViewedChatsTimestampOfOtherUser,
+  updateOtherUsersActiveChat,
 } = chatSlice.actions;
 export default chatSlice;

@@ -143,6 +143,66 @@ const socketMain = async (io, socket) => {
     // Handle online status
     socket.broadcast.emit("online", _id);
 
+    // // Handle chat switches
+    // socket.on("switchActiveChat", async (payload) => {
+    //   // Second time switching a chat
+    //   // Update prev chats info
+    //   console.log(payload);
+    //   if (payload?.prevActiveChat.prevActiveChatType) {
+    //     const { prevActiveChatId, prevActiveChatType } = payload.prevActiveChat;
+    //     const time = Date.now();
+
+    //     // Update last chats info
+    //     await db.collection(`${prevActiveChatType}s`).updateOne(
+    //       {
+    //         "participants.objectId": ObjectID(_id),
+    //       },
+    //       {
+    //         $set: {
+    //           "participants.$.lastViewed": time,
+    //         },
+    //       }
+    //     );
+
+    //     const { participants } = await db
+    //       .collection(`${prevActiveChatType}s`)
+    //       .findOne({
+    //         _id: ObjectId(prevActiveChatId),
+    //       });
+
+    //     for (let i = 0; i < participants.length; i++) {
+    //       if (participants[i].objectId.toString() != _id.toString()) {
+    //         const activeFriends = getActiveUserByObjectId(
+    //           participants[i].objectId
+    //         );
+    //         if (activeFriends?.socketId) {
+    //           // Update others about this
+    //           io.to(activeFriends.socketId).emit("activeChatsSwitched", {
+    //             userObjectId: _id,
+    //             prevActiveChat: {
+    //               prevActiveChatId,
+    //               lastViewed: time,
+    //             },
+    //           });
+    //         }
+    //       }
+    //     }
+    //   }
+
+    //   await db.collection("googleAuthUsers").updateOne(
+    //     { _id: ObjectID(_id) },
+    //     {
+    //       $set: { currentlyOn: payload.switchTo },
+    //     }
+    //   );
+
+    //   // Update others about this
+    //   socket.broadcast.emit("friendCurrentlyOn", {
+    //     userObjectId: _id,
+    //     currentlyOn: payload.switchTo,
+    //   });
+    // });
+
     // Handle disconnect event
     socket.on("disconnect", async () => {
       // timestamp
@@ -155,6 +215,19 @@ const socketMain = async (io, socket) => {
           $set: { lastSeen },
         }
       );
+
+      // await db.collection("googleAuthUsers").updateOne(
+      //   { _id: ObjectID(_id) },
+      //   {
+      //     $set: { currentlyOn: null },
+      //   }
+      // );
+
+      // // Update others about this
+      // socket.broadcast.emit("friendCurrentlyOn", {
+      //   userObjectId: _id,
+      //   currentlyOn: null,
+      // });
 
       // tell others that this user is disconnected
       socket.broadcast.emit("offline", {

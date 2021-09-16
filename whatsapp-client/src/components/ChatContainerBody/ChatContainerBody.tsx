@@ -66,20 +66,21 @@ export const ChatContainerBody = connect(
         const _side = owner ? "right" : "left";
 
         const getSeenStatus = () => {
-          let seen = 2;
-          activeChat.chatInfo.participants.forEach((e: any) => {
-            if (e.objectId !== authState.objectId) {
-              seen = Math.min(
-                seen,
-                e.lastViewed > chatData.timestamp
-                  ? 2
-                  : chatData.timestamp > authUsers[e.objectId].lastSeen
-                  ? 0
-                  : 1
-              );
-            }
-          });
-          return seen;
+          // let seen = 2;
+          // activeChat.chatInfo.participants.forEach((e: any) => {
+          //   if (e.objectId !== authState.objectId) {
+          //     seen = Math.min(
+          //       seen,
+          //       e.lastViewed > chatData.timestamp
+          //         ? 2
+          //         : chatData.timestamp > authUsers[e.objectId].lastSeen
+          //         ? 0
+          //         : 1
+          //     );
+          //   }
+          // });
+          // return seen;
+          return 0;
         };
 
         return (

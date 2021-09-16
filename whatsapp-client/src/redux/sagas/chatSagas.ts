@@ -4,6 +4,7 @@ import {
   getInitialChats,
   onChatsLoadComplete,
   sendMsgStart,
+  setActiveChat,
 } from "../reducers/chat";
 import { getActiveSocket } from "../sockets/socketConnection";
 
@@ -68,5 +69,11 @@ export function* initSendMsgStart() {
       default:
         break;
     }
+  });
+}
+
+export function* activeChatSwitch() {
+  yield takeLatest(setActiveChat.type, function* (action: any) {
+    // yield getActiveSocket().emit("switchActiveChat", action.payload);
   });
 }

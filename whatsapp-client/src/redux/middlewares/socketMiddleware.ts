@@ -6,6 +6,8 @@ import {
   setTotalAuthUsers,
   updateActiveAuthUser,
   updateInactiveAuthUser,
+  updateLastViewedChatsTimestampOfOtherUser,
+  updateOtherUsersActiveChat,
   updateTotalAuthUsers,
 } from "../reducers/chat";
 import { setGlobalModal } from "../reducers/globalModal";
@@ -47,6 +49,16 @@ export const createSocketMiddleware = () => {
       getActiveSocket().on("recieveMessage", (payload: any) => {
         store.dispatch(recieveMessage(payload));
       });
+
+      // // Handle others chat switches
+      // getActiveSocket()?.on("activeChatsSwitched", (payload: any) => {
+      //   store.dispatch(updateLastViewedChatsTimestampOfOtherUser(payload));
+      // });
+
+      // // Handle others active chats
+      // getActiveSocket()?.on("friendCurrentlyOn", (payload: any) => {
+      //   store.dispatch(updateOtherUsersActiveChat(payload));
+      // });
 
       // Socket Disconnected
       getActiveSocket()?.on("multipleSession", (payload: any) => {
