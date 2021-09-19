@@ -9,6 +9,7 @@ export const File = ({
   msgParams,
   timestamp,
   extraParam,
+  stillSending,
 }: any) => {
   const { fileName, fileSize, url } = msgParams;
   const [loading, setLoading] = useState(false);
@@ -68,7 +69,9 @@ export const File = ({
           {extraParam.owner ? (
             <div className={s._A}>
               <small>{formatTime(timestamp)}</small>
-              <SeenStats type={extraParam.seenStatus} />{" "}
+              <SeenStats
+                type={stillSending ? -1 : extraParam.seenStatus}
+              />{" "}
             </div>
           ) : (
             <small>{formatTime(timestamp)}</small>

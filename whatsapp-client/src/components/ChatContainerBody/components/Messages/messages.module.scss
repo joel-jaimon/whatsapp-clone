@@ -115,18 +115,27 @@
     align-items: center;
     margin: 1px 0px 1px 0px;
     position: relative;
+
+    .icon {
+      position: absolute;
+      left: 10px;
+    }
     img {
       height: 50px;
       width: 50px;
       border-radius: 100%;
+      object-fit: cover;
     }
+
     svg {
+      color: var(--seek-before-color);
+    }
+    .micIcon {
       position: absolute;
       top: 30px;
       right: -5px;
       z-index: 1;
       height: 22px;
-      color: var(--seek-before-color);
     }
   }
   .audioInfo {

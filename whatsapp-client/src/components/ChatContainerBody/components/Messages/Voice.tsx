@@ -6,12 +6,14 @@ import MicIcon from "@material-ui/icons/Mic";
 import { formatTime } from "../../../../utils/formatTime";
 import { getDuration } from "../../../../utils/parseDuration";
 import { SeenStats } from "../../../SeenStats/SeenStats";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 export const Voice = ({
   msgPosition,
   timestamp,
   msgParams,
   extraParam,
+  stillSending,
 }: any) => {
   const [audioState, setAudioState] = useState(false);
   const [currentTime, setCurrentTime] = useState<any>(0);
@@ -60,13 +62,15 @@ export const Voice = ({
     <span className={msgPosition === "right" ? s.voiceRight : s.voiceLeft}>
       <div className={s.voice}>
         <div className={s.userImg}>
+          {stillSending && <CircularProgress className={s.icon} size={30} />}
           <img src={extraParam.byAvatar} alt="user-info" />
-          <MicIcon />
+
+          <MicIcon className={s.micIcon} />
           <audio ref={audioRef} src={msgParams.url} onEnded={handleEnd} />
         </div>
 
         <div className={s.audioInfo}>
-          <button onClick={handleAudioState}>
+          <button disabled={stillSending} onClick={handleAudioState}>
             {!audioState ? <PlayArrowIcon /> : <PauseIcon />}
           </button>
           <div>
@@ -75,6 +79,7 @@ export const Voice = ({
               defaultValue="0"
               ref={progressbarRef}
               type="range"
+              disabled={stillSending}
               max={msgParams.duration}
               min={0}
               className={s.progressBar}
@@ -86,7 +91,7 @@ export const Voice = ({
               {extraParam.owner ? (
                 <div className={s._A}>
                   <small>{formatTime(timestamp)}</small>
-                  <SeenStats type={extraParam.seenStatus} />{" "}
+                  <SeenStats type={stillSending ? -1 : extraParam.seenStatus} />
                 </div>
               ) : (
                 <small>{formatTime(timestamp)}</small>

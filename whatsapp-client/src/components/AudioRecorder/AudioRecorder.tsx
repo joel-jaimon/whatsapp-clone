@@ -54,8 +54,7 @@ export const AudioRecorder = connect(
           audioRecorder.current = new MediaRecorder(stream, {
             mimeType: "audio/webm",
           });
-          //@ts-ignore
-          audioRecorder.current.ondataavailable = handleRecordedBlob;
+
           audioRecorder.current.start();
           audioIntervalRef.current = setInterval(() => {
             setDuration((prev) => prev + 1);
@@ -79,11 +78,13 @@ export const AudioRecorder = connect(
       mediaStreamRef.current?.getTracks().forEach((track: MediaStreamTrack) => {
         track.stop();
       });
-      closeOption();
+      closeOption(true);
     };
 
     const sendRecording = async () => {
       clearInterval(audioIntervalRef.current);
+      //@ts-ignore
+      audioRecorder.current.ondataavailable = handleRecordedBlob;
       audioRecorder.current?.stop();
       mediaStreamRef.current?.getTracks().forEach((track: MediaStreamTrack) => {
         track.stop();

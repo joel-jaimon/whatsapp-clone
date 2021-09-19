@@ -7,6 +7,7 @@ export const Text = ({
   timestamp,
   msgParams,
   extraParam,
+  stillSending,
 }: any) => {
   const { text } = msgParams;
   return (
@@ -32,7 +33,9 @@ export const Text = ({
           {extraParam.owner ? (
             <div className={s._A}>
               <small>{formatTime(timestamp)}</small>
-              <SeenStats type={extraParam.seenStatus} />{" "}
+              <SeenStats
+                type={stillSending ? -1 : extraParam.seenStatus}
+              />{" "}
             </div>
           ) : (
             <small>{formatTime(timestamp)}</small>

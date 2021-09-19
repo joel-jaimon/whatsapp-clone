@@ -130,7 +130,7 @@ export const Picture = connect(
                 {formatTime(timestamp)}
               </small>
               {extraParam.owner ? (
-                <SeenStats type={extraParam.seenStatus} />
+                <SeenStats type={stillSending ? -1 : extraParam.seenStatus} />
               ) : null}
             </div>
           </div>

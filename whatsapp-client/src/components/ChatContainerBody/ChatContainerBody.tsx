@@ -90,7 +90,9 @@ export const ChatContainerBody = connect(
               data={chatData}
               extraParam={{
                 owner,
-                byAvatar: authUsers[chatData.sentBy]?.avatar,
+                byAvatar: owner
+                  ? authState.avatar
+                  : authUsers[chatData.sentBy]?.avatar,
                 by: authUsers[chatData.sentBy]?.displayName
                   .split(" ")
                   .slice(0, 2)

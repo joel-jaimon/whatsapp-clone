@@ -45,6 +45,7 @@ export const Video = connect(
     extraParam,
     setMovableModal,
     setGlobalMsgInFocus,
+    stillSending,
   }: any) => {
     const { thumbnail, url, size, duration, orientation } = msgParams;
     const [loading, setLoading] = useState<boolean>(false);
@@ -137,7 +138,9 @@ export const Video = connect(
                   {extraParam.owner ? (
                     <div className={s._A}>
                       <small>{formatTime(timestamp)}</small>
-                      <SeenStats type={extraParam.seenStatus} />{" "}
+                      <SeenStats
+                        type={stillSending ? -1 : extraParam.seenStatus}
+                      />{" "}
                     </div>
                   ) : (
                     <small>{formatTime(timestamp)}</small>
