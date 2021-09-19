@@ -112,6 +112,7 @@ export const PreviewFooter = connect(
           sentBy: authState.objectId,
         },
         files: attachmentModal.files,
+        clientSide: activeChat.chatInfo?.clientSide,
       });
     };
 

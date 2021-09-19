@@ -107,6 +107,7 @@ export const ChatContainerFooter = connect(
         },
         refId: activeChat.chatInfo._id,
         timestamp: Date.now(),
+        clientSide: activeChat.chatInfo.clientSide,
       });
       // @ts-ignore
       inputRef.current.innerText = "";
