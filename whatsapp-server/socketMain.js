@@ -88,6 +88,25 @@ const socketMain = async (io, socket) => {
       lastSeen: userPayload.lastSeen,
     });
 
+    socket.on("updateOthersChats", async (payload) => {
+      const {
+        chatInfo: { participants },
+      } = payload;
+      for (let i = 0; i < participants.length; i++) {
+        if (participants[i].objectId.toString() != _id.toString()) {
+          const activeFriends = getActiveUserByObjectId(
+            participants[i].objectId
+          );
+          if (activeFriends?.socketId) {
+            console.log("Chats updated for ", activeFriends?.objectId);
+            io.to(activeFriends.socketId).emit("updateExistingChats", {
+              ...payload,
+            });
+          }
+        }
+      }
+    });
+
     // handle incoming messages
     socket.on("iTextMessage", async (payload) => {
       console.log(payload);
