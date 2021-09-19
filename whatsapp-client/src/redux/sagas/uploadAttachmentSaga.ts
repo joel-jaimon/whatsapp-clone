@@ -1,9 +1,14 @@
 import { takeLatest, put, call } from "@redux-saga/core/effects";
+import { saveNewChatOnMongoDb } from "../../api/saveNewChatOnMongoDb";
 import {
   resetFileAttachmentModal,
   uploadAttachments,
 } from "../reducers/attachmentModal";
-import { sendFileInit, updateSentFileUrl } from "../reducers/chat";
+import {
+  newChatSuccessfullyCreated,
+  sendFileInit,
+  updateSentFileUrl,
+} from "../reducers/chat";
 import { getActiveSocket } from "../sockets/socketConnection";
 import store from "../store";
 
@@ -77,7 +82,32 @@ const sendInitialMessages = (data: any) => {
 export function* initFileUpload() {
   yield takeLatest(uploadAttachments.type, function* (action: any) {
     yield put(resetFileAttachmentModal(null));
+    // update UI (sending state)
     yield call(sendInitialMessages, action.payload);
+
+    // if chat was just created
+    if (action.payload.clientSide) {
+      //@ts-ignore
+      const socket = yield call(getActiveSocket);
+
+      delete action.payload.clientSide;
+      const v: number = yield call(
+        saveNewChatOnMongoDb,
+        store.getState().chatState.chat[action.payload.msgInfo.refId],
+        "/create-new-chat"
+      );
+      if (v === 200) {
+        yield put(newChatSuccessfullyCreated(action.payload.msgInfo.refId));
+        socket.emit("updateOthersChats", {
+          chatInfo: {
+            ...store.getState().chatState.chat[action.payload.msgInfo.refId]
+              .chatInfo,
+          },
+          messages: [],
+        });
+      }
+    }
+
     //@ts-ignore
     yield call(uploadFile, action.payload.files, action.payload.msgInfo);
   });

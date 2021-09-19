@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import colors from "../../data/colors.json";
+import { ObjectID } from "bson";
 
 const initialState: any = {
   authUsers: {},
@@ -109,6 +110,36 @@ export const chatSlice = createSlice({
       state.activeChat = action.payload;
     },
 
+    // When user starts a new chat
+    createNewChat: (state, action: PayloadAction<any>) => {
+      const assignedId = new ObjectID().toString();
+      state.chat[assignedId] = {
+        chatInfo: {
+          _id: assignedId,
+          ...action.payload,
+          clientSide: true,
+        },
+        messages: [],
+      };
+
+      state.activeChat = assignedId;
+    },
+
+    // When user starts a new chat
+    updateChats: (state, action: PayloadAction<any>) => {
+      state.chat[action.payload.chatInfo._id] = action.payload;
+    },
+
+    // when new chat is successfully created
+    newChatSuccessfullyCreated: (state, action: PayloadAction<any>) => {
+      delete state.chat[action.payload].chatInfo.clientSide;
+    },
+
+    // On failure
+    newChatCreationFailed: (state, action: PayloadAction<any>) => {
+      state.activeChat = action.payload;
+    },
+
     updateLastViewedChatsTimestampOfOtherUser: (
       state,
       action: PayloadAction<any>
@@ -145,5 +176,9 @@ export const {
   updateSentFileUrl,
   updateLastViewedChatsTimestampOfOtherUser,
   updateOtherUsersActiveChat,
+  newChatSuccessfullyCreated,
+  newChatCreationFailed,
+  createNewChat,
+  updateChats,
 } = chatSlice.actions;
 export default chatSlice;

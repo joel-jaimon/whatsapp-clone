@@ -1,12 +1,15 @@
 import { takeLatest, call, put } from "@redux-saga/core/effects";
+import { saveNewChatOnMongoDb } from "../../api/saveNewChatOnMongoDb";
 import { getAccessToken } from "../../utils/accessToken";
 import {
   getInitialChats,
+  newChatSuccessfullyCreated,
   onChatsLoadComplete,
   sendMsgStart,
   setActiveChat,
 } from "../reducers/chat";
 import { getActiveSocket } from "../sockets/socketConnection";
+import store from "../store";
 
 // Logout Saga
 const getInitialChatData = async () => {
@@ -62,12 +65,30 @@ export function* initSendMsgStart() {
   yield takeLatest(sendMsgStart.type, function* (action: any) {
     //@ts-ignore
     const socket = yield call(getActiveSocket);
-    switch (action.payload.msgType) {
-      case "text":
-        socket.emit("iTextMessage", action.payload);
-        break;
-      default:
-        break;
+
+    // If chat was just created and this is the first message being sent
+    if (action.payload.clientSide) {
+      delete action.payload.clientSide;
+      const v: number = yield call(
+        saveNewChatOnMongoDb,
+        store.getState().chatState.chat[action.payload.refId],
+        "/create-new-chat"
+      );
+      if (v === 200) {
+        yield put(newChatSuccessfullyCreated(action.payload.refId));
+        socket.emit("updateOthersChats", {
+          chatInfo: {
+            ...store.getState().chatState.chat[action.payload.refId].chatInfo,
+          },
+          messages: [],
+        });
+        socket.emit("iTextMessage", {
+          ...action.payload,
+        });
+      }
+    } else {
+      // chat already existed, sending message
+      socket.emit("iTextMessage", action.payload);
     }
   });
 }

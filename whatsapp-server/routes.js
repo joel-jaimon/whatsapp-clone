@@ -11,6 +11,8 @@ const {
   handleFileUpload,
   handleGetResource,
 } = require("./controllers/s3/handlers");
+const { handleNewGroup } = require("./controllers/random/handleNewGroup");
+const { handleNewChat } = require("./controllers/random/handleNewChat");
 var router = express.Router();
 
 // temp upload location for files
@@ -47,5 +49,9 @@ router.post(
 
 // chat message files
 router.get("/resources/:fileType/:key", handleGetResource);
+
+router.post("/create-new-group", handleNewGroup);
+
+router.post("/create-new-chat", handleNewChat);
 
 module.exports = router;

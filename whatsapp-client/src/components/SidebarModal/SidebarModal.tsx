@@ -9,59 +9,59 @@ import { SidebarModalAnimation } from "../../animations/sidebarModal/SidebarModa
 import { useState } from "react";
 
 const passStateToProps = ({ sidebarModal }: any) => {
-    return {
-        sidebarModal: sidebarModal.modal,
-    };
+  return {
+    sidebarModal: sidebarModal.modal,
+  };
 };
 
 const passDispatchToProps = (dispatch: any) => ({
-    setSidebarModal: (modal: any) => dispatch(setSidebarModal(modal)),
+  setSidebarModal: (modal: any) => dispatch(setSidebarModal(modal)),
 });
 
-const Modal = ({ sidebarModal }: any) => {
-    switch (sidebarModal?.type) {
-        case "archiveSidebar":
-            return <ArchivedSidebar />;
-        case "newMsgSidebar":
-            return <NewMsgSidebar />;
-        case "userSidebar":
-            return <UserSidebar />;
-        default:
-            return <div />;
-    }
+const Modal = ({ sidebarModal, closeModal }: any) => {
+  switch (sidebarModal?.type) {
+    case "archiveSidebar":
+      return <ArchivedSidebar />;
+    case "newMsgSidebar":
+      return <NewMsgSidebar closeModal={closeModal} />;
+    case "userSidebar":
+      return <UserSidebar />;
+    default:
+      return <div />;
+  }
 };
 
 export const SidebarModal = connect(
-    passStateToProps,
-    passDispatchToProps
+  passStateToProps,
+  passDispatchToProps
 )(({ sidebarModal, setSidebarModal }: any) => {
-    const [reverse, setReverse] = useState(false);
-    const closeModal = () => {
-        if (reverse) {
-            setReverse(false);
-            setSidebarModal(null);
-        }
-    };
-    return sidebarModal?.type ? (
-        <SidebarModalAnimation
-            reverse={reverse}
-            closeModal={closeModal}
-            className={s.sidebarModal}
-        >
-            <div className={s.sidebarModalHeader}>
-                <span>
-                    <ArrowBackIcon
-                        style={{
-                            cursor: "pointer",
-                        }}
-                        onClick={() => setReverse(true)}
-                    />
-                </span>
-                <p>{sidebarModal.params.headerTitle}</p>
-            </div>
-            <Modal sidebarModal={sidebarModal} />
-        </SidebarModalAnimation>
-    ) : (
-        <div />
-    );
+  const [reverse, setReverse] = useState(false);
+  const closeModal = () => {
+    if (reverse) {
+      setReverse(false);
+      setSidebarModal(null);
+    }
+  };
+  return sidebarModal?.type ? (
+    <SidebarModalAnimation
+      reverse={reverse}
+      closeModal={closeModal}
+      className={s.sidebarModal}
+    >
+      <div className={s.sidebarModalHeader}>
+        <span>
+          <ArrowBackIcon
+            style={{
+              cursor: "pointer",
+            }}
+            onClick={() => setReverse(true)}
+          />
+        </span>
+        <p>{sidebarModal.params.headerTitle}</p>
+      </div>
+      <Modal closeModal={() => setReverse(true)} sidebarModal={sidebarModal} />
+    </SidebarModalAnimation>
+  ) : (
+    <div />
+  );
 });

@@ -5,6 +5,7 @@ import {
   sendMsgSuccessful,
   setTotalAuthUsers,
   updateActiveAuthUser,
+  updateChats,
   updateInactiveAuthUser,
   updateLastViewedChatsTimestampOfOtherUser,
   updateOtherUsersActiveChat,
@@ -68,6 +69,10 @@ export const createSocketMiddleware = () => {
             params: {},
           })
         );
+      });
+
+      getActiveSocket()?.on("updateExistingChats", (payload: any) => {
+        store.dispatch(updateChats(payload));
       });
 
       // Socket Disconnected

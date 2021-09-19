@@ -2,14 +2,72 @@ import { Avatar } from "@material-ui/core";
 import { SidebarSearch } from "../../SidebarSearch/SidebarSearch";
 import s from "../sidebarModal.module.scss";
 import { connect } from "react-redux";
+import { createNewChat, setActiveChat } from "../../../redux/reducers/chat";
 
-const passStateToProps = ({ chatState }: any) => ({
+const passStateToProps = ({ chatState, authState }: any) => ({
   authUsers: chatState.authUsers,
+  activeChat: chatState.chat[chatState?.activeChat],
   guestUsers: chatState.guestUsers,
+  chats: chatState.chat,
+  authState,
 });
 
-export const NewMsgSidebar = connect(passStateToProps)(
-  ({ guestUsers, authUsers }: any) => {
+const passDispatchToProps = (dispatch: any) => ({
+  setActiveChat: (activeChat: any) => dispatch(setActiveChat(activeChat)),
+  createNewChat: (payload: any) => dispatch(createNewChat(payload)),
+});
+
+export const NewMsgSidebar = connect(
+  passStateToProps,
+  passDispatchToProps
+)(
+  ({
+    authState,
+    authUsers,
+    chats,
+    setActiveChat,
+    activeChat,
+    closeModal,
+    createNewChat,
+  }: any) => {
+    const handleOnClick = (data: any) => {
+      const doesChatExist: any = Object.entries(chats).find((chat: any) => {
+        const refChat = chat[1].chatInfo;
+        const bool1 = refChat.participants.find(
+          (user: any) => user.objectId === data[0]
+        );
+        const bool2 = refChat.type === "chat";
+        return bool1 && bool2;
+      });
+
+      if (doesChatExist) {
+        setActiveChat({
+          prevActiveChat: {
+            prevActiveChatId: activeChat?.chatInfo._id,
+            prevActiveChatType: activeChat?.chatInfo.type,
+          },
+          switchTo: doesChatExist[1].chatInfo._id,
+        });
+        closeModal();
+      } else {
+        createNewChat({
+          participants: [
+            {
+              lastViewed: null,
+              objectId: data[0],
+            },
+            {
+              lastViewed: Date.now(),
+              objectId: authState.auth.objectId,
+            },
+          ],
+          type: "chat",
+          modifiedOn: Date.now(),
+        });
+        closeModal();
+      }
+    };
+
     return (
       <div className={s.sidebarModalBody}>
         <SidebarSearch />
@@ -34,7 +92,11 @@ export const NewMsgSidebar = connect(passStateToProps)(
           <div className={s.chatsContainer}>
             {Object.entries(authUsers).map((data: any) => {
               return (
-                <div className={s.availableUsers} key={data[0]}>
+                <div
+                  onClick={() => handleOnClick(data)}
+                  className={s.availableUsers}
+                  key={data[0]}
+                >
                   <div className={s.avatar}>
                     <div
                       className={`
