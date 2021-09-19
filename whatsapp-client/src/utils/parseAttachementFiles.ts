@@ -6,23 +6,30 @@ import compress from "react-image-file-resizer";
 const _audioInfo = (item: File) => {
   return new Promise((resolve) => {
     const audio: HTMLAudioElement = document.createElement("audio");
-    audio.src = URL.createObjectURL(item);
 
-    audio.onloadedmetadata = () => {
-      resolve({
-        extraParam: {
-          url: audio.src,
-          duration: Math.floor(audio.duration),
-        },
-        clientParams: {
-          loading: true,
-          tempId: uuidv4(),
-        },
-      });
+    audio.onloadedmetadata = (e) => {
+      if (audio.duration === Infinity) {
+        audio.currentTime = Number.MAX_SAFE_INTEGER;
+        audio.ontimeupdate = () => {
+          audio.ontimeupdate = null;
+          resolve({
+            extraParam: {
+              url: audio.src,
+              duration: Math.floor(audio.duration),
+            },
+            clientParams: {
+              loading: true,
+              tempId: uuidv4(),
+            },
+          });
+          audio.currentTime = 0;
+        };
+      }
     };
+
+    audio.src = URL.createObjectURL(item);
   });
 };
-
 // get video's info
 const _videoInfo = (item: File) => {
   return new Promise((resolve) => {

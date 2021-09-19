@@ -57,6 +57,7 @@
         ]
     },
     "devDependencies": {
+        "@types/dom-mediacapture-record": "^1.0.10",
         "@types/uuid": "^8.3.1"
     }
 }
