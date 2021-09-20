@@ -3,6 +3,7 @@ import { SidebarSearch } from "../../SidebarSearch/SidebarSearch";
 import s from "../sidebarModal.module.scss";
 import { connect } from "react-redux";
 import { createNewChat, setActiveChat } from "../../../redux/reducers/chat";
+import { setSidebarModal } from "../../../redux/reducers/sidebarChatModal";
 
 const passStateToProps = ({ chatState, authState }: any) => ({
   authUsers: chatState.authUsers,
@@ -15,6 +16,8 @@ const passStateToProps = ({ chatState, authState }: any) => ({
 const passDispatchToProps = (dispatch: any) => ({
   setActiveChat: (activeChat: any) => dispatch(setActiveChat(activeChat)),
   createNewChat: (payload: any) => dispatch(createNewChat(payload)),
+  setSidebarModal: (sidebarModal: any) =>
+    dispatch(setSidebarModal(sidebarModal)),
 });
 
 export const NewMsgSidebar = connect(
@@ -29,6 +32,7 @@ export const NewMsgSidebar = connect(
     activeChat,
     closeModal,
     createNewChat,
+    setSidebarModal,
   }: any) => {
     const handleOnClick = (data: any) => {
       const doesChatExist: any = Object.entries(chats).find((chat: any) => {
@@ -72,7 +76,17 @@ export const NewMsgSidebar = connect(
       <div className={s.sidebarModalBody}>
         <SidebarSearch />
         <div className={s.allChats}>
-          <div className={s.newGroup}>
+          <div
+            onClick={() => {
+              setSidebarModal({
+                type: "addUsersToGroup",
+                params: {
+                  headerTitle: "Profile",
+                },
+              });
+            }}
+            className={s.newGroup}
+          >
             <svg
               viewBox="0 0 32 32"
               width="32"

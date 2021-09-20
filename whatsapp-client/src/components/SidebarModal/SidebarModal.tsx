@@ -3,6 +3,8 @@ import s from "./sidebarModal.module.scss";
 import { UserSidebar } from "./Modals/UserSidebar";
 import { NewMsgSidebar } from "./Modals/NewMsgSidebar";
 import { ArchivedSidebar } from "./Modals/ArchivedSidebar";
+import { AddUsersToGroup } from "./Modals/AddUsersToGroup";
+
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { setSidebarModal } from "../../redux/reducers/sidebarChatModal";
 import { SidebarModalAnimation } from "../../animations/sidebarModal/SidebarModalAnimation";
@@ -26,6 +28,8 @@ const Modal = ({ sidebarModal, closeModal }: any) => {
       return <NewMsgSidebar closeModal={closeModal} />;
     case "userSidebar":
       return <UserSidebar />;
+    case "addUsersToGroup":
+      return <AddUsersToGroup />;
     default:
       return <div />;
   }

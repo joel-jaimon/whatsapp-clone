@@ -4,6 +4,7 @@
   align-items: center;
   padding: 5px 0px 5px 10px;
   cursor: pointer;
+  transition: all 0.3s;
   &:hover {
     background-color: #323739;
   }
@@ -16,6 +17,7 @@
     width: calc(100% - 55px);
     height: 55px;
     border-bottom: 0.5px solid rgb(51, 51, 51);
+
     div {
       display: flex;
       justify-content: space-between;

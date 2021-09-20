@@ -101,6 +101,7 @@
   width: 100%;
   padding: 5px 10px 5px 10px;
   border-top: 0.5px solid rgba(128, 128, 128, 0.486);
+  cursor: pointer;
   svg {
     background-color: #009688;
     border-radius: 100%;
@@ -207,4 +208,86 @@
 
 .activeIndicater {
   background-color: #00c0ad;
+}
+
+.newGroupInfo {
+  .selectedUserDiv {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 50px;
+
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #323739;
+    }
+  }
+  .addedUserInfo {
+    padding: 15px;
+    .selectedUserChip {
+      display: flex;
+      justify-self: center;
+      align-items: center;
+      border: 2px solid #003a34;
+      border-radius: 15px;
+      width: fit-content;
+      margin-bottom: 5px;
+      img {
+        height: 30px;
+        width: 30px;
+        border-radius: 15px;
+      }
+      small {
+        font-size: 12px;
+        margin-left: 5px;
+      }
+      svg {
+        width: 30px;
+        cursor: pointer;
+      }
+    }
+  }
+  input {
+    width: 88%;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid #003a34;
+    margin-left: 5%;
+    color: #828689;
+  }
+}
+
+.createGrpButton {
+  position: absolute;
+  z-index: 1;
+  bottom: 40px;
+  height: 40px;
+  width: 40px;
+  left: 50%;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: #009688;
+  outline: none;
+  transform: translateX(-50%);
+  cursor: pointer;
+}
+
+.adduserstog {
+  .chatsContainer {
+    height: calc(100vh - 260px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #323739;
+    }
+  }
 }
