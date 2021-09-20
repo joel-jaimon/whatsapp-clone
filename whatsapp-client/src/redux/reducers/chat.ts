@@ -125,6 +125,19 @@ export const chatSlice = createSlice({
       state.activeChat = assignedId;
     },
 
+    createNewGroup: (state, action: PayloadAction<any>) => {
+      state.chat[action.payload._id] = {
+        chatInfo: action.payload,
+        messages: [],
+        stillSaving: true,
+      };
+      state.activeChat = action.payload._id;
+    },
+
+    newGroupCreated: (state, action: PayloadAction<any>) => {
+      delete state.chat[action.payload._id].stillSaving;
+    },
+
     // When user starts a new chat
     updateChats: (state, action: PayloadAction<any>) => {
       state.chat[action.payload.chatInfo._id] = action.payload;
@@ -180,5 +193,7 @@ export const {
   newChatCreationFailed,
   createNewChat,
   updateChats,
+  createNewGroup,
+  newGroupCreated,
 } = chatSlice.actions;
 export default chatSlice;

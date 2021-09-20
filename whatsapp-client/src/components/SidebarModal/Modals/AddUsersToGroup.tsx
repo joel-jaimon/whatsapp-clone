@@ -1,8 +1,10 @@
 import { Avatar } from "@material-ui/core";
 import s from "../sidebarModal.module.scss";
 import { connect } from "react-redux";
-import { createNewChat, setActiveChat } from "../../../redux/reducers/chat";
+import { createNewGroup, setActiveChat } from "../../../redux/reducers/chat";
 import { useState } from "react";
+import { ObjectID } from "bson";
+import { newGroupIcon } from "./newGroupIcon";
 
 const passStateToProps = ({ chatState, authState }: any) => ({
   authUsers: chatState.authUsers,
@@ -14,7 +16,7 @@ const passStateToProps = ({ chatState, authState }: any) => ({
 
 const passDispatchToProps = (dispatch: any) => ({
   setActiveChat: (activeChat: any) => dispatch(setActiveChat(activeChat)),
-  createNewChat: (payload: any) => dispatch(createNewChat(payload)),
+  createNewGroupStart: (payload: any) => dispatch(createNewGroup(payload)),
 });
 
 export const AddUsersToGroup = connect(
@@ -28,7 +30,7 @@ export const AddUsersToGroup = connect(
     setActiveChat,
     activeChat,
     closeModal,
-    createNewChat,
+    createNewGroupStart,
   }: any) => {
     const [userList, setUserList] = useState(authUsers);
     const [grpName, setGrpName] = useState("");
@@ -52,8 +54,32 @@ export const AddUsersToGroup = connect(
       }));
     };
 
-    const createNewGroup = () => {
+    const createNewGroup = ({}: any) => {
       if (grpName.length <= 1) return;
+      const participants: any = [];
+      participants.push({
+        objectId: authState.auth.objectId,
+        lastViewed: Date.now(),
+      });
+      Object.entries(userList).forEach((e: any) => {
+        if (e[1].selected) {
+          participants.push({
+            objectId: e[0],
+            lastViewed: Date.now(),
+          });
+        }
+      });
+      createNewGroupStart({
+        _id: new ObjectID().toString(),
+        name: grpName,
+        avatar: newGroupIcon,
+        createdOn: Date.now(),
+        modifiedOn: Date.now(),
+        participants,
+        type: "group",
+        desc: `Group created by ${authState.auth.displayName}`,
+      });
+      closeModal();
     };
 
     return (

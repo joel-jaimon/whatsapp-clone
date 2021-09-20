@@ -2,8 +2,10 @@ import { takeLatest, call, put } from "@redux-saga/core/effects";
 import { saveNewChatOnMongoDb } from "../../api/saveNewChatOnMongoDb";
 import { getAccessToken } from "../../utils/accessToken";
 import {
+  createNewGroup,
   getInitialChats,
   newChatSuccessfullyCreated,
+  newGroupCreated,
   onChatsLoadComplete,
   sendMsgStart,
   setActiveChat,
@@ -96,5 +98,24 @@ export function* initSendMsgStart() {
 export function* activeChatSwitch() {
   yield takeLatest(setActiveChat.type, function* (action: any) {
     // yield getActiveSocket().emit("switchActiveChat", action.payload);
+  });
+}
+
+export function* handleGroupCreation() {
+  yield takeLatest(createNewGroup.type, function* (action: any) {
+    const v: number = yield call(
+      saveNewChatOnMongoDb,
+      store.getState().chatState.chat[action.payload._id],
+      "/create-new-group"
+    );
+    //@ts-ignore
+    const socket = yield call(getActiveSocket);
+    if (v === 200) {
+      socket.emit("updateOthersChats", {
+        chatInfo: action.payload,
+        messages: [],
+      });
+      yield put(newGroupCreated(action.payload._id));
+    }
   });
 }
