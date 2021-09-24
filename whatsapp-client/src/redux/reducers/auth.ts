@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+const initialState: any = {
   auth: null,
   loading: true,
   error: null,
@@ -14,6 +14,20 @@ export const authSlice = createSlice({
     initiateSignin: (state, action) => {
       state.loading = true;
     },
+
+    initAuthuserInfoUpdate: (state, action) => {
+      state.auth.loading = true;
+    },
+
+    authuserInfoUpdateSuccessfull: (state, action) => {
+      state.auth = { ...state.auth, ...action.payload };
+      state.auth.loading = false;
+    },
+
+    authuserInfoUpdateFailed: (state, action) => {
+      state.auth.loading = false;
+    },
+
     setSocketConnectionSuccess: (state) => {
       state.socketStatus = true;
     },
@@ -54,4 +68,7 @@ export const {
   setSocketConnectionSuccess,
   initiateLogout,
   socketDisconnected,
+  initAuthuserInfoUpdate,
+  authuserInfoUpdateSuccessfull,
+  authuserInfoUpdateFailed,
 } = authSlice.actions;

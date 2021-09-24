@@ -120,6 +120,16 @@
       position: absolute;
       left: 10px;
     }
+    .mainIcon {
+      border-radius: 50%;
+      background-color: #bdbdbd;
+      width: 48px;
+      height: 48px;
+      svg {
+        fill: #fafafa;
+        padding: 5px;
+      }
+    }
     img {
       height: 50px;
       width: 50px;

@@ -1,30 +1,40 @@
 .sidebarHead {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #2a2f32;
-    height: 45px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2a2f32;
+  height: 45px;
 }
 
 .headControls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .avatar {
-    cursor: pointer;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  .mainIcon {
+    margin-left: 10px;
+    border-radius: 50%;
+    background-color: #bdbdbd;
     width: 30px;
     height: 30px;
-    img {
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        margin-left: 10px;
-        object-fit: cover;
+    svg {
+      fill: #fafafa;
     }
+  }
+  img {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+    object-fit: cover;
+  }
 }
 
 .dropDownBtn {
-    position: relative;
+  position: relative;
 }

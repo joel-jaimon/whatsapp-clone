@@ -210,7 +210,7 @@ export const AvatarSection = connect(
   }
 );
 
-const AddNewAvatar = ({ type, handleDropMenuClicks }: any) => {
+export const AddNewAvatar = ({ type, handleDropMenuClicks }: any) => {
   return (
     <div onClick={handleDropMenuClicks} className={s.addGroupIcon}>
       <div className={s.addGroupCameraDiv}>

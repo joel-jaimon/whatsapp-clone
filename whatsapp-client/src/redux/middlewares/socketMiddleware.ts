@@ -5,6 +5,7 @@ import {
   sendMsgSuccessful,
   setTotalAuthUsers,
   updateActiveAuthUser,
+  updateAuthUsersInfo,
   updateChats,
   updateInactiveAuthUser,
   updateLastViewedChatsTimestampOfOtherUser,
@@ -49,6 +50,10 @@ export const createSocketMiddleware = () => {
 
       getActiveSocket().on("recieveMessage", (payload: any) => {
         store.dispatch(recieveMessage(payload));
+      });
+
+      getActiveSocket().on("onOtherAuthUsersInfoUpdate", (payload: any) => {
+        store.dispatch(updateAuthUsersInfo(payload));
       });
 
       // // Handle others chat switches

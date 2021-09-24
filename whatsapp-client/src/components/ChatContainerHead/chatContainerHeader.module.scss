@@ -19,7 +19,16 @@
   cursor: pointer;
   width: 30px;
   height: 30px;
-
+  .mainIcon {
+    margin-left: 10px;
+    border-radius: 50%;
+    background-color: #bdbdbd;
+    width: 30px;
+    height: 30px;
+    svg {
+      fill: #fafafa;
+    }
+  }
   img {
     border-radius: 50%;
     width: 30px;

@@ -46,6 +46,14 @@ export const chatSlice = createSlice({
         color: colors[Math.floor(Math.random() * colors.length - 1)],
       };
     },
+
+    updateAuthUsersInfo: (state, action: PayloadAction<any>) => {
+      state.authUsers[action.payload.objectId] = {
+        ...state.authUsers[action.payload.objectId],
+        ...action.payload,
+      };
+    },
+
     updateActiveAuthUser: (state, action: PayloadAction<any>) => {
       state.authUsers[action.payload].status = true;
     },
@@ -195,5 +203,6 @@ export const {
   updateChats,
   createNewGroup,
   newGroupCreated,
+  updateAuthUsersInfo,
 } = chatSlice.actions;
 export default chatSlice;
