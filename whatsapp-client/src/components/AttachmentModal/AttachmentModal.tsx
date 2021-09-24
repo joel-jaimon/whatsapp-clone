@@ -18,6 +18,7 @@ export const FilePreview = ({ file, iconPreview }: any) => {
     return <div />;
   }
   const { type }: any = file;
+
   switch (type.split("/")[0]) {
     case "image":
       return <Image file={file} />;

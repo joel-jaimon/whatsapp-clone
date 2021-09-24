@@ -1,6 +1,12 @@
+import { connect } from "react-redux";
+import { getPreviewIcon } from "./getPreviewIcon";
 import s from "./mediaSection.module.scss";
 
-export const MediaSection = () => {
+const passStateToProps = ({ chatModal, chatState, authState }: any) => ({
+  activeChat: chatState.chat[chatState.activeChat],
+});
+
+export const MediaSection = connect(passStateToProps)(({ activeChat }: any) => {
   return (
     <div className={s.mediaScreen}>
       <div className={s.head}>
@@ -17,7 +23,29 @@ export const MediaSection = () => {
           ></path>
         </svg>
       </div>
-      <div className={s.mediaThumbnails}></div>
+      <div className={s.mediaThumbnails}>
+        {Object.entries(activeChat?.messages)
+          .filter((e: any) => e[1].msgType !== "text")
+          .map((e: any) => {
+            console.log(e[1]);
+            return (
+              <div className={s.media} key={e[0]}>
+                <img
+                  src={
+                    e[1].msgType === "document"
+                      ? getPreviewIcon(e[1].msgParams.fileName.split(".")[1])
+                      : e[1].msgType === "image"
+                      ? e[1].msgParams.url
+                      : e[1].msgType === "video"
+                      ? e[1].msgParams.thumbnail
+                      : getPreviewIcon(e[1].msgType)
+                  }
+                  alt="*_*"
+                />
+              </div>
+            );
+          })}
+      </div>
     </div>
   );
-};
+});
