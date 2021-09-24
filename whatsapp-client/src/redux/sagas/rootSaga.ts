@@ -1,5 +1,9 @@
 import { all } from "@redux-saga/core/effects";
-import { initiateSignInSaga, initLogout } from "./authSagas";
+import {
+  initAuthuserInfoUpdateSaga,
+  initiateSignInSaga,
+  initLogout,
+} from "./authSagas";
 import {
   activeChatSwitch,
   handleGroupCreation,
@@ -17,5 +21,6 @@ export default function* rootSaga() {
     initFileUpload(),
     handleGroupCreation(),
     // activeChatSwitch(),
+    initAuthuserInfoUpdateSaga(),
   ]);
 }

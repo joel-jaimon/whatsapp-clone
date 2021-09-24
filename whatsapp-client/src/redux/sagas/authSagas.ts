@@ -1,6 +1,8 @@
 import guestAvatars from "../../data/guestAvatars.json";
 import { takeLatest, call, put } from "@redux-saga/core/effects";
 import {
+  authuserInfoUpdateSuccessfull,
+  initAuthuserInfoUpdate,
   initiateLogout,
   initiateSignin,
   logout,
@@ -93,5 +95,13 @@ export function* initLogout() {
     if (status === 200) {
       yield put(logout());
     }
+  });
+}
+
+export function* initAuthuserInfoUpdateSaga() {
+  yield takeLatest(initAuthuserInfoUpdate.type, function* (action: any) {
+    const socket = getActiveSocket();
+    yield socket.emit("updateUserProfile", action.payload);
+    yield put(authuserInfoUpdateSuccessfull(action.payload));
   });
 }
