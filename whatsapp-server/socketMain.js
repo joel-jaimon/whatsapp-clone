@@ -88,6 +88,21 @@ const socketMain = async (io, socket) => {
       lastSeen: userPayload.lastSeen,
     });
 
+    // Verification needed
+    socket.on("updateUserProfile", async (payload) => {
+      await db.collection("googleAuthUsers").updateOne(
+        { _id: ObjectID(_id) },
+        {
+          $set: { ...payload },
+        }
+      );
+
+      socket.broadcast.emit("onOtherAuthUsersInfoUpdate", {
+        objectId: _id,
+        ...payload,
+      });
+    });
+
     socket.on("updateOthersChats", async (payload) => {
       const {
         chatInfo: { participants },
@@ -234,19 +249,6 @@ const socketMain = async (io, socket) => {
           $set: { lastSeen },
         }
       );
-
-      // await db.collection("googleAuthUsers").updateOne(
-      //   { _id: ObjectID(_id) },
-      //   {
-      //     $set: { currentlyOn: null },
-      //   }
-      // );
-
-      // // Update others about this
-      // socket.broadcast.emit("friendCurrentlyOn", {
-      //   userObjectId: _id,
-      //   currentlyOn: null,
-      // });
 
       // tell others that this user is disconnected
       socket.broadcast.emit("offline", {
