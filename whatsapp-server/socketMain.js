@@ -60,6 +60,46 @@ const socketMain = async (io, socket) => {
       lastSeen: userPayload.lastSeen,
     });
 
+    // Signin success state
+    socket.on("callOtherUser", async (payload) => {
+      console.log(payload);
+      if (payload?.extraParam) {
+        const to = getActiveUserByObjectId(payload.extraParam.callTo);
+        if (to) {
+          io.to(to.socketId).emit("incomingCall", {
+            peerId: payload.peerId,
+            active: true,
+            callBy: payload.callby,
+            ...payload.extraParam,
+          });
+        }
+      } else {
+        const { participants, name, avatar } = await db
+          .collection("groups")
+          .findOne({
+            _id: ObjectID(payload.refId),
+          });
+
+        for (let i = 0; i < participants.length; i++) {
+          if (participants[i].objectId.toString() != _id.toString()) {
+            const activeFriends = getActiveUserByObjectId(
+              participants[i].objectId
+            );
+            if (activeFriends?.socketId) {
+              console.log("Calling ", activeFriends?.objectId);
+              io.to(activeFriends.socketId).emit("incomingCall", {
+                peerId: payload.peerId,
+                active: true,
+                callBy: payload.callby,
+                displayname: name,
+                avatar,
+              });
+            }
+          }
+        }
+      }
+    });
+
     // Send users existing in DB back to sender
     socket.on("getTotalUsers", () => {
       // get total users (less size compared to chat data so we can use socket.io here,

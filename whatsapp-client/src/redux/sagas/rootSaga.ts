@@ -11,6 +11,7 @@ import {
   initGroupInfoUpdateSaga,
   initSendMsgStart,
 } from "./chatSagas";
+import { initCallSaga } from "./roomSagas";
 import { initFileUpload } from "./uploadAttachmentSaga";
 
 export default function* rootSaga() {
@@ -20,6 +21,7 @@ export default function* rootSaga() {
     initChatLoad(),
     initSendMsgStart(),
     initFileUpload(),
+    initCallSaga(),
     handleGroupCreation(),
     // activeChatSwitch(),
     initGroupInfoUpdateSaga(),

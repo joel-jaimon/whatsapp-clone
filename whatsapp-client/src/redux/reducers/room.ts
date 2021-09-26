@@ -16,9 +16,12 @@ export const roomSlice = createSlice({
   name: "roomReducer",
   initialState,
   reducers: {
-    initCall: (state, action: PayloadAction<any>) => {
+    initCall: (state, action: PayloadAction<any>) => {},
+
+    callingActive: (state, action: PayloadAction<any>) => {
       state.onCall = true;
     },
+
     callConnected: (state, action: PayloadAction<any>) => {
       state.ringing = true;
     },
@@ -37,5 +40,10 @@ export const roomSlice = createSlice({
   },
 });
 
-export const { rejectCall, callConnected, othersCalling, initCall } =
-  roomSlice.actions;
+export const {
+  rejectCall,
+  callConnected,
+  othersCalling,
+  initCall,
+  callingActive,
+} = roomSlice.actions;

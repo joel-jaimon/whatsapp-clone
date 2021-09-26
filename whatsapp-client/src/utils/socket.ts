@@ -16,6 +16,7 @@ import {
 } from "redux/reducers/chat";
 import { setGlobalModal } from "redux/reducers/globalModal";
 import store from "redux/store";
+import { othersCalling } from "redux/reducers/room";
 
 export class SocketIO {
   private socket: Socket<DefaultEventsMap, DefaultEventsMap>;
@@ -75,6 +76,14 @@ export class SocketIO {
 
       this.socket.on("onGroupInfoUpdate", (payload: any) => {
         store.dispatch(groupInfoUpdateSuccessfull(payload));
+      });
+
+      this.socket.on("incomingCall", (payload: any) => {
+        store.dispatch(othersCalling(payload));
+      });
+
+      this.socket.on("incomingCallCanceledByOther", (payload: any) => {
+        store.dispatch(othersCalling(null));
       });
 
       // // Handle others chat switches

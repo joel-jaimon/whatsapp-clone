@@ -1,13 +1,13 @@
 import { connect } from "react-redux";
 import s from "./chatContainerHeader.module.scss";
 import { setChatContainerModal } from "redux/reducers/chatContainerModal";
-import { setRoomModal } from "redux/reducers/roomModal";
 import { setDropDown } from "redux/reducers/dropDown";
 import { formatTime } from "utils/formatTime";
+import { initCall } from "redux/reducers/room";
 
 const passStateToProps = ({ chatState, dropDownMenu, authState }: any) => ({
   dropDown: dropDownMenu.dropDown,
-  myObjId: authState.auth.objectId,
+  authUser: authState.auth,
   activeChat: chatState.chat[chatState.activeChat],
   allUsers: chatState.authUsers,
 });
@@ -15,7 +15,7 @@ const passStateToProps = ({ chatState, dropDownMenu, authState }: any) => ({
 const passDispatchToProps = (dispatch: any) => ({
   setDropDown: (dropMenu: any) => dispatch(setDropDown(dropMenu)),
   setChatContainerModal: (modal: any) => dispatch(setChatContainerModal(modal)),
-  setRoomModal: (roomModal: any) => dispatch(setRoomModal(roomModal)),
+  initiateCall: (payload: any) => dispatch(initCall(payload)),
 });
 
 export const ChatContainerHead = connect(
@@ -27,9 +27,9 @@ export const ChatContainerHead = connect(
     setChatContainerModal,
     dropDown,
     setDropDown,
-    setRoomModal,
-    myObjId,
+    authUser,
     allUsers,
+    initiateCall,
   }: any) => {
     const toggleDropdown = (e: any) => {
       if (dropDown.type === "activeChatInfoToggle") {
@@ -52,9 +52,24 @@ export const ChatContainerHead = connect(
       activeChat.chatInfo.type === "chat"
         ? activeChat.chatInfo.participants.find((e: any) => {
             console.log(e);
-            return e.objectId !== myObjId;
+            return e.objectId !== authUser.objectId;
           })
         : null;
+
+    const initiateACall = () => {
+      initiateCall({
+        active: true,
+        callBy: authUser.objectId,
+        refId: activeChat.chatInfo._id,
+        extraParam: otherFriend
+          ? {
+              displayName: authUser.displayName,
+              avatar: authUser.avatar,
+              callTo: otherFriend.objectId,
+            }
+          : null,
+      });
+    };
 
     return (
       <div className={s.chatContainerHead}>
@@ -106,12 +121,7 @@ export const ChatContainerHead = connect(
         </div>
 
         <div className={s.roomControls}>
-          <span
-            onClick={() => {
-              setRoomModal(true);
-            }}
-            className="icons"
-          >
+          <span onClick={initiateACall} className="icons">
             <svg
               fill="#b1b3b5"
               focusable="false"
