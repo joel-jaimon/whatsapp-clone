@@ -4,9 +4,9 @@ import s from "./chatStyles.module.scss";
 import { Avatar } from "@material-ui/core";
 import { MsgPreview } from "./Components/MsgPreview";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { setDropDown } from "../../redux/reducers/dropDown";
-import { setActiveChat } from "../../redux/reducers/chat";
-import { setChatContainerModal } from "../../redux/reducers/chatContainerModal";
+import { setDropDown } from "redux/reducers/dropDown";
+import { setActiveChat } from "redux/reducers/chat";
+import { setChatContainerModal } from "redux/reducers/chatContainerModal";
 
 const passStateToProps = ({ chatState, authState }: any) => ({
   activeChat: chatState.chat[chatState?.activeChat],

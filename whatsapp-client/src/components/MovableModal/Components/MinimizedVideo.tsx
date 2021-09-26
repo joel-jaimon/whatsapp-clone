@@ -11,13 +11,10 @@ import VolumeUpIcon from "@material-ui/icons/VolumeUp";
 import VolumeDownIcon from "@material-ui/icons/VolumeDown";
 import VolumeMuteIcon from "@material-ui/icons/VolumeMute";
 import VolumeOffIcon from "@material-ui/icons/VolumeOff";
-import {
-  landscapeOffset,
-  potraitOffset,
-} from "../../../constants/movableModal";
+import { landscapeOffset, potraitOffset } from "constants/movableModal";
 import { connect } from "react-redux";
-import { setMovalbleModal } from "../../../redux/reducers/movableModal";
-import { setGlobalModal } from "../../../redux/reducers/globalModal";
+import { setMovalbleModal } from "redux/reducers/movableModal";
+import { setGlobalModal } from "redux/reducers/globalModal";
 
 const VolumeButton = ({ vol }: { vol: number }) => {
   if (vol < 1) return <VolumeOffIcon />;

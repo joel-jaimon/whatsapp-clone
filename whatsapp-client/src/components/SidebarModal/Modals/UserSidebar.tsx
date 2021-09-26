@@ -1,14 +1,11 @@
 import { useState } from "react";
 import { connect } from "react-redux";
-import {
-  initAuthuserInfoUpdate,
-  initiateLogout,
-} from "../../../redux/reducers/auth";
-import { AddNewAvatar } from "../../ChatModal/Modals/UserInfoModal/Components/AvatarSection/AvatarSection";
+import { initAuthuserInfoUpdate, initiateLogout } from "redux/reducers/auth";
+import { AddNewAvatar } from "components/ChatModal/Modals/UserInfoModal/Components/AvatarSection/AvatarSection";
 import s from "../sidebarModal.module.scss";
 import compress from "react-image-file-resizer";
-import { setDropDown } from "../../../redux/reducers/dropDown";
-import { setGlobalModal } from "../../../redux/reducers/globalModal";
+import { setDropDown } from "redux/reducers/dropDown";
+import { setGlobalModal } from "redux/reducers/globalModal";
 
 const passStateToProps = ({ authState, dropDownMenu }: any) => ({
   dropMenu: dropDownMenu.dropDown,

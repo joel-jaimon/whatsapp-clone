@@ -6,8 +6,8 @@ import { ArchivedSidebar } from "./Modals/ArchivedSidebar";
 import { AddUsersToGroup } from "./Modals/AddUsersToGroup";
 
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import { setSidebarModal } from "../../redux/reducers/sidebarChatModal";
-import { SidebarModalAnimation } from "../../animations/sidebarModal/SidebarModalAnimation";
+import { setSidebarModal } from "redux/reducers/sidebarChatModal";
+import { SidebarModalAnimation } from "animations/sidebarModal/SidebarModalAnimation";
 import { useState } from "react";
 
 const passStateToProps = ({ sidebarModal }: any) => {

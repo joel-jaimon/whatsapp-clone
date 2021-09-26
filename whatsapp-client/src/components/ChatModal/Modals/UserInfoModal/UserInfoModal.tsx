@@ -5,7 +5,7 @@ import { DescSection } from "./Components/DescSection/DescSection";
 import { GeneralSettingsSection } from "./Components/GeneralSettingsSection/generalSettingsSection";
 import { MediaSection } from "./Components/MediaSection/MediaSection";
 import { ParticipantSection } from "./Components/ParticipantSection/ParticipantSection";
-import { setChatContainerModal } from "../../../../redux/reducers/chatContainerModal";
+import { setChatContainerModal } from "redux/reducers/chatContainerModal";
 
 const passStateToProps = ({ chatModal, chatState, authState }: any) => ({
   chatContainerModal: chatModal.modal,

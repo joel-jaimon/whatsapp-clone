@@ -1,6 +1,6 @@
 import { takeLatest, put, call } from "@redux-saga/core/effects";
-import { saveNewChatOnMongoDb } from "../../api/saveNewChatOnMongoDb";
-import { getActiveSocket } from "../../config/globalSocket";
+import { saveNewChatOnMongoDb } from "api/saveNewChatOnMongoDb";
+import { getActiveSocket } from "config/globalSocket";
 import {
   resetFileAttachmentModal,
   uploadAttachments,

@@ -1,8 +1,8 @@
 import s from "./messages.module.scss";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { useState } from "react";
-import { formatTime } from "../../../../utils/formatTime";
-import { SeenStats } from "../../../SeenStats/SeenStats";
+import { formatTime } from "utils/formatTime";
+import { SeenStats } from "components/SeenStats/SeenStats";
 
 export const File = ({
   msgPosition,

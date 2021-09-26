@@ -3,9 +3,9 @@ import s from "./messages.module.scss";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
 import MicIcon from "@material-ui/icons/Mic";
-import { formatTime } from "../../../../utils/formatTime";
-import { getDuration } from "../../../../utils/parseDuration";
-import { SeenStats } from "../../../SeenStats/SeenStats";
+import { formatTime } from "utils/formatTime";
+import { getDuration } from "utils/parseDuration";
+import { SeenStats } from "components/SeenStats/SeenStats";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 export const Voice = ({

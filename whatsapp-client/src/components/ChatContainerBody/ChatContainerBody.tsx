@@ -6,7 +6,7 @@ import { Video } from "./components/Messages/Video";
 import { Voice } from "./components/Messages/Voice";
 import { connect } from "react-redux";
 import { useEffect, useRef } from "react";
-import { setDropDown } from "../../redux/reducers/dropDown";
+import { setDropDown } from "redux/reducers/dropDown";
 
 const Message = ({ data, _side, extraParam }: any) => {
   switch (data.msgType) {

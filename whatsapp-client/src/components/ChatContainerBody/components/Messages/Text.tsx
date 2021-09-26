@@ -1,5 +1,5 @@
-import { formatTime } from "../../../../utils/formatTime";
-import { SeenStats } from "../../../SeenStats/SeenStats";
+import { formatTime } from "utils/formatTime";
+import { SeenStats } from "components/SeenStats/SeenStats";
 import s from "./messages.module.scss";
 
 export const Text = ({

@@ -1,7 +1,7 @@
 import io, { Socket } from "socket.io-client";
 import { DefaultEventsMap } from "socket.io-client/build/typed-events";
 import { setActiveSocket } from "../config/globalSocket";
-import { setAuthSuccess, socketDisconnected } from "../redux/reducers/auth";
+import { setAuthSuccess, socketDisconnected } from "redux/reducers/auth";
 import {
   getInitialChats,
   recieveMessage,

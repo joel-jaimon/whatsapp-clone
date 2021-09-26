@@ -1,6 +1,6 @@
 import { CircularProgress } from "@material-ui/core";
 import { connect } from "react-redux";
-import { initiateSignin, setAuthFailed } from "../../redux/reducers/auth";
+import { initiateSignin, setAuthFailed } from "redux/reducers/auth";
 import s from "./login.module.scss";
 import { GoogleLogin } from "react-google-login";
 import whatsappLogo from "./WhatsApp.svg.webp";

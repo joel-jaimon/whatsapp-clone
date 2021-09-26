@@ -9,9 +9,9 @@ import { connect } from "react-redux";
 import {
   setGlobalModal,
   setGlobalMsgInFocus,
-} from "../../../../redux/reducers/globalModal";
-import { formatTime } from "../../../../utils/formatTime";
-import { SeenStats } from "../../../SeenStats/SeenStats";
+} from "redux/reducers/globalModal";
+import { formatTime } from "utils/formatTime";
+import { SeenStats } from "components/SeenStats/SeenStats";
 
 const mapDispatchToProps = (dispatch: any) => ({
   setGlobalModal: (modal: any) => dispatch(setGlobalModal(modal)),

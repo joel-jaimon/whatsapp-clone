@@ -16,9 +16,9 @@ import {
   StickerIcon,
   VideoCallIcon,
 } from "./icons/ChatFooterIcons";
-import { ShowAttachmentAnimations } from "../../animations/chatFooterAnimation/ShowAttachmentAnimations";
-import { ExpandOptions } from "../../animations/ExpandOptions";
-import { RecorderAnimation } from "../../animations/chatFooterAnimation/RecorderAnimation";
+import { ShowAttachmentAnimations } from "animations/chatFooterAnimation/ShowAttachmentAnimations";
+import { ExpandOptions } from "animations/ExpandOptions";
+import { RecorderAnimation } from "animations/chatFooterAnimation/RecorderAnimation";
 import { v4 as uuidv4 } from "uuid";
 
 import { connect } from "react-redux";
@@ -26,9 +26,9 @@ import {
   addAttachments,
   resetFileAttachmentModal,
   setAttachmentModal,
-} from "../../redux/reducers/attachmentModal";
-import { sendMsgStart } from "../../redux/reducers/chat";
-import { parseAttachmentFiles } from "../../utils/parseAttachementFiles";
+} from "redux/reducers/attachmentModal";
+import { sendMsgStart } from "redux/reducers/chat";
+import { parseAttachmentFiles } from "utils/parseAttachementFiles";
 
 const passStateFromProps = ({
   chatState,

@@ -9,12 +9,12 @@ import GetAppIcon from "@material-ui/icons/GetApp";
 import CloseIcon from "@material-ui/icons/Close";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import { MinimizedVideo } from "../../MovableModal/Components/MinimizedVideo";
+import { MinimizedVideo } from "components/MovableModal/Components/MinimizedVideo";
 import { connect } from "react-redux";
 import {
   setGlobalModal,
   setGlobalMsgInFocus,
-} from "../../../redux/reducers/globalModal";
+} from "redux/reducers/globalModal";
 
 const mapStateToProps = ({ globalModal, chatState, authState }: any) => ({
   globalModal,

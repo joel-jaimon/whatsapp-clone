@@ -1,9 +1,9 @@
 import { Avatar } from "@material-ui/core";
-import { SidebarSearch } from "../../SidebarSearch/SidebarSearch";
+import { SidebarSearch } from "components/SidebarSearch/SidebarSearch";
 import s from "../sidebarModal.module.scss";
 import { connect } from "react-redux";
-import { createNewChat, setActiveChat } from "../../../redux/reducers/chat";
-import { setSidebarModal } from "../../../redux/reducers/sidebarChatModal";
+import { createNewChat, setActiveChat } from "redux/reducers/chat";
+import { setSidebarModal } from "redux/reducers/sidebarChatModal";
 
 const passStateToProps = ({ chatState, authState }: any) => ({
   authUsers: chatState.authUsers,

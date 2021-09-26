@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
-import { uploadAttachments } from "../../redux/reducers/attachmentModal";
-import { setGlobalModal } from "../../redux/reducers/globalModal";
-import { parseAttachmentFiles } from "../../utils/parseAttachementFiles";
-import { getDuration } from "../../utils/parseDuration";
+import { uploadAttachments } from "redux/reducers/attachmentModal";
+import { setGlobalModal } from "redux/reducers/globalModal";
+import { parseAttachmentFiles } from "utils/parseAttachementFiles";
+import { getDuration } from "utils/parseDuration";
 import s from "./audioRecorder.module.scss";
 
 const passStateToProps = ({ chatState, authState }: any) => ({

@@ -1,8 +1,8 @@
 import s from "./sidebarHeadStyles.module.scss";
 import { connect } from "react-redux";
-import { setDropDown } from "../../redux/reducers/dropDown";
-import { setSidebarModal } from "../../redux/reducers/sidebarChatModal";
-// import { setAuthState } from "../../redux/reducers/auth";
+import { setDropDown } from "redux/reducers/dropDown";
+import { setSidebarModal } from "redux/reducers/sidebarChatModal";
+// import { setAuthState } from "redux/reducers/auth";
 
 const passDispatchToProps = (dispatch: any) => ({
   setPersonalSettingsDropdown: (dropDown: any) =>

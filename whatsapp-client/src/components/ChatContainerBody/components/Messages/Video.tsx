@@ -8,19 +8,16 @@ import FullscreenExitIcon from "@material-ui/icons/FullscreenExit";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import CloseIcon from "@material-ui/icons/Close";
 import ForwardIcon from "@material-ui/icons/Forward";
-import { formatTime } from "../../../../utils/formatTime";
-import {
-  landscapeOffset,
-  potraitOffset,
-} from "../../../../constants/movableModal";
+import { formatTime } from "utils/formatTime";
+import { landscapeOffset, potraitOffset } from "constants/movableModal";
 import { connect } from "react-redux";
-import { setMovalbleModal } from "../../../../redux/reducers/movableModal";
+import { setMovalbleModal } from "redux/reducers/movableModal";
 import {
   setGlobalModal,
   setGlobalMsgInFocus,
-} from "../../../../redux/reducers/globalModal";
-import { getDuration } from "../../../../utils/parseDuration";
-import { SeenStats } from "../../../SeenStats/SeenStats";
+} from "redux/reducers/globalModal";
+import { getDuration } from "utils/parseDuration";
+import { SeenStats } from "components/SeenStats/SeenStats";
 
 const passStateToProps = ({ movableModal }: any) => ({
   movableModal: movableModal.modal,

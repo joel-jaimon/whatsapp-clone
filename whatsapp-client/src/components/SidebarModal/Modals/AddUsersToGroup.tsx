@@ -1,7 +1,7 @@
 import { Avatar } from "@material-ui/core";
 import s from "../sidebarModal.module.scss";
 import { connect } from "react-redux";
-import { createNewGroup, setActiveChat } from "../../../redux/reducers/chat";
+import { createNewGroup, setActiveChat } from "redux/reducers/chat";
 import { useState } from "react";
 import { ObjectID } from "bson";
 import { newGroupIcon } from "./newGroupIcon";
