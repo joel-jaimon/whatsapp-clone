@@ -37,7 +37,7 @@ export const Video = connect(
   passDispatchToProps
 )(
   ({
-    id,
+    _id,
     msgPosition,
     msgParams,
     timestamp,
@@ -70,7 +70,7 @@ export const Video = connect(
         type: "viewMsgPreview",
         params: {},
       });
-      setGlobalMsgInFocus(id);
+      setGlobalMsgInFocus(_id);
     };
 
     const downloadVideo = () => {

@@ -8,6 +8,7 @@ import { getAccessToken } from "../utils/accessToken";
 import { setAuthFailed, setSocketConnectionSuccess } from "./reducers/auth";
 import { getActiveSocket, initializeSocket } from "./sockets/socketConnection";
 import { createSocketMiddleware } from "./middlewares/socketMiddleware";
+// import { SocketIO } from "../utils/socket";
 
 const sagaMiddleware = createSagaMiddleware();
 const socketMiddleware = createSocketMiddleware();
@@ -28,8 +29,14 @@ const store = configureStore({
     return;
   } else {
     await initializeSocket();
-    const socket = getActiveSocket();
-    if (socket) {
+    const socketConnected = getActiveSocket();
+    // const socket = new SocketIO(
+    //   process.env.REACT_APP_SERVER_URL as string,
+    //   getAccessToken()
+    // );
+    // console.log(socket);
+    // const socketConnected = socket.connectionStatus();
+    if (socketConnected) {
       store.dispatch(setSocketConnectionSuccess());
     }
     return;

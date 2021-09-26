@@ -23,7 +23,7 @@ export const Picture = connect(
   mapDispatchToProps
 )(
   ({
-    id,
+    _id,
     msgPosition,
     msgParams,
     setGlobalModal,
@@ -69,7 +69,7 @@ export const Picture = connect(
         type: "viewMsgPreview",
         params: { messageType: "image" },
       });
-      setGlobalMsgInFocus(id);
+      setGlobalMsgInFocus(_id);
     };
 
     const downloadImg = () => {
