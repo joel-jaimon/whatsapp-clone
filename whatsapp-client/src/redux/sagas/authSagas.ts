@@ -15,7 +15,7 @@ import { SocketIO } from "utils/socket";
 import { getActiveSocket } from "config/globalSocket";
 
 // Google SignIn -------------------------------------------
-const googleSignin = async (payload: any) => {
+const googleSignin = async (payload: { idToken: string }) => {
   const data = await fetch(
     `${process.env.REACT_APP_SERVER_URL}/g-auth/authenticate`,
     {

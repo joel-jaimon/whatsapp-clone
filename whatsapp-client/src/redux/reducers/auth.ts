@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { AuthStateType, AuthUserType } from "types/authSlice.types";
 
-const initialState: any = {
+const initialState: AuthStateType = {
   auth: null,
   loading: true,
   error: null,
@@ -16,22 +17,22 @@ export const authSlice = createSlice({
     },
 
     initAuthuserInfoUpdate: (state, action) => {
-      state.auth.loading = true;
+      state.auth!.loading = true;
     },
 
     authuserInfoUpdateSuccessfull: (state, action) => {
       state.auth = { ...state.auth, ...action.payload };
-      state.auth.loading = false;
+      state.auth!.loading = false;
     },
 
     authuserInfoUpdateFailed: (state, action) => {
-      state.auth.loading = false;
+      state.auth!.loading = false;
     },
 
     setSocketConnectionSuccess: (state) => {
       state.socketStatus = true;
     },
-    setAuthSuccess: (state, action) => {
+    setAuthSuccess: (state, action: { payload: AuthUserType }) => {
       state.auth = action.payload;
       state.error = null;
       state.loading = false;

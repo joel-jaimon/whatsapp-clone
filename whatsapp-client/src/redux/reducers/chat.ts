@@ -1,8 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import colors from "data/colors.json";
 import { ObjectID } from "bson";
+import { ChatStateType } from "types/chatSlice.types";
+import { AuthUserType } from "types/authSlice.types";
 
-const initialState: any = {
+const initialState: ChatStateType = {
   authUsers: {},
   guestUsers: {},
   activeChat: null,
@@ -25,9 +27,9 @@ export const chatSlice = createSlice({
     },
 
     setTotalAuthUsers: (state, action: PayloadAction<any>) => {
-      action.payload.forEach((user: any) => {
-        state.authUsers[user._id] = {
-          objectId: user._id,
+      action.payload.forEach((user: AuthUserType) => {
+        state.authUsers[user._id as string] = {
+          objectId: user._id as string,
           uid: user.uid,
           displayName: user.displayName,
           email: user.email,
