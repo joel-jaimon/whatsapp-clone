@@ -1,5 +1,6 @@
 import io, { Socket } from "socket.io-client";
 import { DefaultEventsMap } from "socket.io-client/build/typed-events";
+import { setActiveSocket } from "../config/globalSocket";
 import { setAuthSuccess, socketDisconnected } from "../redux/reducers/auth";
 import {
   getInitialChats,
@@ -17,7 +18,6 @@ import store from "../redux/store";
 
 export class SocketIO {
   private socket: Socket<DefaultEventsMap, DefaultEventsMap>;
-  private connected: boolean = false;
 
   public constructor(serverUrl: string, accessToken: string) {
     this.socket = io(serverUrl, {
@@ -29,23 +29,13 @@ export class SocketIO {
         });
       },
     });
-
-    this.connect();
-  }
-
-  private async connect() {
-    return await new Promise((resolve) => {
-      this.socket.on("connect", () => {
-        this.configure();
-        resolve((this.connected = true));
-      });
-    });
   }
 
   private configure() {
     // Socket Verified
     this.socket?.on("signInSuccess", (mainPayload: any) => {
       store.dispatch(setAuthSuccess(mainPayload));
+
       store.dispatch(getInitialChats());
       this.socket?.emit("getTotalUsers");
 
@@ -113,13 +103,15 @@ export class SocketIO {
     });
   }
 
-  public connectionStatus() {
-    return this.connected;
-  }
-
-  public getActiveSocket() {
-    return this.socket;
+  public async getActiveSocket(): Promise<
+    Socket<DefaultEventsMap, DefaultEventsMap>
+  > {
+    return await new Promise((resolve) => {
+      this.socket.on("connect", () => {
+        this.configure();
+        setActiveSocket(this.socket);
+        resolve(this.socket);
+      });
+    });
   }
 }
-
-// const v = new SocketIO();

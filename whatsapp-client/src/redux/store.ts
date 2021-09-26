@@ -6,13 +6,11 @@ import rootSaga from "./sagas/rootSaga";
 import { refreshToken } from "../utils/refreshToken";
 import { getAccessToken } from "../utils/accessToken";
 import { setAuthFailed, setSocketConnectionSuccess } from "./reducers/auth";
-import { getActiveSocket, initializeSocket } from "./sockets/socketConnection";
-import { createSocketMiddleware } from "./middlewares/socketMiddleware";
-// import { SocketIO } from "../utils/socket";
+import { SocketIO } from "../utils/socket";
+import { setActiveSocket } from "../config/globalSocket";
 
 const sagaMiddleware = createSagaMiddleware();
-const socketMiddleware = createSocketMiddleware();
-const middleware = [logger, socketMiddleware, sagaMiddleware] as const;
+const middleware = [logger, sagaMiddleware] as const;
 
 const store = configureStore({
   reducer: combinedReducers,
@@ -28,15 +26,12 @@ const store = configureStore({
     store.dispatch(setAuthFailed(null));
     return;
   } else {
-    await initializeSocket();
-    const socketConnected = getActiveSocket();
-    // const socket = new SocketIO(
-    //   process.env.REACT_APP_SERVER_URL as string,
-    //   getAccessToken()
-    // );
-    // console.log(socket);
-    // const socketConnected = socket.connectionStatus();
-    if (socketConnected) {
+    const initializedSocket = new SocketIO(
+      process.env.REACT_APP_SERVER_URL as string,
+      getAccessToken()
+    );
+    const socket = await initializedSocket.getActiveSocket();
+    if (socket.connected) {
       store.dispatch(setSocketConnectionSuccess());
     }
     return;

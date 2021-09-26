@@ -1,5 +1,6 @@
 import { takeLatest, call, put } from "@redux-saga/core/effects";
 import { saveNewChatOnMongoDb } from "../../api/saveNewChatOnMongoDb";
+import { getActiveSocket } from "../../config/globalSocket";
 import { getAccessToken } from "../../utils/accessToken";
 import {
   createNewGroup,
@@ -10,7 +11,6 @@ import {
   sendMsgStart,
   setActiveChat,
 } from "../reducers/chat";
-import { getActiveSocket } from "../sockets/socketConnection";
 import store from "../store";
 
 // Logout Saga

@@ -1,5 +1,6 @@
 import { takeLatest, put, call } from "@redux-saga/core/effects";
 import { saveNewChatOnMongoDb } from "../../api/saveNewChatOnMongoDb";
+import { getActiveSocket } from "../../config/globalSocket";
 import {
   resetFileAttachmentModal,
   uploadAttachments,
@@ -9,10 +10,7 @@ import {
   sendFileInit,
   updateSentFileUrl,
 } from "../reducers/chat";
-import { getActiveSocket } from "../sockets/socketConnection";
 import store from "../store";
-
-const allowedTypes = ["image", "video", "audio"];
 
 export const uploadFile = async (attachmentArr: any[], msginfo: any) => {
   return await Promise.all(
