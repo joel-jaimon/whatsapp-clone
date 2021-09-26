@@ -163,6 +163,21 @@ export const chatSlice = createSlice({
       state.activeChat = action.payload;
     },
 
+    initGroupInfoUpdate: (state, action) => {
+      state.chat[action.payload.groupId].chatInfo.loading = true;
+    },
+
+    groupInfoUpdateSuccessfull: (state, action) => {
+      state.chat[action.payload.groupId].chatInfo = {
+        ...state.chat[action.payload.groupId].chatInfo,
+        ...action.payload.updatedParams,
+      };
+    },
+
+    groupInfoUpdateFailed: (state, action) => {
+      state.chat[action.payload.groupId].chatInfo.loading = false;
+    },
+
     updateLastViewedChatsTimestampOfOtherUser: (
       state,
       action: PayloadAction<any>
@@ -206,5 +221,8 @@ export const {
   createNewGroup,
   newGroupCreated,
   updateAuthUsersInfo,
+  groupInfoUpdateFailed,
+  groupInfoUpdateSuccessfull,
+  initGroupInfoUpdate,
 } = chatSlice.actions;
 export default chatSlice;

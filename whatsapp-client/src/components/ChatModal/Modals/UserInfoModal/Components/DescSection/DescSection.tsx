@@ -1,13 +1,32 @@
 import { useState } from "react";
+import { connect } from "react-redux";
+import { initGroupInfoUpdate } from "redux/reducers/chat";
 import s from "./descSection.module.scss";
 
-export const DescSection = (props: any) => {
+const passStateToProps = ({ dropDownMenu, chatState }: any) => ({
+  activeChat: chatState.chat[chatState.activeChat],
+});
+
+const passDispatchToProps = (dispatch: any) => ({
+  initGroupInfoUpdate: (payload: any) => dispatch(initGroupInfoUpdate(payload)),
+});
+
+export const DescSection = connect(
+  passStateToProps,
+  passDispatchToProps
+)((props: any) => {
   console.log(props);
   const [editDescBool, setEditDesc] = useState(false);
   const [newDesc, setNewDesc] = useState(props.desc ?? props?.userInfo?.about);
 
   const handleDescUpdate = () => {
     //TODO
+    props.initGroupInfoUpdate({
+      groupId: props.activeChat.chatInfo._id,
+      updatedParams: {
+        desc: newDesc,
+      },
+    });
     setEditDesc(false);
   };
 
@@ -29,13 +48,28 @@ export const DescSection = (props: any) => {
       >
         <span
           className={s.input}
+          onPaste={(e: any) => e.preventDefault()}
+          onDrag={(e: any) => e.preventDefault()}
+          onDrop={(e: any) => e.preventDefault()}
           contentEditable={props?.userInfo ? false : editDescBool}
-          onChange={
-            props?.userInfo ? () => {} : (e: any) => setNewDesc(e.target.value)
-          }
+          onInput={(e: any) => {
+            try {
+              setNewDesc(e.target.outerText);
+              var selection: any = window.getSelection();
+              var range = document.createRange();
+              selection.removeAllRanges();
+              range.selectNodeContents(e.target);
+              range.collapse(false);
+              selection.addRange(range);
+              e.target.focus();
+            } catch (e) {
+              console.log(e);
+            }
+          }}
         >
           {newDesc}
         </span>
+
         {props?.userInfo ? null : (
           <div className={s.editNameButton}>
             {editDescBool ? (
@@ -87,4 +121,4 @@ export const DescSection = (props: any) => {
       </div>
     </div>
   );
-};
+});

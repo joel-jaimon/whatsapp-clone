@@ -103,6 +103,32 @@ const socketMain = async (io, socket) => {
       });
     });
 
+    // Verification needed
+    socket.on("updateGroupInfo", async (payload) => {
+      await db.collection("groups").updateOne(
+        { _id: ObjectID(payload.groupId) },
+        {
+          $set: { ...payload.updatedParams },
+        }
+      );
+
+      const { participants } = await db.collection("groups").findOne({
+        _id: ObjectID(payload.groupId),
+      });
+
+      for (let i = 0; i < participants.length; i++) {
+        if (participants[i].objectId.toString() != _id.toString()) {
+          const activeFriends = getActiveUserByObjectId(
+            participants[i].objectId
+          );
+          if (activeFriends?.socketId) {
+            console.log("Chats updated for ", activeFriends?.objectId);
+            io.to(activeFriends.socketId).emit("onGroupInfoUpdate", payload);
+          }
+        }
+      }
+    });
+
     socket.on("updateOthersChats", async (payload) => {
       const {
         chatInfo: { participants },

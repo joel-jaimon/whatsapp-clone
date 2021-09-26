@@ -335,3 +335,16 @@
     }
   }
 }
+
+.chatsContainer {
+  height: calc(100vh - 260px);
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #323739;
+  }
+}

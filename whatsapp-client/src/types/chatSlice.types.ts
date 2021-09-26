@@ -11,6 +11,11 @@ export interface ChatInfoType {
   modifiendOn: number;
   type: string;
   clientSide?: boolean;
+  loading?: boolean;
+  // For groups
+  name?: string;
+  createdOn?: string;
+  desc?: string;
 }
 
 export interface MsgTypes {

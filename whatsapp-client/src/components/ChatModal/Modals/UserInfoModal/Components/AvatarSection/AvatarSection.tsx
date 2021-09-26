@@ -4,6 +4,7 @@ import compress from "react-image-file-resizer";
 import { connect } from "react-redux";
 import { setDropDown } from "redux/reducers/dropDown";
 import { setGlobalModal } from "redux/reducers/globalModal";
+import { initGroupInfoUpdate } from "redux/reducers/chat";
 
 const passStateToProps = ({ dropDownMenu, chatState }: any) => ({
   dropMenu: dropDownMenu.dropDown,
@@ -14,6 +15,7 @@ const passStateToProps = ({ dropDownMenu, chatState }: any) => ({
 const passDispatchToProps = (dispatch: any) => ({
   setDropMenu: (dropMenu: any) => dispatch(setDropDown(dropMenu)),
   setGlobalModal: (modal: any) => dispatch(setGlobalModal(modal)),
+  initGroupInfoUpdate: (payload: any) => dispatch(initGroupInfoUpdate(payload)),
 });
 
 export const AvatarSection = connect(
@@ -26,17 +28,22 @@ export const AvatarSection = connect(
     dropMenu,
     setDropMenu,
     setGlobalModal,
+    initGroupInfoUpdate,
     activeChat: { chatInfo },
   }: any) => {
     const [editName, setEditName] = useState(false);
     const [newName, setNewName] = useState(
       chatInfo.name ?? allUsers[otherFriend]?.displayName
     );
-    const [avatar, setAvatar] = useState<any>(chatInfo.avatar);
     const [hoverForNewAvatar, setHoverForNewAvatar] = useState(false);
 
     const handleCompressedImage = (base64Data: string) => {
-      setAvatar(base64Data);
+      initGroupInfoUpdate({
+        groupId: chatInfo._id,
+        updatedParams: {
+          avatar: base64Data,
+        },
+      });
       setDropMenu("");
     };
 
@@ -45,7 +52,12 @@ export const AvatarSection = connect(
         type: "removeAvatar",
         params: {
           removeAvatar: () => {
-            setAvatar(null);
+            initGroupInfoUpdate({
+              groupId: chatInfo._id,
+              updatedParams: {
+                avatar: null,
+              },
+            });
             setGlobalModal(null);
           },
         },
@@ -67,6 +79,12 @@ export const AvatarSection = connect(
     };
 
     const handleNameUpdate = () => {
+      initGroupInfoUpdate({
+        groupId: chatInfo._id,
+        updatedParams: {
+          name: newName,
+        },
+      });
       setEditName(false);
     };
 
@@ -80,7 +98,7 @@ export const AvatarSection = connect(
         params: {
           handleAvatarChange: handleAvatarChange,
           handleRemoveImage: handleRemoveImage,
-          src: type === "changeAvatar" ? avatar : null,
+          src: type === "changeAvatar" ? chatInfo?.avatar : null,
         },
       });
     };
@@ -88,7 +106,8 @@ export const AvatarSection = connect(
     return (
       <div className={s.avatarSection}>
         <div className={s.infoModalAvatar}>
-          {avatar || (otherFriend && allUsers[otherFriend]?.avatar) ? (
+          {chatInfo?.avatar ||
+          (otherFriend && allUsers[otherFriend]?.avatar) ? (
             <div
               onMouseLeave={() => setHoverForNewAvatar(false)}
               onMouseOver={() => setHoverForNewAvatar(true)}
@@ -105,7 +124,11 @@ export const AvatarSection = connect(
                     type="change"
                   />
                 )}
-              <img src={otherFriend ? allUsers[otherFriend].avatar : avatar} />
+              <img
+                src={
+                  otherFriend ? allUsers[otherFriend].avatar : chatInfo?.avatar
+                }
+              />
             </div>
           ) : (
             <div className={s.grpIcon}>

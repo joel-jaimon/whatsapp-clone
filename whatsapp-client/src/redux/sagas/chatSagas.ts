@@ -5,6 +5,8 @@ import { getAccessToken } from "utils/accessToken";
 import {
   createNewGroup,
   getInitialChats,
+  groupInfoUpdateSuccessfull,
+  initGroupInfoUpdate,
   newChatSuccessfullyCreated,
   newGroupCreated,
   onChatsLoadComplete,
@@ -117,5 +119,13 @@ export function* handleGroupCreation() {
       });
       yield put(newGroupCreated(action.payload._id));
     }
+  });
+}
+
+export function* initGroupInfoUpdateSaga() {
+  yield takeLatest(initGroupInfoUpdate.type, function* (action: any) {
+    const socket = getActiveSocket();
+    yield socket.emit("updateGroupInfo", action.payload);
+    yield put(groupInfoUpdateSuccessfull(action.payload));
   });
 }

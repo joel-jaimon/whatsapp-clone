@@ -8,6 +8,7 @@ import {
   activeChatSwitch,
   handleGroupCreation,
   initChatLoad,
+  initGroupInfoUpdateSaga,
   initSendMsgStart,
 } from "./chatSagas";
 import { initFileUpload } from "./uploadAttachmentSaga";
@@ -21,6 +22,7 @@ export default function* rootSaga() {
     initFileUpload(),
     handleGroupCreation(),
     // activeChatSwitch(),
+    initGroupInfoUpdateSaga(),
     initAuthuserInfoUpdateSaga(),
   ]);
 }

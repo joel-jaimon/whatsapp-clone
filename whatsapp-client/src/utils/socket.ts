@@ -4,6 +4,7 @@ import { setActiveSocket } from "../config/globalSocket";
 import { setAuthSuccess, socketDisconnected } from "redux/reducers/auth";
 import {
   getInitialChats,
+  groupInfoUpdateSuccessfull,
   recieveMessage,
   sendMsgSuccessful,
   setTotalAuthUsers,
@@ -70,6 +71,10 @@ export class SocketIO {
 
       this.socket.on("onOtherAuthUsersInfoUpdate", (payload: any) => {
         store.dispatch(updateAuthUsersInfo(payload));
+      });
+
+      this.socket.on("onGroupInfoUpdate", (payload: any) => {
+        store.dispatch(groupInfoUpdateSuccessfull(payload));
       });
 
       // // Handle others chat switches
