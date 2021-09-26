@@ -1,4 +1,6 @@
+import { CallerInfo } from "components/CallerInfo/CallerInfo";
 import { connect } from "react-redux";
+import { peer } from "utils/peerjs";
 import s from "./App.module.scss";
 import { ChatContainer } from "./components/ChatContainer/ChatContainer";
 import { DropMenu } from "./components/Dropmenu/Dropmenu";
@@ -13,6 +15,7 @@ const passStateToProps = ({ authState }: any) => ({
 });
 
 const App = connect(passStateToProps)(({ authState }: any) => {
+  console.log(peer);
   return authState.auth ? (
     <div>
       {authState.socketStatus ? null : (
@@ -24,6 +27,7 @@ const App = connect(passStateToProps)(({ authState }: any) => {
           </div>
         </div>
       )}
+      <CallerInfo />
       <RoomModal />
       <MovableModal />
       <GlobalModal />

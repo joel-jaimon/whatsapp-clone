@@ -13,7 +13,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const { inititalizeMongoDb } = require("./utils/database");
 const { isAuthSocket } = require("./utils/isAuth");
-// const { ExpressPeerServer } = require("peer");
+const { PeerServer } = require("peer");
 
 (async () => {
   if (cluster.isPrimary) {
@@ -81,6 +81,9 @@ const { isAuthSocket } = require("./utils/isAuth");
 
     // app.use(isAuthREST);
     // Don't expose our internal server to the outside world.
+
+    const peerServer = PeerServer({ port: 9000, path: "/peer-server" });
+
     app.use("/", router);
 
     const server = app.listen(0, "localhost");

@@ -7,15 +7,17 @@ import chatSlice from "./reducers/chat";
 import { authSlice } from "./reducers/auth";
 import { attachmentModalSlice } from "./reducers/attachmentModal";
 import { roomModalSlice } from "./reducers/roomModal";
+import { roomSlice } from "./reducers/room";
 
 export const combinedReducers = {
-    authState: authSlice.reducer,
-    chatState: chatSlice.reducer,
-    roomModal: roomModalSlice.reducer,
-    dropDownMenu: dropDownSlice.reducer,
-    globalModal: globalModalSlice.reducer,
-    movableModal: movableModalSlice.reducer,
-    chatModal: chatContainerModalSlice.reducer,
-    sidebarModal: sidebarChatModalSlice.reducer,
-    attachmentModal: attachmentModalSlice.reducer,
+  authState: authSlice.reducer,
+  chatState: chatSlice.reducer,
+  roomState: roomSlice.reducer,
+  roomModal: roomModalSlice.reducer,
+  dropDownMenu: dropDownSlice.reducer,
+  globalModal: globalModalSlice.reducer,
+  movableModal: movableModalSlice.reducer,
+  chatModal: chatContainerModalSlice.reducer,
+  sidebarModal: sidebarChatModalSlice.reducer,
+  attachmentModal: attachmentModalSlice.reducer,
 };
