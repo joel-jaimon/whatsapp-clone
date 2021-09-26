@@ -3,11 +3,10 @@ import logger from "redux-logger";
 import { combinedReducers } from "./rootReducer";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "./sagas/rootSaga";
-import { refreshToken } from "../utils/refreshToken";
-import { getAccessToken } from "../utils/accessToken";
+import { refreshToken } from "utils/refreshToken";
+import { getAccessToken } from "utils/accessToken";
 import { setAuthFailed, setSocketConnectionSuccess } from "./reducers/auth";
-import { SocketIO } from "../utils/socket";
-import { setActiveSocket } from "../config/globalSocket";
+import { SocketIO } from "utils/socket";
 
 const sagaMiddleware = createSagaMiddleware();
 const middleware = [logger, sagaMiddleware] as const;

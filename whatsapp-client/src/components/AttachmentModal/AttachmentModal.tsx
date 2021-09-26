@@ -7,11 +7,11 @@ import { PreviewFooter } from "./components/PreviewFooter";
 import { useState } from "react";
 import { connect } from "react-redux";
 import { VideoPlayer } from "../VideoPlayer/VideoPlayer";
-import { BlendFromBottomAnimation } from "../../animations/BlendFromBottomAnimation";
+import { BlendFromBottomAnimation } from "animations/BlendFromBottomAnimation";
 import {
   changeFileInPreview,
   resetFileAttachmentModal,
-} from "../../redux/reducers/attachmentModal";
+} from "redux/reducers/attachmentModal";
 
 export const FilePreview = ({ file, iconPreview }: any) => {
   if (!file) {

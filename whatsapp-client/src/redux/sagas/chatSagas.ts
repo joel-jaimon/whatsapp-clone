@@ -1,7 +1,7 @@
 import { takeLatest, call, put } from "@redux-saga/core/effects";
-import { saveNewChatOnMongoDb } from "../../api/saveNewChatOnMongoDb";
-import { getActiveSocket } from "../../config/globalSocket";
-import { getAccessToken } from "../../utils/accessToken";
+import { saveNewChatOnMongoDb } from "api/saveNewChatOnMongoDb";
+import { getActiveSocket } from "config/globalSocket";
+import { getAccessToken } from "utils/accessToken";
 import {
   createNewGroup,
   getInitialChats,

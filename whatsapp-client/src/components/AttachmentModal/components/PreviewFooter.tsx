@@ -10,8 +10,8 @@ import {
   changeFileInPreview,
   removeAttachment,
   uploadAttachments,
-} from "../../../redux/reducers/attachmentModal";
-import { parseAttachmentFiles } from "../../../utils/parseAttachementFiles";
+} from "redux/reducers/attachmentModal";
+import { parseAttachmentFiles } from "utils/parseAttachementFiles";
 
 const passStateToProps = ({ attachmentModal, chatState, authState }: any) => ({
   attachmentModal: attachmentModal,

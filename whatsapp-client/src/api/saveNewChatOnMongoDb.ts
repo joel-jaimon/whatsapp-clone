@@ -1,4 +1,4 @@
-import { getAccessToken } from "../utils/accessToken";
+import { getAccessToken } from "utils/accessToken";
 
 export const saveNewChatOnMongoDb = async (
   newChatInfo: any,

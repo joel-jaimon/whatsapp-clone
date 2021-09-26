@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import colors from "../../data/colors.json";
+import colors from "data/colors.json";
 import { ObjectID } from "bson";
 
 const initialState: any = {

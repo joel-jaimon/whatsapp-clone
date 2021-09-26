@@ -12,9 +12,9 @@ import {
   updateChats,
   updateInactiveAuthUser,
   updateTotalAuthUsers,
-} from "../redux/reducers/chat";
-import { setGlobalModal } from "../redux/reducers/globalModal";
-import store from "../redux/store";
+} from "redux/reducers/chat";
+import { setGlobalModal } from "redux/reducers/globalModal";
+import store from "redux/store";
 
 export class SocketIO {
   private socket: Socket<DefaultEventsMap, DefaultEventsMap>;

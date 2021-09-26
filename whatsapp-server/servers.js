@@ -12,7 +12,7 @@ const router = require("./routes");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const { inititalizeMongoDb } = require("./utils/database");
-const { isAuthREST, isAuthSocket } = require("./utils/isAuth");
+const { isAuthSocket } = require("./utils/isAuth");
 // const { ExpressPeerServer } = require("peer");
 
 (async () => {

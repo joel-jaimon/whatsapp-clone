@@ -1,4 +1,4 @@
-import guestAvatars from "../../data/guestAvatars.json";
+import guestAvatars from "data/guestAvatars.json";
 import { takeLatest, call, put } from "@redux-saga/core/effects";
 import {
   authuserInfoUpdateSuccessfull,
@@ -8,10 +8,11 @@ import {
   logout,
   setAuthSuccess,
   setSocketConnectionSuccess,
-} from "../reducers/auth";
+} from "redux/reducers/auth";
 import { v4 as uuidv4 } from "uuid";
-import { getActiveSocket, initializeSocket } from "../sockets/socketConnection";
-import { getAccessToken, setAccessToken } from "../../utils/accessToken";
+import { getAccessToken, setAccessToken } from "utils/accessToken";
+import { SocketIO } from "utils/socket";
+import { getActiveSocket } from "config/globalSocket";
 
 // Google SignIn -------------------------------------------
 const googleSignin = async (payload: any) => {
@@ -37,7 +38,11 @@ function* googleSignIn(payload?: any) {
   //@ts-ignore
   const userData = yield call(googleSignin, payload);
   yield setAccessToken(userData.accessToken);
-  yield call(initializeSocket);
+  const initializedSocket = new SocketIO(
+    process.env.REACT_APP_SERVER_URL as string,
+    getAccessToken()
+  );
+  yield call(initializedSocket.getActiveSocket);
   //@ts-ignore
   const socket = getActiveSocket();
   if (socket) {
@@ -47,7 +52,8 @@ function* googleSignIn(payload?: any) {
 
 // Guest SignIn ---------------------------------------------------
 const handleGuestSignIn = async () => {
-  return await initializeSocket();
+  // return await initializeSocket();
+  return;
 };
 
 function* guestSignIn(payload?: any) {
