@@ -1,0 +1,17 @@
+.loadingChat {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 5px 0px 5px 10px;
+  height: 60px;
+  .sn_avatar {
+    margin-right: 10px;
+  }
+  .sn_div {
+    display: flex;
+    flex-direction: column;
+    span {
+      height: 20px;
+    }
+  }
+}

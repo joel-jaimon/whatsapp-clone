@@ -22,7 +22,7 @@ export const chatSlice = createSlice({
     },
 
     onChatsLoadComplete: (state, action: PayloadAction<any>) => {
-      state.loading = true;
+      state.loading = false;
       state.chat = action.payload;
     },
 

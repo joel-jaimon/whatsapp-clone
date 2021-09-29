@@ -1,19 +1,29 @@
 .userVideo {
+  position: relative;
+  height: 50vh;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 50%;
+  .video {
+    margin: 20px;
+    height: calc(100% - 40px);
+    width: calc(100% - 40px);
+  }
+  video {
+    height: 100%;
+    width: 100%;
     position: relative;
-    height: 50vh;
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: 50%;
-    .video {
-        margin: 20px;
-        height: calc(100% - 40px);
-        width: calc(100% - 40px);
-    }
-    video {
-        height: 100%;
-        width: 100%;
-        // aspect-ratio: 15/9;
-        object-fit: cover;
-        object-position: center;
-    }
+    // aspect-ratio: 15/9;
+    object-fit: cover;
+    object-position: center;
+  }
+  .smokeControl {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+  }
 }

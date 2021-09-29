@@ -62,7 +62,6 @@ const socketMain = async (io, socket) => {
 
     // Signin success state
     socket.on("callOtherUser", async (payload) => {
-      console.log(payload);
       if (payload?.extraParam) {
         const to = getActiveUserByObjectId(payload.extraParam.callTo);
         if (to) {
@@ -98,6 +97,17 @@ const socketMain = async (io, socket) => {
           }
         }
       }
+    });
+
+    socket.on("join-vc-room", (roomId, peerUserId) => {
+      console.log(roomId, peerUserId);
+      socket.join(roomId); // Join the room
+      io.to(roomId).emit("user-connected-to-vc", peerUserId); // Tell everyone else in the room that we joined
+
+      // Communicate the disconnection
+      socket.on("disconnect", () => {
+        io.to(roomId).emit("user-disconnected-from-vc", peerUserId);
+      });
     });
 
     // Send users existing in DB back to sender

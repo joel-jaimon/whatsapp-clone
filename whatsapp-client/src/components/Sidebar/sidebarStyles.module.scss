@@ -1,26 +1,26 @@
 .sidebar {
-    width: 30%;
-    height: 100%;
-    background-color: #131c21;
-    overflow: hidden;
-    border-right: 0.25px solid rgb(71, 71, 71);
-    position: relative;
-    @media screen and (max-width: 1200px) {
-        height: 100vh;
-        width: 35%;
-    }
+  width: 30%;
+  height: 100%;
+  background-color: #131c21;
+  overflow: hidden;
+  border-right: 0.25px solid rgb(71, 71, 71);
+  position: relative;
+  @media screen and (max-width: 1200px) {
+    height: 100vh;
+    width: 35%;
+  }
 }
 
 .chatsContainer {
-    overflow-y: scroll;
-    overflow-x: hidden;
-    height: calc(100% - 80px);
-    border-top: 0.25px solid rgb(49, 49, 49);
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: calc(100% - 80px);
+  border-top: 0.25px solid rgb(49, 49, 49);
 
-    &::-webkit-scrollbar {
-        width: 4px;
-    }
-    &::-webkit-scrollbar-thumb {
-        background-color: rgb(58, 58, 58);
-    }
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgb(58, 58, 58);
+  }
 }
