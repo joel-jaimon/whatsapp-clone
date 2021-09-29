@@ -3,13 +3,13 @@ import Peer from "peerjs";
 import { useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
 import { setGlobalModal } from "redux/reducers/globalModal";
-import { peer } from "utils/peerjs";
 import { UserVideo } from "./UserVideo";
 import s from "./uservideo.module.scss";
 
 const passStateToProps = ({ globalModal, roomModal }: any) => ({
   globalModal: globalModal.modal,
   room: roomModal.modal,
+  newConnection: roomModal.newConnection,
 });
 
 const passDispatchToProps = (dispatch: any) => ({
@@ -19,46 +19,35 @@ const passDispatchToProps = (dispatch: any) => ({
 export const MyVideo = connect(
   passStateToProps,
   passDispatchToProps
-)(({ room, setVideos }: any) => {
+)(({ room, setVideos, newConnection }: any) => {
   const myVideoRef: any = useRef();
+  const peerConnectionRef: { current: Peer | undefined } = useRef();
   const [loading, setLoading] = useState(true);
+  const [stream, setStream] = useState<MediaStream>();
 
   useEffect(() => {
     setLoading(true);
+    const peer = new Peer(undefined, {
+      host: `${process.env.REACT_APP_PEER_SERVER_URL?.split(":")[1].slice(2)}`,
+      port: parseInt(`${process.env.REACT_APP_PEER_SERVER_URL?.split(":")[2]}`),
+      path: "/peer-server",
+    });
+
+    peerConnectionRef.current = peer;
+
     navigator.mediaDevices
       .getUserMedia({
         video: true,
-        audio: false,
+        audio: true,
       })
       .then((stream: MediaStream) => {
         // Play your own stream in this component
         myVideoRef.current.srcObject = stream;
         myVideoRef.current.play();
+        if (!room.acceptedCall)
+          getActiveSocket().emit("callOtherUser", room.extraParam);
         setLoading(false);
-
-        peer.on("call", (call: Peer.MediaConnection) => {
-          // Answer for that call will be our stream
-          call.answer(stream);
-
-          // When we recieve their stream
-          call.on("stream", (otherStream: MediaStream) => {
-            setVideos((prev: any) => [
-              ...prev,
-              <UserVideo stream={otherStream} />,
-            ]);
-          });
-        });
-
-        getActiveSocket().on("user-connected-to-vc", (userId) => {
-          const call = peer.call(userId, stream); // Call the user who just joined
-          // Add their video
-          call.on("stream", (userVideoStream) => {
-            setVideos((prev: any) => [
-              ...prev,
-              <UserVideo stream={userVideoStream} />,
-            ]);
-          });
-        });
+        setStream(stream);
       })
       .catch((e) => {
         if (e.message === "Permission denied") {
@@ -69,11 +58,47 @@ export const MyVideo = connect(
         }
       });
 
-    peer.on("open", (id: string) => {
+    peer.on("open", (myPeerId: string) => {
       // When we first open the app, have us join a room
-      getActiveSocket().emit("join-vc-room", room.peerId, id);
+      getActiveSocket().emit("join-vc-room", room.peerId, myPeerId);
+      peer.on("call", (call: Peer.MediaConnection) => {
+        // Answer for that call will be our stream
+        call.answer(stream);
+        // When we recieve their streamlk
+        call.on("stream", (otherStream: MediaStream) => {
+          setVideos((prev: any) => [
+            ...prev,
+            <UserVideo stream={otherStream} />,
+          ]);
+        });
+      });
     });
   }, []);
+
+  useEffect(() => {
+    if (newConnection) {
+      connectToNewUser(newConnection);
+    }
+  }, [newConnection]);
+
+  const connectToNewUser = (otherPeerUserId: string) => {
+    try {
+      const call = peerConnectionRef.current!.call(
+        otherPeerUserId,
+        stream as MediaStream
+      ); // Call the user who just joined 2
+      console.log(call);
+      call.on("stream", (userVideoStream) => {
+        console.log(userVideoStream);
+        setVideos((prev: any) => [
+          ...prev,
+          <UserVideo stream={userVideoStream} />,
+        ]);
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <div className={s.userVideo}>

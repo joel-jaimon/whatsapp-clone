@@ -4,7 +4,6 @@ import ForwardIcon from "@material-ui/icons/Forward";
 import { useEffect, useRef, useState } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import CloseIcon from "@material-ui/icons/Close";
-import CheckIcon from "@material-ui/icons/Check";
 import { connect } from "react-redux";
 import {
   setGlobalModal,

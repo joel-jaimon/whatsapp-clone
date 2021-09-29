@@ -17,6 +17,7 @@ import {
 import { setGlobalModal } from "redux/reducers/globalModal";
 import store from "redux/store";
 import { othersCalling } from "redux/reducers/room";
+import { setNewConnection } from "redux/reducers/roomModal";
 
 export class SocketIO {
   private socket: Socket<DefaultEventsMap, DefaultEventsMap>;
@@ -84,6 +85,10 @@ export class SocketIO {
 
       this.socket.on("incomingCallCanceledByOther", (payload: any) => {
         store.dispatch(othersCalling(null));
+      });
+
+      this.socket.on("user-connected-to-vc", (payload: any) => {
+        store.dispatch(setNewConnection(payload));
       });
 
       // // Handle others chat switches

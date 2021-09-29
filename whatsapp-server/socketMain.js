@@ -102,11 +102,13 @@ const socketMain = async (io, socket) => {
     socket.on("join-vc-room", (roomId, peerUserId) => {
       console.log(roomId, peerUserId);
       socket.join(roomId); // Join the room
-      io.to(roomId).emit("user-connected-to-vc", peerUserId); // Tell everyone else in the room that we joined
+      socket.broadcast.to(roomId).emit("user-connected-to-vc", peerUserId); // Tell everyone else in the room that we joined
 
       // Communicate the disconnection
       socket.on("disconnect", () => {
-        io.to(roomId).emit("user-disconnected-from-vc", peerUserId);
+        socket.broadcast
+          .to(roomId)
+          .emit("user-disconnected-from-vc", peerUserId);
       });
     });
 

@@ -82,17 +82,12 @@ const { PeerServer } = require("peer");
     // app.use(isAuthREST);
     // Don't expose our internal server to the outside world.
 
-    const peerServer = PeerServer({ port: 9000, path: "/peer-server" });
+    PeerServer({ port: 9000, path: "/peer-server" });
 
     app.use("/", router);
 
     const server = app.listen(0, "localhost");
     console.log("Worker listening...");
-
-    // const peerServer = ExpressPeerServer(server, {
-    //   debug: true,
-    // });
-    // app.use("/peerjs", peerServer);
 
     const io = socketio(server, {
       cors: {

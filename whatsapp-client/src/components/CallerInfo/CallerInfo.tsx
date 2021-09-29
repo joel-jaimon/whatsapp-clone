@@ -23,6 +23,7 @@ export const CallerInfo = connect(
       peerId: callerInfo.peerId,
       callBy: null,
       groupInfo: [],
+      acceptedCall: true,
     });
   };
 

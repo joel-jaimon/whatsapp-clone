@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   modal: null,
+  newConnection: null,
 };
 
 export const roomModalSlice = createSlice({
@@ -11,7 +12,11 @@ export const roomModalSlice = createSlice({
     setRoomModal: (state, action) => {
       state.modal = action.payload;
     },
+
+    setNewConnection: (state, action) => {
+      state.newConnection = action.payload;
+    },
   },
 });
 
-export const { setRoomModal } = roomModalSlice.actions;
+export const { setRoomModal, setNewConnection } = roomModalSlice.actions;
