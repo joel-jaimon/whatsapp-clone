@@ -1,7 +1,6 @@
 import { takeLatest, call, put } from "@redux-saga/core/effects";
 import { saveNewChatOnMongoDb } from "api/saveNewChatOnMongoDb";
 import { getActiveSocket } from "config/globalSocket";
-import { getAccessToken } from "utils/accessToken";
 import {
   createNewGroup,
   getInitialChats,
@@ -13,36 +12,30 @@ import {
   sendMsgStart,
   setActiveChat,
 } from "../reducers/chat";
-import store from "../store";
+import store, { instance } from "../store";
 
 // Logout Saga
 const getInitialChatData = async () => {
-  const data = await fetch(`${process.env.REACT_APP_SERVER_URL}/chats`, {
+  const { data } = await instance({
     method: "GET",
-    credentials: "include",
-    headers: {
-      authorization: `Bearer ${getAccessToken()}`,
-    },
+    url: `/chats`,
+    withCredentials: true,
   });
-  const response = await data.json();
-  return response.data;
+  //@ts-ignore
+  return data.data;
 };
 
 const getAllMessages = async (data: any) => {
   return await Promise.all(
     data.map(async (obj: any) => {
-      const data = await fetch(
-        `${process.env.REACT_APP_SERVER_URL}/chats/${obj._id}`,
-        {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            authorization: `Bearer ${getAccessToken()}`,
-          },
-        }
-      );
-      const res = await data.json();
-      return [obj, res.data];
+      const res = await instance({
+        method: "GET",
+        url: `/chats/${obj._id}`,
+        withCredentials: true,
+      });
+      console.log(res);
+      //@ts-ignore
+      return [obj, res.data.data];
     })
   );
 };

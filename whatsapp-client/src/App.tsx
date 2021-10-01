@@ -8,6 +8,7 @@ import { Login } from "./components/Login/Login";
 import { MovableModal } from "./components/MovableModal/MovableModal";
 import { RoomModal } from "./components/RoomModal/RoomModal";
 import { Sidebar } from "./components/Sidebar/Sidebar";
+import { getAccessToken } from "utils/accessToken";
 
 const passStateToProps = ({ authState }: any) => ({
   authState,

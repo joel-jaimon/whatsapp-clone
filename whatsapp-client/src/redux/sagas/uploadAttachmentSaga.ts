@@ -10,7 +10,7 @@ import {
   sendFileInit,
   updateSentFileUrl,
 } from "../reducers/chat";
-import store from "../store";
+import store, { instance } from "../store";
 
 export const uploadFile = async (attachmentArr: any[], msginfo: any) => {
   return await Promise.all(
@@ -25,20 +25,26 @@ export const uploadFile = async (attachmentArr: any[], msginfo: any) => {
         ? "voice"
         : "document";
 
-      const data = await fetch(
-        `${process.env.REACT_APP_SERVER_URL}/file-upload/${msgType}`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {},
-          body: formData,
-        }
-      );
-      const { path } = await data.json();
+      // const data = await fetch(
+      //   `${process.env.REACT_APP_SERVER_URL}/file-upload/${msgType}`,
+      //   {
+      //     method: "POST",
+      //     credentials: "include",
+      //     headers: {},
+      //     body: formData,
+      //   }
+      // );
+      const { data } = await instance({
+        url: `/file-upload/${msgType}`,
+        method: "POST",
+        data: formData,
+      });
+      // const { path } = await data.json();
       store.dispatch(
         updateSentFileUrl({
           refId: msginfo.refId,
-          updatedUrl: `${process.env.REACT_APP_SERVER_URL}/${path}`,
+          //@ts-ignore
+          updatedUrl: `${process.env.REACT_APP_SERVER_URL}/${data.path}`,
           tempId: _data[1].clientParams.tempId,
         })
       );
@@ -49,7 +55,8 @@ export const uploadFile = async (attachmentArr: any[], msginfo: any) => {
         msgType,
         msgParams: {
           ..._data[1].extraParam,
-          url: `${process.env.REACT_APP_SERVER_URL}/${path}`,
+          //@ts-ignore
+          url: `${process.env.REACT_APP_SERVER_URL}/${data.path}`,
         },
       });
     })

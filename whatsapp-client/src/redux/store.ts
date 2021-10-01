@@ -7,6 +7,50 @@ import { refreshToken } from "utils/refreshToken";
 import { getAccessToken } from "utils/accessToken";
 import { setAuthFailed, setSocketConnectionSuccess } from "./reducers/auth";
 import { SocketIO } from "utils/socket";
+import axios, { AxiosRequestConfig } from "axios";
+
+export const instance = axios.create({
+  baseURL: process.env.REACT_APP_SERVER_URL,
+});
+
+instance.interceptors.request.use(
+  async (request: AxiosRequestConfig<any>) => {
+    request.headers!.Authorization = `Bearer ${getAccessToken()}`;
+    return request;
+  },
+  (error) => {
+    console.log(error);
+  }
+);
+
+instance.interceptors.response.use(
+  async (response: AxiosRequestConfig<any>) => {
+    return response;
+  },
+  async (error) => {
+    const originalConfig = error.config;
+    console.log(error);
+    if (error.response.status === 401 && !originalConfig._retry) {
+      originalConfig._retry = true;
+      try {
+        await refreshToken();
+        //@ts-ignore
+        instance.defaults.headers!.common.Authorization = `Bearer ${getAccessToken()}`;
+        return instance(originalConfig);
+      } catch (_error) {
+        if (_error.response && _error.response.data) {
+          return Promise.reject(_error.response.data);
+        }
+
+        return Promise.reject(_error);
+      }
+    }
+
+    if (error.response.status === 403 && error.response.data) {
+      return Promise.reject(error.response.data);
+    }
+  }
+);
 
 const sagaMiddleware = createSagaMiddleware();
 const middleware = [logger, sagaMiddleware] as const;

@@ -15,7 +15,7 @@ const isAuthREST = (req, res, next) => {
     req.payload = payload;
   } catch (err) {
     console.log(err);
-    res.send(404).end();
+    res.status(401);
   } finally {
     return next();
   }

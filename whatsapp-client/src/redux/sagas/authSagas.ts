@@ -13,6 +13,7 @@ import { v4 as uuidv4 } from "uuid";
 import { getAccessToken, setAccessToken } from "utils/accessToken";
 import { SocketIO } from "utils/socket";
 import { getActiveSocket } from "config/globalSocket";
+import { instance } from "redux/store";
 
 // Google SignIn -------------------------------------------
 const googleSignin = async (payload: { idToken: string }) => {
@@ -82,16 +83,19 @@ export function* initiateSignInSaga() {
 
 // Logout Saga
 const logoutUser = async () => {
-  const data = await fetch(`${process.env.REACT_APP_SERVER_URL}/logout`, {
+  const { status } = await instance({
     method: "GET",
-    credentials: "include",
-    headers: {
-      authorization: `Bearer ${getAccessToken()}`,
-    },
+    url: `/logout`,
+    withCredentials: true,
   });
-  const response = await data.status;
-  console.log(response);
-  return response;
+  // const data = await fetch(`${process.env.REACT_APP_SERVER_URL}/logout`, {
+  //   method: "GET",
+  //   credentials: "include",
+  //   headers: {
+  //     authorization: `Bearer ${getAccessToken()}`,
+  //   },
+  // });
+  return status;
 };
 
 export function* initLogout() {

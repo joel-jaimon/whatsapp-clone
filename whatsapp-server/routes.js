@@ -32,7 +32,7 @@ router.get("/refresh-token", sendRefreshToken);
 router.post("/g-auth/authenticate", googlelogin);
 
 // logout user
-router.get("/logout", logout);
+router.get("/logout", isAuthREST, logout);
 
 // get messages of a particular chat, group
 router.get("/chats/:refId", isAuthREST, getMessages);
@@ -43,6 +43,7 @@ router.get("/chats", isAuthREST, getGroupsChats);
 // upload files
 router.post(
   "/file-upload/:fileType",
+  isAuthREST,
   uploadLocation.single("whatsapp-clone-message-file"),
   handleFileUpload
 );
@@ -50,8 +51,8 @@ router.post(
 // chat message files
 router.get("/resources/:fileType/:key", handleGetResource);
 
-router.post("/create-new-group", handleNewGroup);
+router.post("/create-new-group", isAuthREST, handleNewGroup);
 
-router.post("/create-new-chat", handleNewChat);
+router.post("/create-new-chat", isAuthREST, handleNewChat);
 
 module.exports = router;
