@@ -4,6 +4,8 @@ import s from "./callerInfo.module.scss";
 import CallEndIcon from "@material-ui/icons/CallEnd";
 import VideocamIcon from "@material-ui/icons/Videocam";
 import { setRoomModal } from "redux/reducers/roomModal";
+import { CallerInfoAnimation } from "animations/CallerInfoAnimation";
+import { useState } from "react";
 
 const passStateToProps = ({ roomState }: any) => ({
   callerInfo: roomState.callerInfo,
@@ -18,6 +20,16 @@ export const CallerInfo = connect(
   passStateToProps,
   passDispatchToProps
 )(({ callerInfo, setRoomModal }: any) => {
+  const [reverseAttachmentModalAnimation, setReverseAttachmentModalAnimation] =
+    useState(false);
+
+  const onClose = () => {
+    if (reverseAttachmentModalAnimation) {
+      setReverseAttachmentModalAnimation(false);
+      // resetAttachmentModal();
+    }
+  };
+
   const acceptCall = () => {
     setRoomModal({
       peerId: callerInfo.peerId,
@@ -26,9 +38,13 @@ export const CallerInfo = connect(
       acceptedCall: true,
     });
   };
-
+  //
   return callerInfo?.active ? (
-    <div className={s.callerInfo}>
+    <CallerInfoAnimation
+      onClose={onClose}
+      reverse={reverseAttachmentModalAnimation}
+      className={s.callerInfo}
+    >
       <div className={s.eva}>
         <div
           className={s.img}
@@ -50,6 +66,6 @@ export const CallerInfo = connect(
           </div>
         </div>
       </div>
-    </div>
+    </CallerInfoAnimation>
   ) : null;
 });
