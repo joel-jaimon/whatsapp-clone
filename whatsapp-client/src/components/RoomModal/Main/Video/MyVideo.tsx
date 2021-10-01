@@ -46,6 +46,19 @@ export const MyVideo = connect(
         myVideoRef.current.play();
         if (!room.acceptedCall)
           getActiveSocket().emit("callOtherUser", room.extraParam);
+        peer.on("call", (call: Peer.MediaConnection) => {
+          // Answer for that call will be our stream
+          call.answer(stream);
+          // When we recieve their streamlk
+          call.on("stream", (otherStream: MediaStream) => {
+            setVideos((prev: any) => ({
+              ...prev,
+              [otherStream.id]: (
+                <UserVideo key={otherStream.id} stream={otherStream} />
+              ),
+            }));
+          });
+        });
         setLoading(false);
         setStream(stream);
       })
@@ -61,44 +74,39 @@ export const MyVideo = connect(
     peer.on("open", (myPeerId: string) => {
       // When we first open the app, have us join a room
       getActiveSocket().emit("join-vc-room", room.peerId, myPeerId);
-      peer.on("call", (call: Peer.MediaConnection) => {
-        // Answer for that call will be our stream
-        call.answer(stream);
-        // When we recieve their streamlk
-        call.on("stream", (otherStream: MediaStream) => {
-          setVideos((prev: any) => [
-            ...prev,
-            <UserVideo stream={otherStream} />,
-          ]);
-        });
-      });
     });
   }, []);
+
+  const connectToNewUser = (otherPeerUserId: string) => {
+    try {
+      setTimeout(() => {
+        //@ts-ignore
+        const call = peerConnectionRef.current.call(
+          otherPeerUserId,
+          //@ts-ignore
+          stream
+        ); // Call the user who just joined 2
+        console.log(call);
+        call.on("stream", (userVideoStream) => {
+          console.log(userVideoStream);
+          setVideos((prev: any) => ({
+            ...prev,
+            [userVideoStream.id]: (
+              <UserVideo key={userVideoStream.id} stream={userVideoStream} />
+            ),
+          }));
+        });
+      }, 500);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   useEffect(() => {
     if (newConnection) {
       connectToNewUser(newConnection);
     }
   }, [newConnection]);
-
-  const connectToNewUser = (otherPeerUserId: string) => {
-    try {
-      const call = peerConnectionRef.current!.call(
-        otherPeerUserId,
-        stream as MediaStream
-      ); // Call the user who just joined 2
-      console.log(call);
-      call.on("stream", (userVideoStream) => {
-        console.log(userVideoStream);
-        setVideos((prev: any) => [
-          ...prev,
-          <UserVideo stream={userVideoStream} />,
-        ]);
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  };
 
   return (
     <div className={s.userVideo}>
@@ -129,7 +137,7 @@ export const MyVideo = connect(
             </div>
           ) : null}
         </div>
-        <video loop={true} autoPlay={true} ref={myVideoRef} />
+        <video ref={myVideoRef} muted={true} />
       </div>
     </div>
   );

@@ -14,9 +14,27 @@ export const File = ({
   const { fileName, fileSize, url } = msgParams;
   const [loading, setLoading] = useState(false);
 
-  const downloadFile = () => {
+  function save(data: any) {
+    const blob = new Blob([data], { type: "application/zip" });
+    //@ts-ignore
+    if (window.navigator.msSaveOrOpenBlob) {
+      //@ts-ignore
+      window.navigator.msSaveBlob(blob, filename);
+    } else {
+      const elem = window.document.createElement("a");
+      elem.href = window.URL.createObjectURL(blob);
+      elem.download = msgParams.fileName;
+      document.body.appendChild(elem);
+      elem.click();
+      document.body.removeChild(elem);
+    }
+    setLoading(false);
+  }
+
+  const downloadFile = async () => {
     setLoading(true);
-    setTimeout(() => setLoading(false), 2000);
+    const blob = await fetch(url).then((r) => r.blob());
+    save(blob);
   };
 
   return (

@@ -71,6 +71,7 @@ export const Video = connect(
     };
 
     const downloadVideo = () => {
+      // Faking video download
       setLoading(true);
       setTimeout(() => {
         setDownloaded(true);
@@ -112,7 +113,7 @@ export const Video = connect(
                     onClick={loading ? cancelDownload : downloadVideo}
                     className={s.downloadWrapper}
                   >
-                    {loading ? (
+                    {loading || stillSending ? (
                       <button onClick={cancelDownload} className={s.loader}>
                         <CloseIcon className={s.closeIcon} />
                         <CircularProgress className={s.icon} />

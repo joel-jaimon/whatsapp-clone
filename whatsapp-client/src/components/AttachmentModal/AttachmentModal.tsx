@@ -65,7 +65,6 @@ export const AttachmentModal = connect(
     const onClose = () => {
       if (reverseAttachmentModalAnimation) {
         setReverseAttachmentModalAnimation(false);
-        resetAttachmentModal();
       }
     };
 

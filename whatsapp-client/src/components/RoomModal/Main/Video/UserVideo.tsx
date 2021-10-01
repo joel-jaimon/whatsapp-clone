@@ -63,7 +63,10 @@ export const UserVideo = connect(
             </div>
           ) : null}
         </div>
-        <video ref={videoRef as LegacyRef<HTMLVideoElement> | undefined} />
+        <video
+          muted={true}
+          ref={videoRef as LegacyRef<HTMLVideoElement> | undefined}
+        />
       </div>
     </div>
   );
