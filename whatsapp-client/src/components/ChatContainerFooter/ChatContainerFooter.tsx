@@ -26,9 +26,11 @@ import {
   addAttachments,
   resetFileAttachmentModal,
   setAttachmentModal,
+  uploadAttachments,
 } from "redux/reducers/attachmentModal";
 import { sendMsgStart } from "redux/reducers/chat";
 import { parseAttachmentFiles } from "utils/parseAttachementFiles";
+import { setGlobalModal } from "redux/reducers/globalModal";
 
 const passStateFromProps = ({
   chatState,
@@ -45,6 +47,9 @@ const passDispatchToProps = (dispatch: any) => ({
   addAttachments: (files: any[]) => dispatch(addAttachments(files)),
   resetAttachmentModal: () => dispatch(resetFileAttachmentModal(null)),
   sendMessage: (payload: any) => dispatch(sendMsgStart(payload)),
+  setGlobalModal: (modal: any) => dispatch(setGlobalModal(modal)),
+  startUploadingAttachments: (payload: any) =>
+    dispatch(uploadAttachments(payload)),
 });
 
 export const ChatContainerFooter = connect(
@@ -59,6 +64,8 @@ export const ChatContainerFooter = connect(
     resetAttachmentModal,
     authUser,
     sendMessage,
+    setGlobalModal,
+    startUploadingAttachments,
   }: any) => {
     const [height, setHeight] = useState(0);
     const [activity, setActivity] = useState<boolean | string>(false);
@@ -123,6 +130,42 @@ export const ChatContainerFooter = connect(
       setAttachmentModal(activeChat?.chatInfo.id);
     };
 
+    const sendClickedImage = async (e: Blob) => {
+      closeAttachmentMenu();
+      const file = new File([e], `${uuidv4().replaceAll("-", "")}.png`, {
+        type: "image/png",
+      });
+      const parsedFile = await parseAttachmentFiles([file]);
+      startUploadingAttachments({
+        msgInfo: {
+          type: activeChat.chatInfo.type,
+          // msgType:"",
+          refId: activeChat.chatInfo._id,
+          timestamp: Date.now(),
+          sentBy: authUser.objectId,
+        },
+        files: parsedFile,
+        clientSide: activeChat.chatInfo?.clientSide,
+      });
+    };
+
+    const takePhoto = () => {
+      if (localStorage.getItem("_streamPermission")) {
+        setGlobalModal({
+          type: "takePhoto",
+          params: {
+            viaFooter: true,
+            send: sendClickedImage,
+          },
+        });
+      } else {
+        setGlobalModal({
+          type: "allowCamera",
+          params: {},
+        });
+      }
+    };
+
     const attachmentsArray = [
       <PictureIcon className={s.pictureIcon}>
         <input
@@ -132,7 +175,7 @@ export const ChatContainerFooter = connect(
           accept="image/png"
         />
       </PictureIcon>,
-      <CameraIcon className={s.cameraIcon} />,
+      <CameraIcon onClick={takePhoto} className={s.cameraIcon} />,
       <DocumentIcon className={s.docIcon}>
         <input
           onChange={handleAttachments}

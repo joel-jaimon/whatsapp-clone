@@ -70,7 +70,11 @@ export const TakePhoto = connect(
     fetch(photo)
       .then((res) => res.blob())
       .then((e) => {
-        globalModal.params.handleAvatarChange(e);
+        if (globalModal.params?.viaFooter) {
+          globalModal.params.send(e);
+        } else {
+          globalModal.params.handleAvatarChange(e);
+        }
         setGlobalModal(null);
       });
   };
