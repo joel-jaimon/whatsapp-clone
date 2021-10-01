@@ -1,10 +1,18 @@
 const { ObjectId } = require("bson");
 const { mongoDB } = require("../../utils/database");
 
-const handleNewGroup = async (req, res) => {
-  const db = await mongoDB().db();
-  const { _id, participants, modifiedOn, type, desc, createdOn, avatar, name } =
-    req.body;
+export const handleNewGroup = async (req: any, res: any) => {
+  const db: any = await mongoDB().db();
+  const {
+    _id,
+    participants,
+    modifiedOn,
+    type,
+    desc,
+    createdOn,
+    avatar,
+    name,
+  }: any = req.body;
 
   console.log(req.body);
 
@@ -14,7 +22,7 @@ const handleNewGroup = async (req, res) => {
 
   await db.collection("groups").insertOne({
     _id: ObjectId(_id),
-    participants: participants.map((participant) => {
+    participants: participants.map((participant: any) => {
       return {
         objectId: ObjectId(participant.objectId),
         lastViewed: participant.lastViewed,
@@ -30,5 +38,3 @@ const handleNewGroup = async (req, res) => {
 
   return res.sendStatus(200);
 };
-
-module.exports = { handleNewGroup };

@@ -1,13 +1,3 @@
-const { ObjectID, ObjectId } = require("bson");
-const { verify } = require("jsonwebtoken");
-const {
-  addToActiveUsers,
-  getActiveUserByObjectId,
-  removeActiveUserByObjectId,
-  getActiveUserBySocketId,
-} = require("./utils/activeUsers");
-const { mongoDB } = require("./utils/database");
-
 const socketMain = async (io, socket) => {
   try {
     const jwtToken = socket.handshake.auth.accessToken;

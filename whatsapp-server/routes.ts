@@ -4,22 +4,19 @@ const {
   sendRefreshToken,
   logout,
 } = require("./controllers/auth/auth");
-const { getMessages, getGroupsChats } = require("./controllers/mongo/chats");
-const { isAuthREST } = require("./utils/isAuth");
-const multer = require("multer");
-const {
-  handleFileUpload,
-  handleGetResource,
-} = require("./controllers/s3/handlers");
-const { handleNewGroup } = require("./controllers/random/handleNewGroup");
-const { handleNewChat } = require("./controllers/random/handleNewChat");
-var router = express.Router();
+import { getMessages, getGroupsChats } from "./controllers/mongo/chats";
+import { isAuthREST } from "./utils/isAuth";
+import * as multer from "multer";
+import { handleFileUpload, handleGetResource } from "./controllers/s3/handlers";
+import { handleNewGroup } from "./controllers/random/handleNewGroup";
+import { handleNewChat } from "./controllers/random/handleNewChat";
+const router = express.Router();
 
 // temp upload location for files
 const uploadLocation = multer({ dest: "uploads/" });
 
 // check if server is active
-router.get("/", (_, res) => {
+router.get("/", (_: any, res: any) => {
   res.json({
     active: true,
   });

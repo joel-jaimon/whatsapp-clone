@@ -1,33 +1,33 @@
-require("dotenv").config();
-const express = require("express");
-const cluster = require("cluster");
-const net = require("net");
-const socketio = require("socket.io");
-const socketMain = require("./socketMain");
 const port = 8181;
-const num_processes = require("os").cpus().length;
+require("dotenv").config();
+import * as express from "express";
+const cluster = require("cluster");
+import * as net from "net";
+const socketio = require("socket.io");
 const io_redis = require("socket.io-redis");
-const farmhash = require("farmhash");
-const router = require("./routes");
-const cookieParser = require("cookie-parser");
-const cors = require("cors");
-const { inititalizeMongoDb } = require("./utils/database");
-const { isAuthSocket } = require("./utils/isAuth");
-const { PeerServer } = require("peer");
+const num_processes = require("os").cpus().length;
+import { socketMain } from "./socketMain";
+import * as farmhash from "farmhash";
+import * as router from "./routes";
+import * as cookieParser from "cookie-parser";
+import * as cors from "cors";
+import { inititalizeMongoDb } from "./utils/database";
+import { isAuthSocket } from "./utils/isAuth";
+import { PeerServer } from "peer";
 
 (async () => {
-  if (cluster.isPrimary) {
+  if (cluster.isMaster) {
     // This stores our workers. We need to keep them to be able to reference
     // them based on source IP address. It's also useful for auto-restart,
     // for example.
-    let workers = [];
+    const workers: any = [];
 
     // Helper function for spawning worker at index 'i'.
-    let spawn = (i) => {
+    const spawn = (i: number) => {
       workers[i] = cluster.fork();
 
       // Optional: Restart worker on exit
-      workers[i].on("exit", (code, signal) => {
+      workers[i].on("exit", () => {
         console.log("respawning worker", i);
         spawn(i);
       });
@@ -46,7 +46,7 @@ const { PeerServer } = require("peer");
     // Compared against "real" hashing (from the sticky-session code) and
     // "real" IP number conversion, this function is on par in terms of
     // worker index distribution only much faster.
-    const worker_index = (ip, len) => {
+    const worker_index = (ip: string, len: number) => {
       return farmhash.fingerprint32(ip) % len; // Farmhash is the fastest and works with IPv6, too
     };
 
@@ -54,14 +54,17 @@ const { PeerServer } = require("peer");
     // module INSTEAD OF the http module. Express will use http, but we need
     // an independent tcp port open for cluster to work. This is the port that
     // will face the internet
-    const server = net.createServer({ pauseOnConnect: true }, (connection) => {
-      // We received a connection and need to pass it to the appropriate
-      // worker. Get the worker for this connection's source IP and pass
-      // it the connection.
-      let worker =
-        workers[worker_index(connection.remoteAddress, num_processes)];
-      worker.send("sticky-session:connection", connection);
-    });
+    const server = net.createServer(
+      { pauseOnConnect: true },
+      (connection: net.Socket) => {
+        // We received a connection and need to pass it to the appropriate
+        // worker. Get the worker for this connection's source IP and pass
+        // it the connection.
+        const worker =
+          workers[worker_index(connection.remoteAddress, num_processes)];
+        worker.send("sticky-session:connection", connection);
+      }
+    );
 
     server.listen(port);
     console.log(`Master listening on port ${port}`);
@@ -84,12 +87,13 @@ const { PeerServer } = require("peer");
 
     PeerServer({ port: 9000, path: "/peer-server" });
 
+    //@ts-ignore
     app.use("/", router);
 
-    const server = app.listen(0, "localhost");
+    const server: any = app.listen(0, "localhost");
     console.log("Worker listening...");
 
-    const io = socketio(server, {
+    const io: any = socketio(server, {
       cors: {
         origin: "http://localhost:3000",
         credentials: true,
@@ -110,7 +114,7 @@ const { PeerServer } = require("peer");
 
     io.use(isAuthSocket);
 
-    io.on("connection", (socket, next) => {
+    io.on("connection", (socket: any) => {
       socketMain(io, socket);
       console.log(`connected to worker: ${cluster.worker.id}`);
     });
@@ -123,7 +127,7 @@ const { PeerServer } = require("peer");
       // Emulate a connection event on the server by emitting the
       // event with the connection the master sent us.
       server.emit("connection", connection);
-
+      //@ts-ignore
       connection.resume();
     });
   }

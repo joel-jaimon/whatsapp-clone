@@ -1,14 +1,14 @@
-const { OAuth2Client } = require("google-auth-library");
-const { mongoDB } = require("../../utils/database");
-const { v4: uuidv4 } = require("uuid");
-const {
+import { OAuth2Client } from "google-auth-library";
+import { mongoDB } from "../../utils/database";
+import { v4 as uuidv4 } from "uuid";
+import {
   createAccessToken,
   createRefreshToken,
-} = require("../../utils/handleTokens");
+} from "../../utils/handleTokens";
 
-const axios = require("axios");
+import axios from "axios";
 
-const verify = require("jsonwebtoken/verify");
+import { verify } from "jsonwebtoken";
 const { ObjectId } = require("bson");
 
 const refreshTokenExp = 7 * 24 * 60 * 60 * 1000;
@@ -17,9 +17,9 @@ const accessTokenExp = 30 * 1000;
 const client = new OAuth2Client(process.env.GAUTH_CLIENT_ID);
 
 // Refresh token endpoint
-const sendRefreshToken = async (req, res) => {
-  const db = await mongoDB().db();
-  const token = req.cookies.wc_RTN;
+export const sendRefreshToken = async (req: any, res: any) => {
+  const db: any = await mongoDB().db();
+  const token: any = req.cookies.wc_RTN;
 
   if (!token) {
     return res.status(401).send({
@@ -27,7 +27,7 @@ const sendRefreshToken = async (req, res) => {
     });
   }
 
-  let payload = null;
+  let payload: any = null;
   try {
     payload = verify(token, process.env.JWT_REFRESH_SECRET);
   } catch (err) {
@@ -36,7 +36,7 @@ const sendRefreshToken = async (req, res) => {
     });
   }
 
-  const { _id } = await db
+  const { _id }: any = await db
     .collection("googleAuthUsers")
     .findOne({ _id: ObjectId(payload._id) });
 
@@ -60,13 +60,13 @@ const sendRefreshToken = async (req, res) => {
 };
 
 // Create / SigIn new user endpoint
-const googlelogin = async (req, res) => {
+export const googlelogin = async (req: any, res: any) => {
   try {
-    const db = await mongoDB().db();
+    const db: any = await mongoDB().db();
 
-    const { tokenId } = req.body;
+    const { tokenId }: any = req.body;
 
-    const { payload } = await client.verifyIdToken({
+    const { payload }: any = await client.verifyIdToken({
       idToken: tokenId,
     });
 
@@ -76,8 +76,8 @@ const googlelogin = async (req, res) => {
       });
     }
 
-    const { name, picture, email } = payload;
-    const rs = await db.collection("googleAuthUsers").findOne({ email });
+    const { name, picture, email }: any = payload;
+    const rs: any = await db.collection("googleAuthUsers").findOne({ email });
 
     if (rs?._id) {
       const refreshToken = createRefreshToken(rs._id, refreshTokenExp);
@@ -92,13 +92,15 @@ const googlelogin = async (req, res) => {
         accessToken: accessToken,
       });
     } else {
-      const image = await axios.get(picture, { responseType: "arraybuffer" });
+      const image: any = await axios.get(picture, {
+        responseType: "arraybuffer",
+      });
       const raw = Buffer.from(image.data).toString("base64");
       const base64Image =
         "data:" + image.headers["content-type"] + ";base64," + raw;
 
       const userUid = uuidv4();
-      const { _id } = await db.collection("googleAuthUsers").insertOne({
+      const { _id }: any = await db.collection("googleAuthUsers").insertOne({
         uid: userUid,
         displayName: name,
         authType: "google",
@@ -108,8 +110,8 @@ const googlelogin = async (req, res) => {
         createdOn: Date.now(),
       });
 
-      const refreshToken = createRefreshToken(_id, refreshTokenExp);
-      const accessToken = createAccessToken(_id, accessTokenExp);
+      const refreshToken: any = createRefreshToken(_id, refreshTokenExp);
+      const accessToken: any = createAccessToken(_id, accessTokenExp);
 
       res.cookie("wc_RTN", refreshToken, {
         maxAge: refreshTokenExp,
@@ -126,15 +128,9 @@ const googlelogin = async (req, res) => {
   }
 };
 
-const logout = async (req, res) => {
+export const logout = async (_: any, res: any) => {
   res.clearCookie("wc_RTN");
   res.status(200).json({
     hi: "Thanks for testing...!",
   });
-};
-
-module.exports = {
-  logout,
-  googlelogin,
-  sendRefreshToken,
 };

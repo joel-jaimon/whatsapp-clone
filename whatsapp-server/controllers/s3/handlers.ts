@@ -1,13 +1,9 @@
-const {
-  getFileStream,
-  uploadFile,
-  getSignedUrlAndSizeofFile,
-} = require("../../utils/handleS3");
+import { getFileStream, uploadFile } from "../../utils/handleS3";
 const fs = require("fs");
 const util = require("util");
 const unlinkFile = util.promisify(fs.unlink);
 
-const handleFileUpload = async (req, res) => {
+export const handleFileUpload = async (req: any, res: any) => {
   const file = req.file;
   const fileType = req.params.fileType;
   await uploadFile(file, fileType);
@@ -15,10 +11,10 @@ const handleFileUpload = async (req, res) => {
   res.status(200).send({ path: `resources/${fileType}/${file.filename}` });
 };
 
-const handleGetResource = async (req, res) => {
-  const { fileType, key } = req.params;
+export const handleGetResource = async (req: any, res: any) => {
+  const { fileType, key }: any = req.params;
   const fileKey = `${fileType}/${key}`;
-  const readStream = await getFileStream(fileKey);
+  const readStream: any = await getFileStream(fileKey);
 
   // if (fileType === "voice") {
   //   // Ensure there is a range given for the media file
@@ -49,10 +45,6 @@ const handleGetResource = async (req, res) => {
   // } else {
   res.set("Cache-Control", "public, max-age=604800, immutable");
   // }
+  //@ts-ignore
   readStream.pipe(res);
-};
-
-module.exports = {
-  handleFileUpload,
-  handleGetResource,
 };

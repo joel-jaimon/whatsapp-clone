@@ -1,7 +1,7 @@
-const { ObjectId } = require("bson");
-const { mongoDB } = require("../../utils/database");
+import { ObjectId } from "bson";
+import { mongoDB } from "../../utils/database";
 
-const handleNewChat = async (req, res) => {
+export const handleNewChat = async (req: any, res: any) => {
   const db = await mongoDB().db();
   const { _id, participants, modifiedOn, type } = req.body;
 
@@ -12,10 +12,10 @@ const handleNewChat = async (req, res) => {
   }
 
   await db.collection("chats").insertOne({
-    _id: ObjectId(_id),
-    participants: participants.map((participant) => {
+    _id: new ObjectId(_id),
+    participants: participants.map((participant: any) => {
       return {
-        objectId: ObjectId(participant.objectId),
+        objectId: new ObjectId(participant.objectId),
         lastViewed: participant.lastViewed,
       };
     }),
@@ -25,5 +25,3 @@ const handleNewChat = async (req, res) => {
 
   return res.sendStatus(200);
 };
-
-module.exports = { handleNewChat };
