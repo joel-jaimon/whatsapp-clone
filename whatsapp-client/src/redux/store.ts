@@ -9,11 +9,11 @@ import { setAuthFailed, setSocketConnectionSuccess } from "./reducers/auth";
 import { SocketIO } from "utils/socket";
 import axios, { AxiosRequestConfig } from "axios";
 
-export const instance = axios.create({
+export const globalAxios = axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL,
 });
 
-instance.interceptors.request.use(
+globalAxios.interceptors.request.use(
   async (request: AxiosRequestConfig<any>) => {
     request.headers!.Authorization = `Bearer ${getAccessToken()}`;
     return request;
@@ -23,7 +23,7 @@ instance.interceptors.request.use(
   }
 );
 
-instance.interceptors.response.use(
+globalAxios.interceptors.response.use(
   async (response: AxiosRequestConfig<any>) => {
     return response;
   },
@@ -35,8 +35,8 @@ instance.interceptors.response.use(
       try {
         await refreshToken();
         //@ts-ignore
-        instance.defaults.headers!.common.Authorization = `Bearer ${getAccessToken()}`;
-        return instance(originalConfig);
+        globalAxios.defaults.headers!.common.Authorization = `Bearer ${getAccessToken()}`;
+        return globalAxios(originalConfig);
       } catch (_error) {
         if (_error.response && _error.response.data) {
           return Promise.reject(_error.response.data);

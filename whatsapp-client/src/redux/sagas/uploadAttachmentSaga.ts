@@ -10,7 +10,7 @@ import {
   sendFileInit,
   updateSentFileUrl,
 } from "../reducers/chat";
-import store, { instance } from "../store";
+import store, { globalAxios } from "../store";
 
 export const uploadFile = async (attachmentArr: any[], msginfo: any) => {
   return await Promise.all(
@@ -34,7 +34,7 @@ export const uploadFile = async (attachmentArr: any[], msginfo: any) => {
       //     body: formData,
       //   }
       // );
-      const { data } = await instance({
+      const { data } = await globalAxios({
         url: `/file-upload/${msgType}`,
         method: "POST",
         data: formData,

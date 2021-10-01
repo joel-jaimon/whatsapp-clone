@@ -13,7 +13,7 @@ import { v4 as uuidv4 } from "uuid";
 import { getAccessToken, setAccessToken } from "utils/accessToken";
 import { SocketIO } from "utils/socket";
 import { getActiveSocket } from "config/globalSocket";
-import { instance } from "redux/store";
+import { globalAxios } from "redux/store";
 
 // Google SignIn -------------------------------------------
 const googleSignin = async (payload: { idToken: string }) => {
@@ -83,7 +83,7 @@ export function* initiateSignInSaga() {
 
 // Logout Saga
 const logoutUser = async () => {
-  const { status } = await instance({
+  const { status } = await globalAxios({
     method: "GET",
     url: `/logout`,
     withCredentials: true,

@@ -1,11 +1,11 @@
-import { instance } from "redux/store";
+import { globalAxios } from "redux/store";
 
 export const saveNewChatOnMongoDb = async (
   newChatInfo: any,
   endpointPath: string
 ) => {
   try {
-    const { data } = await instance({
+    const { data } = await globalAxios({
       method: "POST",
       url: endpointPath,
       data: newChatInfo.chatInfo,

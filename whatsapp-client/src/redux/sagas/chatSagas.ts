@@ -12,11 +12,11 @@ import {
   sendMsgStart,
   setActiveChat,
 } from "../reducers/chat";
-import store, { instance } from "../store";
+import store, { globalAxios } from "../store";
 
 // Logout Saga
 const getInitialChatData = async () => {
-  const { data } = await instance({
+  const { data } = await globalAxios({
     method: "GET",
     url: `/chats`,
     withCredentials: true,
@@ -28,7 +28,7 @@ const getInitialChatData = async () => {
 const getAllMessages = async (data: any) => {
   return await Promise.all(
     data.map(async (obj: any) => {
-      const res = await instance({
+      const res = await globalAxios({
         method: "GET",
         url: `/chats/${obj._id}`,
         withCredentials: true,
