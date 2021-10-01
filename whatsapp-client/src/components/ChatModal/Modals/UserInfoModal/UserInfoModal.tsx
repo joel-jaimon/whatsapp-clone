@@ -55,7 +55,9 @@ export const UserInfoModal = connect(
         />
         <MediaSection />
         {otherFriend ? null : <GeneralSettingsSection />}
-        <ParticipantSection />
+        {otherFriend ? null : (
+          <ParticipantSection onClose={() => setReverseAnimation(true)} />
+        )}
         {otherFriend ? null : (
           <div className={s.exit}>
             <svg

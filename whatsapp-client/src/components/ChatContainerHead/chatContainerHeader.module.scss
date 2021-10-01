@@ -60,3 +60,19 @@
 .roomControls {
   display: flex;
 }
+
+.callButton {
+  background: none;
+  border: none;
+  position: relative;
+  .activeBullet {
+    position: absolute;
+    background-color: #00c0ad;
+    top: 3px;
+    right: 3px;
+    z-index: 1;
+    height: 5px;
+    border-radius: 5px;
+    width: 5px;
+  }
+}

@@ -1,5 +1,6 @@
 import { takeLatest, put } from "@redux-saga/core/effects";
-import { callingActive, initCall } from "redux/reducers/callerInfo";
+import { getActiveSocket } from "config/globalSocket";
+import { callingActive, initCall, rejectCall } from "redux/reducers/callerInfo";
 import { setRoomModal } from "redux/reducers/roomModal";
 import store from "redux/store";
 import { v4 as uuidv4 } from "uuid";
@@ -18,5 +19,12 @@ export function* initCallSaga() {
         acceptedCall: false,
       })
     );
+  });
+}
+
+export function* rejectCallSaga() {
+  yield takeLatest(rejectCall.type, function* (action: any) {
+    const socket = getActiveSocket();
+    yield socket.emit("reject-call");
   });
 }

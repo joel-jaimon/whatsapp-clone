@@ -25,6 +25,7 @@ export const callerInfoSlice = createSlice({
     callConnected: (state, action: PayloadAction<any>) => {
       state.ringing = true;
     },
+
     othersCalling: (state, action: PayloadAction<any>) => {
       state.incomingCall = true;
       state.callerInfo = action.payload;

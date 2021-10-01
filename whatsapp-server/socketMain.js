@@ -4,6 +4,7 @@ const {
   addToActiveUsers,
   getActiveUserByObjectId,
   removeActiveUserByObjectId,
+  getActiveUserBySocketId,
 } = require("./utils/activeUsers");
 const { mongoDB } = require("./utils/database");
 
@@ -99,6 +100,7 @@ const socketMain = async (io, socket) => {
       }
     });
 
+    // join user to a video call room
     socket.on("join-vc-room", (roomId, peerUserId) => {
       console.log(roomId, peerUserId);
       socket.join(roomId); // Join the room
@@ -110,6 +112,28 @@ const socketMain = async (io, socket) => {
           .to(roomId)
           .emit("user-disconnected-from-vc", peerUserId);
       });
+    });
+
+    // when user ends vc after joining
+    socket.on("diconnect-from-call", (roomId, peerUserId) => {
+      socket.broadcast.to(roomId).emit("user-disconnected-from-vc", peerUserId);
+    });
+
+    // whien user rejects call
+    socket.on("reject-call", (roomId) => {
+      socket.broadcast
+        .to(roomId)
+        .emit("call-rejected", getActiveUserBySocketId(socket.id).objectId);
+    });
+
+    // when user is already on call
+    socket.on("user-on-call", (roomId) => {
+      socket.broadcast
+        .to(roomId)
+        .emit(
+          "other-user-on-call",
+          getActiveUserBySocketId(socket.id).objectId
+        );
     });
 
     // Send users existing in DB back to sender
