@@ -12,7 +12,7 @@ const initialState = {
   },
 };
 
-export const roomSlice = createSlice({
+export const callerInfoSlice = createSlice({
   name: "roomReducer",
   initialState,
   reducers: {
@@ -46,4 +46,4 @@ export const {
   othersCalling,
   initCall,
   callingActive,
-} = roomSlice.actions;
+} = callerInfoSlice.actions;

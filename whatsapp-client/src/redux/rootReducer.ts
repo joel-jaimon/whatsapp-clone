@@ -7,12 +7,12 @@ import chatSlice from "./reducers/chat";
 import { authSlice } from "./reducers/auth";
 import { attachmentModalSlice } from "./reducers/attachmentModal";
 import { roomModalSlice } from "./reducers/roomModal";
-import { roomSlice } from "./reducers/room";
+import { callerInfoSlice } from "./reducers/callerInfo";
 
 export const combinedReducers = {
   authState: authSlice.reducer,
   chatState: chatSlice.reducer,
-  roomState: roomSlice.reducer,
+  roomState: callerInfoSlice.reducer,
   roomModal: roomModalSlice.reducer,
   dropDownMenu: dropDownSlice.reducer,
   globalModal: globalModalSlice.reducer,

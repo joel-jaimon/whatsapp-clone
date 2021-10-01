@@ -16,7 +16,7 @@ import {
 } from "redux/reducers/chat";
 import { setGlobalModal } from "redux/reducers/globalModal";
 import store from "redux/store";
-import { othersCalling } from "redux/reducers/room";
+import { othersCalling } from "redux/reducers/callerInfo";
 import { setNewConnection } from "redux/reducers/roomModal";
 
 export class SocketIO {

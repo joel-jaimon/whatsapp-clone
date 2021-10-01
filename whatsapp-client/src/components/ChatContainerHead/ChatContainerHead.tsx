@@ -3,7 +3,7 @@ import s from "./chatContainerHeader.module.scss";
 import { setChatContainerModal } from "redux/reducers/chatContainerModal";
 import { setDropDown } from "redux/reducers/dropDown";
 import { formatTime } from "utils/formatTime";
-import { initCall } from "redux/reducers/room";
+import { initCall } from "redux/reducers/callerInfo";
 
 const passStateToProps = ({ chatState, dropDownMenu, authState }: any) => ({
   dropDown: dropDownMenu.dropDown,

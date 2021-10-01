@@ -140,7 +140,7 @@ export const MyVideo = connect(
     const disconnectFromCall = () => {
       toggleTrack(videoStatus, "video");
       toggleTrack(micStatus, "audio");
-      peerConnectionRef.current?.destroy();
+      peerConnectionRef.current!.destroy();
       if (stream?.getTracks()) {
         const tracks: MediaStreamTrack[] = stream?.getTracks();
         tracks.forEach((track: MediaStreamTrack) => track.stop());

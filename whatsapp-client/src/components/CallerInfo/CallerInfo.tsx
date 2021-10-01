@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { rejectCall } from "redux/reducers/room";
+import { rejectCall } from "redux/reducers/callerInfo";
 import s from "./callerInfo.module.scss";
 import CallEndIcon from "@material-ui/icons/CallEnd";
 import VideocamIcon from "@material-ui/icons/Videocam";

@@ -11,7 +11,7 @@ import {
   initGroupInfoUpdateSaga,
   initSendMsgStart,
 } from "./chatSagas";
-import { initCallSaga } from "./roomSagas";
+import { initCallSaga } from "./callerInfoSagas";
 import { initFileUpload } from "./uploadAttachmentSaga";
 
 export default function* rootSaga() {
