@@ -151,7 +151,15 @@ export const Video = connect(
                       />{" "}
                     </div>
                   ) : (
-                    <small>{formatTime(timestamp)}</small>
+                    <div className={s._A}>
+                      <small
+                        style={{
+                          marginRight: "5px",
+                        }}
+                      >
+                        {formatTime(timestamp)}
+                      </small>
+                    </div>
                   )}
                 </div>
               </div>

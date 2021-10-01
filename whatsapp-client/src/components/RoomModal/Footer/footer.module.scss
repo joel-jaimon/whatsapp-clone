@@ -1,27 +1,30 @@
 .roomFooter {
-    background-color: #2a2f32;
-    width: 300px;
-    display: flex;
-    border-radius: 12px;
-    justify-content: center;
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    .Icon {
-        padding: 10px;
-        margin: 10px;
-        border-radius: 15px;
-        cursor: pointer;
-        &:hover {
-            background-color: rgba(0, 0, 0, 0.4);
-        }
+  background-color: #2a2f32;
+  width: 300px;
+  display: flex;
+  border-radius: 12px;
+  justify-content: center;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  .Icon {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 15px;
+    cursor: pointer;
+    transform: scale(1);
+    transition: 0.3s all;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.4);
+      transform: scale(1.05);
     }
-    .endCallBtn {
-        background-color: rgba(255, 0, 0, 0.901);
-        border-radius: 15px;
-        &:hover {
-            background-color: red;
-        }
+  }
+  .endCallBtn {
+    background-color: rgba(255, 0, 0, 0.901);
+    border-radius: 15px;
+    &:hover {
+      background-color: red;
     }
+  }
 }

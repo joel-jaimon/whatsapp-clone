@@ -26,7 +26,6 @@ export const CallerInfo = connect(
   const onClose = () => {
     if (reverseAttachmentModalAnimation) {
       setReverseAttachmentModalAnimation(false);
-      // resetAttachmentModal();
     }
   };
 
