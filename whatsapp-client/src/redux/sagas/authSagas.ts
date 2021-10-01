@@ -13,7 +13,7 @@ import { v4 as uuidv4 } from "uuid";
 import { getAccessToken, setAccessToken } from "utils/accessToken";
 import { SocketIO } from "utils/socket";
 import { getActiveSocket } from "config/globalSocket";
-import { globalAxios } from "redux/store";
+import { globalAxios } from "config/globalAxios";
 
 // Google SignIn -------------------------------------------
 const googleSignin = async (payload: { idToken: string }) => {

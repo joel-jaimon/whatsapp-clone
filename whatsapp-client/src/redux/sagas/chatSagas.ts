@@ -12,7 +12,8 @@ import {
   sendMsgStart,
   setActiveChat,
 } from "../reducers/chat";
-import store, { globalAxios } from "../store";
+import store from "../store";
+import { globalAxios } from "config/globalAxios";
 
 // Logout Saga
 const getInitialChatData = async () => {

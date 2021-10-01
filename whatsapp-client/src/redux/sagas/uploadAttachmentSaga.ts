@@ -10,7 +10,8 @@ import {
   sendFileInit,
   updateSentFileUrl,
 } from "../reducers/chat";
-import store, { globalAxios } from "../store";
+import store from "../store";
+import { globalAxios } from "config/globalAxios";
 
 export const uploadFile = async (attachmentArr: any[], msginfo: any) => {
   return await Promise.all(

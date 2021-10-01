@@ -1,4 +1,4 @@
-import { globalAxios } from "redux/store";
+import { globalAxios } from "config/globalAxios";
 
 export const saveNewChatOnMongoDb = async (
   newChatInfo: any,
