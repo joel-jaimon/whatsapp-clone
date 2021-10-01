@@ -15,6 +15,7 @@ import { landscapeOffset, potraitOffset } from "constants/movableModal";
 import { connect } from "react-redux";
 import { setMovalbleModal } from "redux/reducers/movableModal";
 import { setGlobalModal } from "redux/reducers/globalModal";
+import { CircularProgress } from "@material-ui/core";
 
 const VolumeButton = ({ vol }: { vol: number }) => {
   if (vol < 1) return <VolumeOffIcon />;
@@ -35,7 +36,6 @@ export const MinimizedVideo = connect(
 )(({ params, setGlobalModal, setMovableModal }: any) => {
   const [duration, setDuration] = useState<any>(null);
   const [play, setPlay] = useState(false);
-  const [currentTime, setCurrentTime] = useState<any>(0);
   const [vol, setVol] = useState(100);
   const [volVisible, setVolVisible] = useState(false);
 
@@ -43,6 +43,8 @@ export const MinimizedVideo = connect(
   const animationRef: any = useRef(null);
   const progressbarRef: any = useRef(null);
   const volProgressRef: any = useRef(null);
+
+  const [vidLoaded, setVidLoaded] = useState(false);
 
   const offset =
     params.orientation === "potrait" ? potraitOffset : landscapeOffset;
@@ -86,7 +88,6 @@ export const MinimizedVideo = connect(
       "--seek-before-width",
       `${(progressbarRef.current.value / duration) * 100}%`
     );
-    setCurrentTime(progressbarRef.current.value);
   };
 
   const changeVolume = () => {
@@ -115,7 +116,17 @@ export const MinimizedVideo = connect(
 
   return (
     <div className={s.minimizedVideo}>
-      <div className={s.control}>
+      {vidLoaded ? null : (
+        <span className={s.loader}>
+          <CircularProgress className={s.loaderB} />
+        </span>
+      )}
+      <div
+        style={{
+          opacity: vidLoaded ? 1 : 0,
+        }}
+        className={s.control}
+      >
         <div className={s.header}>
           <CropFreeIcon onClick={fullScreenMode} />
           {params.mode === "mini" ? (
@@ -163,14 +174,20 @@ export const MinimizedVideo = connect(
         </div>
       </div>
       <video
+        style={{
+          opacity: vidLoaded ? 1 : 0,
+        }}
         ref={videoRef}
         src={params.url}
         onEnded={(e) => setPlay(false)}
         onDurationChange={(e) => loadDuration(e.target)}
+        onLoadedData={(e: React.SyntheticEvent<HTMLVideoElement, Event>) => {
+          setVidLoaded(true);
+          //@ts-ignore
+          e.target.play();
+          setPlay(true);
+        }}
       />
     </div>
   );
 });
-
-//volTrackModal
-//volTrackMinimized

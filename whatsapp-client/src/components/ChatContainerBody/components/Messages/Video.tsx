@@ -18,6 +18,7 @@ import {
 } from "redux/reducers/globalModal";
 import { getDuration } from "utils/parseDuration";
 import { SeenStats } from "components/SeenStats/SeenStats";
+import { replaceDownloadedVideoURL } from "redux/reducers/chat";
 
 const passStateToProps = ({ movableModal }: any) => ({
   movableModal: movableModal.modal,
@@ -27,6 +28,8 @@ const passDispatchToProps = (dispatch: any) => ({
   setMovableModal: (modal: any) => dispatch(setMovalbleModal(modal)),
   setGlobalModal: (modal: any) => dispatch(setGlobalModal(modal)),
   setGlobalMsgInFocus: (id: string) => dispatch(setGlobalMsgInFocus(id)),
+  updateVideoUrl: (payload: any) =>
+    dispatch(replaceDownloadedVideoURL(payload)),
 });
 
 export const Video = connect(
@@ -36,6 +39,7 @@ export const Video = connect(
   ({
     _id,
     msgPosition,
+    refId,
     msgParams,
     timestamp,
     setGlobalModal,
@@ -43,11 +47,11 @@ export const Video = connect(
     setMovableModal,
     setGlobalMsgInFocus,
     stillSending,
+    updateVideoUrl,
   }: any) => {
     const { thumbnail, url, size, duration, orientation } = msgParams;
     const [loading, setLoading] = useState<boolean>(false);
     const [downloaded, setDownloaded] = useState<boolean>(false);
-
     const offset = orientation === "potrait" ? potraitOffset : landscapeOffset;
 
     const openMinimizedVideo = () => {
@@ -70,13 +74,19 @@ export const Video = connect(
       setGlobalMsgInFocus(_id);
     };
 
-    const downloadVideo = () => {
-      // Faking video download
+    const downloadVideo = async () => {
       setLoading(true);
-      setTimeout(() => {
-        setDownloaded(true);
-        setLoading(false);
-      }, 500);
+      const data = await fetch(url).then((r) => r.blob());
+      const blob = new Blob([data]);
+      const newURL = window.URL.createObjectURL(blob);
+      console.log(newURL);
+      updateVideoUrl({
+        messageId: _id,
+        chatId: refId,
+        updatedUrl: newURL,
+      });
+      setDownloaded(true);
+      setLoading(false);
     };
 
     const cancelDownload = () => {

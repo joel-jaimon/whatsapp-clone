@@ -110,6 +110,17 @@ export const chatSlice = createSlice({
         action.payload.updatedUrl;
     },
 
+    replaceDownloadedVideoURL: (state, action: PayloadAction<any>) => {
+      const refArrIndex = state.chat[action.payload.chatId].messages.findIndex(
+        (e: any) => {
+          return e._id === action.payload.messageId;
+        }
+      );
+
+      state.chat[action.payload.chatId].messages[refArrIndex].msgParams.url =
+        action.payload.updatedUrl;
+    },
+
     recieveMessage: (state, action: PayloadAction<any>) => {
       state.chat[action.payload.refId].messages.push({
         ...action.payload,
@@ -224,5 +235,6 @@ export const {
   groupInfoUpdateFailed,
   groupInfoUpdateSuccessfull,
   initGroupInfoUpdate,
+  replaceDownloadedVideoURL,
 } = chatSlice.actions;
 export default chatSlice;
