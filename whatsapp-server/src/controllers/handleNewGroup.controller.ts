@@ -1,5 +1,5 @@
-const { ObjectId } = require("bson");
-const { mongoDB } = require("../../utils/database");
+import { ObjectId } from "bson";
+import { mongoDB } from "../database/mongoInstance";
 
 export const handleNewGroup = async (req: any, res: any) => {
   const db: any = await mongoDB().db();
@@ -21,10 +21,10 @@ export const handleNewGroup = async (req: any, res: any) => {
   }
 
   await db.collection("groups").insertOne({
-    _id: ObjectId(_id),
+    _id: new ObjectId(_id),
     participants: participants.map((participant: any) => {
       return {
-        objectId: ObjectId(participant.objectId),
+        objectId: new ObjectId(participant.objectId),
         lastViewed: participant.lastViewed,
       };
     }),

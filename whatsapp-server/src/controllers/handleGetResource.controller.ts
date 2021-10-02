@@ -1,15 +1,4 @@
-import { getFileStream, uploadFile } from "../../utils/handleS3";
-const fs = require("fs");
-const util = require("util");
-const unlinkFile = util.promisify(fs.unlink);
-
-export const handleFileUpload = async (req: any, res: any) => {
-  const file = req.file;
-  const fileType = req.params.fileType;
-  await uploadFile(file, fileType);
-  await unlinkFile(file.path);
-  res.status(200).send({ path: `resources/${fileType}/${file.filename}` });
-};
+import { getFileStream } from "../aws/getFileStream.s3";
 
 export const handleGetResource = async (req: any, res: any) => {
   const { fileType, key }: any = req.params;

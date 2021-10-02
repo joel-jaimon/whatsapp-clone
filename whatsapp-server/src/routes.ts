@@ -1,16 +1,16 @@
-var express = require("express");
-const {
-  googlelogin,
-  sendRefreshToken,
-  logout,
-} = require("./controllers/auth/auth");
-import { getMessages, getGroupsChats } from "./controllers/mongo/chats";
-import { isAuthREST } from "./utils/isAuth";
+import * as express from "express";
 import * as multer from "multer";
-import { handleFileUpload, handleGetResource } from "./controllers/s3/handlers";
-import { handleNewGroup } from "./controllers/random/handleNewGroup";
-import { handleNewChat } from "./controllers/random/handleNewChat";
-const router = express.Router();
+import { getMessages } from "./controllers/getMessages.controller";
+import { getGroupsChats } from "./controllers/getGroupsChats.controller";
+import { isAuthREST } from "./middlewares/isAuthREST.middleware";
+import { handleFileUpload } from "./controllers/handleFileUpload.controller";
+import { handleGetResource } from "./controllers/handleGetResource.controller";
+import { handleNewGroup } from "./controllers/handleNewGroup.controller";
+import { handleNewChat } from "./controllers/handleNewChat.controller";
+import { sendRefreshToken } from "./controllers/sendRefreshToken.controller";
+import { googlelogin } from "./controllers/googleLogin.controller";
+import { logout } from "./controllers/logout.controller";
+const router: express.Router = express.Router();
 
 // temp upload location for files
 const uploadLocation = multer({ dest: "uploads/" });
@@ -52,4 +52,4 @@ router.post("/create-new-group", isAuthREST, handleNewGroup);
 
 router.post("/create-new-chat", isAuthREST, handleNewChat);
 
-module.exports = router;
+export default router;

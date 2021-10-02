@@ -1,5 +1,5 @@
 import { ObjectId } from "bson";
-import { mongoDB } from "../../utils/database";
+import { mongoDB } from "../database/mongoInstance";
 
 export const handleNewChat = async (req: any, res: any) => {
   const db = await mongoDB().db();

@@ -1,19 +1,20 @@
-const port = 8181;
 require("dotenv").config();
-import * as express from "express";
+const port = 8181;
 const cluster = require("cluster");
-import * as net from "net";
-const socketio = require("socket.io");
 const io_redis = require("socket.io-redis");
 const num_processes = require("os").cpus().length;
-import { socketMain } from "./socketMain";
-import * as farmhash from "farmhash";
-import * as router from "./routes";
-import * as cookieParser from "cookie-parser";
+import * as net from "net";
 import * as cors from "cors";
-import { inititalizeMongoDb } from "./utils/database";
-import { isAuthSocket } from "./utils/isAuth";
+import * as http from "http";
+import router from "./routes";
 import { PeerServer } from "peer";
+import * as express from "express";
+import * as socket from "socket.io";
+import * as farmhash from "farmhash";
+import * as cookieParser from "cookie-parser";
+import { socketMain } from "./socket.io/socketMain";
+import { inititalizeMongoDb } from "./database/mongoInstance";
+import { isAuthSocket } from "./middlewares/isAuthSocket.middleware";
 
 (async () => {
   if (cluster.isMaster) {
@@ -54,7 +55,7 @@ import { PeerServer } from "peer";
     // module INSTEAD OF the http module. Express will use http, but we need
     // an independent tcp port open for cluster to work. This is the port that
     // will face the internet
-    const server = net.createServer(
+    const server: net.Server = net.createServer(
       { pauseOnConnect: true },
       (connection: net.Socket) => {
         // We received a connection and need to pass it to the appropriate
@@ -87,13 +88,12 @@ import { PeerServer } from "peer";
 
     PeerServer({ port: 9000, path: "/peer-server" });
 
-    //@ts-ignore
     app.use("/", router);
 
-    const server: any = app.listen(0, "localhost");
+    const server: http.Server = app.listen(0, "localhost");
     console.log("Worker listening...");
 
-    const io: any = socketio(server, {
+    const io = new socket.Server(server, {
       cors: {
         origin: "http://localhost:3000",
         credentials: true,
@@ -114,7 +114,7 @@ import { PeerServer } from "peer";
 
     io.use(isAuthSocket);
 
-    io.on("connection", (socket: any) => {
+    io.on("connection", (socket: socket.Socket) => {
       socketMain(io, socket);
       console.log(`connected to worker: ${cluster.worker.id}`);
     });

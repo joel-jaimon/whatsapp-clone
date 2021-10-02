@@ -1,65 +1,12 @@
+import { mongoDB } from "../database/mongoInstance";
+import { accessTokenExp, refreshTokenExp } from "../constants/token.constants";
 import { OAuth2Client } from "google-auth-library";
-import { mongoDB } from "../../utils/database";
 import { v4 as uuidv4 } from "uuid";
-import {
-  createAccessToken,
-  createRefreshToken,
-} from "../../utils/handleTokens";
-
 import axios from "axios";
-
-import { verify } from "jsonwebtoken";
-const { ObjectId } = require("bson");
-
-const refreshTokenExp = 7 * 24 * 60 * 60 * 1000;
-const accessTokenExp = 30 * 1000;
+import { createAccessToken, createRefreshToken } from "../utils/handleTokens";
 
 const client = new OAuth2Client(process.env.GAUTH_CLIENT_ID);
 
-// Refresh token endpoint
-export const sendRefreshToken = async (req: any, res: any) => {
-  const db: any = await mongoDB().db();
-  const token: any = req.cookies.wc_RTN;
-
-  if (!token) {
-    return res.status(401).send({
-      error: "Not Authorized!",
-    });
-  }
-
-  let payload: any = null;
-  try {
-    payload = verify(token, process.env.JWT_REFRESH_SECRET);
-  } catch (err) {
-    return res.status(401).send({
-      error: "Not Authorized!",
-    });
-  }
-
-  const { _id }: any = await db
-    .collection("googleAuthUsers")
-    .findOne({ _id: ObjectId(payload._id) });
-
-  if (!_id) {
-    return res.status(401).send({
-      error: "Not Authorized!",
-    });
-  }
-
-  const newAccessToken = createAccessToken(payload._id, accessTokenExp);
-  const newRefreshToken = createRefreshToken(payload._id, refreshTokenExp);
-
-  res.cookie("wc_RTN", newRefreshToken, {
-    maxAge: refreshTokenExp,
-    httpOnly: true,
-  });
-
-  return res.send({
-    accessToken: newAccessToken,
-  });
-};
-
-// Create / SigIn new user endpoint
 export const googlelogin = async (req: any, res: any) => {
   try {
     const db: any = await mongoDB().db();
@@ -126,11 +73,4 @@ export const googlelogin = async (req: any, res: any) => {
     console.log(err);
     return res.status(400).json({ error: "Something went wrong!" });
   }
-};
-
-export const logout = async (_: any, res: any) => {
-  res.clearCookie("wc_RTN");
-  res.status(200).json({
-    hi: "Thanks for testing...!",
-  });
 };
