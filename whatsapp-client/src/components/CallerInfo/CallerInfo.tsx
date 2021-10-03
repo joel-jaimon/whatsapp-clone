@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { rejectCall } from "redux/reducers/callerInfo";
+import { callConnected, rejectCall } from "redux/reducers/callerInfo";
 import s from "./callerInfo.module.scss";
 import CallEndIcon from "@material-ui/icons/CallEnd";
 import VideocamIcon from "@material-ui/icons/Videocam";
@@ -13,18 +13,20 @@ const passStateToProps = ({ roomState }: any) => ({
 
 const passDispatchToProps = (dispatch: any) => ({
   rejectCall: (payload: any) => dispatch(rejectCall(payload)),
+  callConnected: (payload: any) => dispatch(callConnected(payload)),
   setRoomModal: (payload: any) => dispatch(setRoomModal(payload)),
 });
 
 export const CallerInfo = connect(
   passStateToProps,
   passDispatchToProps
-)(({ callerInfo, setRoomModal }: any) => {
+)(({ callerInfo, setRoomModal, rejectCall, callConnected }: any) => {
   const [reverseAttachmentModalAnimation, setReverseAttachmentModalAnimation] =
     useState(false);
 
   const onClose = () => {
     if (reverseAttachmentModalAnimation) {
+      rejectCall();
       setReverseAttachmentModalAnimation(false);
     }
   };
@@ -36,6 +38,7 @@ export const CallerInfo = connect(
       groupInfo: [],
       acceptedCall: true,
     });
+    callConnected();
   };
   //
   return callerInfo?.active ? (

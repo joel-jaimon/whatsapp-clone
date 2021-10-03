@@ -86,7 +86,7 @@ import { isAuthSocket } from "./middlewares/isAuthSocket.middleware";
     // app.use(isAuthREST);
     // Don't expose our internal server to the outside world.
 
-    PeerServer({ port: 9000, path: "/peer-server" });
+    await PeerServer({ port: 9000, path: "/peer-server" });
 
     app.use("/", router);
 

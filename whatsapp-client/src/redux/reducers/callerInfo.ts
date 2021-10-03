@@ -24,6 +24,8 @@ export const callerInfoSlice = createSlice({
 
     callConnected: (state, action: PayloadAction<any>) => {
       state.ringing = true;
+      //@ts-ignore
+      state.callerInfo = {};
     },
 
     othersCalling: (state, action: PayloadAction<any>) => {

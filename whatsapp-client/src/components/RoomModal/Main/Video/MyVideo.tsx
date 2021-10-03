@@ -114,7 +114,7 @@ export const MyVideo = connect(
               ),
             }));
           });
-        }, 500);
+        }, 1000);
       } catch (e) {
         console.log(e);
       }
