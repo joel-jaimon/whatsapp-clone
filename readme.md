@@ -54,10 +54,10 @@ Once the above part is done.
 ### Installation:
 
 - In whatsapp-server run:<br>
-`npm run dev`
+`npm i && npm run dev`
 
 - In whatsapp-client run:<br>
-`npm start`
+`npm i && npm start`
 
 ### Redux Store
 https://user-images.githubusercontent.com/64752455/142684906-f56231a1-8c20-4304-afee-f305b43a2077.mp4
